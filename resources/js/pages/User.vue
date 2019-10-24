@@ -40,6 +40,12 @@
             <span v-else v-bind:style="{width:stylesDevice[index]}" class="barDevice"></span>
         </div>
     </div>
+    <div class="userType graphBox">
+      <h2>UserType</h2>
+      <div v-for="(userType,index) in data.userTypes">
+        <p>{{userType[0][0]}}:{{userType[0][1]}}</p>
+      </div>
+    </div>
 </div>
 
 </template>
@@ -67,7 +73,7 @@ export default {
                     this.widthFemale()
             })
             .catch(error => {
-                console.log(error);
+                console.error(error);
             })
     },
     methods: {

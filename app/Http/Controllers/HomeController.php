@@ -79,12 +79,12 @@ class HomeController extends Controller
         $gsa = new Google_Service_AnalyticsReporting($client);
         $gsw = new Google_Service_Webmasters($client);
         $end = date('Y-m-d', strtotime('-1 day', time()));
-        $start = date('Y-m-d', strtotime('-31 days', time()));
-        $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($end)));
-        $comStart = date('Y-m-d', strtotime('-31 days', strtotime($comEnd)));
+        $start = date('Y-m-d', strtotime('-30 days', time()));
+        $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+        $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
         $ga_result = $google->get_ga_data($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
         $ga_result = $ga_result[0];
-        // $ga_user = $google->get_ga_user($gsa, $VIEW_ID, $start, $end);
+        $ga_user = $google->get_ga_user($gsa, $VIEW_ID, $start, $end);
         // $ga_inflow = $google->get_ga_inflow($gsa, $VIEW_ID, $start, $end);
         // $data = ["inflow"=>$ga_inflow];
         // dd($ga_inflow,$ga_user,$data);

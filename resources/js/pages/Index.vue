@@ -1,31 +1,34 @@
 <template>
 <div class="container">
-    <div class="row">
-        <div class="col-4-lg">
-          <p>ユーザー</p>
-        </div>
-        <div class="col-8-lg">
-          <line-chart :chart-data="datacollection"></line-chart>
-          <button @click="fillData()">Randomize</button>
-        </div>
+    <div class="userLineGraph">
+        <line-chart :chart-data="datacollection" height="150"></line-chart>
     </div>
-    <h1 v-bind:style="styles">Summary</h1>
+    <h2>User</h2>
+    <h3>今期間</h3>
+      <div v-for="(user,date,index) in data.originUser">
+        <p>{{date}}:{{user}}</p>
+      </div>
+    <h3>前期間</h3>
+      <div v-for="(user,date,index) in data.compareUser">
+        <p>{{date}}:{{user}}</p>
+      </div>
+    <h2 v-bind:style="styles">Summary</h2>
     <p>セッション数：{{ data.session }}</p>
-    <p>セッション数：{{ data.comSession }}</p>
+    <p>前セッション数：{{ data.comSession }}</p>
     <p>ページ/セッション：{{ data.pSession }}</p>
-    <p>ページ/セッション：{{ data.comPSession }}</p>
+    <p>前ページ/セッション：{{ data.comPSession }}</p>
     <p>ユーザー数：{{ data.user }}</p>
-    <p>ユーザー数：{{ data.comUser }}</p>
+    <p>前ユーザー数：{{ data.comUser }}</p>
     <p>滞在時間：{{ data.time }}</p>
-    <p>滞在時間：{{ data.comTime }}</p>
+    <p>前滞在時間：{{ data.comTime }}</p>
     <p>直帰率：{{ data.bRate }}</p>
-    <p>直帰率：{{ data.comBRate }}</p>
+    <p>前直帰率：{{ data.comBRate }}</p>
     <p>ページの価値：{{ data.value }}</p>
-    <p>ページの価値：{{ data.comValue }}</p>
+    <p>前ページの価値：{{ data.comValue }}</p>
     <p>CV：{{ data.cv }}</p>
-    <p>CV：{{ data.comCv }}</p>
+    <p>前CV：{{ data.comCv }}</p>
     <p>ページの早さ：{{ data.speed }}</p>
-    <p>ページの早さ：{{ data.comSpeed }}</p>
+    <p>前ページの早さ：{{ data.comSpeed }}</p>
 </div>
 </template>
 <script>
@@ -52,7 +55,6 @@ export default {
             .then((res) => {
                 this.data = res.data,
                     this.fillData()
-                // console.log(this.data);
             })
             .catch(error => {
                 console.log(error);
@@ -63,24 +65,37 @@ export default {
          * 入力されたデータの数に応じてランダムなチャートデータを作成する
          */
         fillData: function() {
+            var originUser = this.data['originUser'];
+            var compareUser = this.data['compareUser'];
+            var arrayLabel = [];
+            var arrayDataOne = [];
+            var arrayDataTwo = [];
+            for (var key in originUser) {
+              // console.log(key+':'+originUser[key]);
+              arrayLabel.push(key);
+              arrayDataOne.push(originUser[key]);
+            }
+            for (var key in compareUser) {
+              // console.log(key+':'+originUser[key]);
+              arrayDataTwo.push(compareUser[key]);
+            }
+
             this.datacollection = {
                 animation : true,
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: arrayLabel,
                 datasets: [{
                     label: 'Data One',
                     borderColor: 'red',
                     backgroundColor:'rgba(0, 0, 0, 0)',
-                    data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+                    data: arrayDataOne
                 }, {
                     label: 'Data Two',
                     borderColor: 'blue',
                     backgroundColor:'rgba(0, 0, 0, 0)',
-                    data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
-                }]
+                    data: arrayDataTwo
+                }],
+
             }
-        },
-        getRandomInt: function() {
-            return Math.floor(Math.random() * (50 - 5 + 1)) + 5
         }
     }
 }

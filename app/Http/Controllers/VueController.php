@@ -62,14 +62,15 @@ class VueController extends Controller
         }
     }
     $gsa = new Google_Service_AnalyticsReporting($client);
-    $gsw = new Google_Service_Webmasters($client);
     $end = date('Y-m-d', strtotime('-1 day', time()));
-    $start = date('Y-m-d', strtotime('-31 days', time()));
-    $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($end)));
-    $comStart = date('Y-m-d', strtotime('-31 days', strtotime($comEnd)));
+    $start = date('Y-m-d', strtotime('-30 days', time()));
+    $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+    $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
     $ga_result = $google->get_ga_data($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
-    $originResult = $ga_result[0];
-    $comResult = $ga_result[1];
+    $originResult = $ga_result[0][0];
+    $comResult = $ga_result[0][1];
+    $originUser = $ga_result[1]['original'];
+    $compareUser = $ga_result[1]['compare'];
     $ss = $originResult[0];
     $ps = $originResult[1];
     $user = $originResult[2];
@@ -103,6 +104,8 @@ class VueController extends Controller
     "comValue"=>$comVl,
     "comCv"=>$comCv,
     "comSpeed"=>$comSpeed,
+    "originUser"=>$originUser,
+    "compareUser"=>$compareUser
     ];
 
     return $data;
@@ -147,11 +150,18 @@ class VueController extends Controller
         }
     }
     $gsa = new Google_Service_AnalyticsReporting($client);
-    $start = date('Y-m-d', strtotime('-33 day', time()));
+    $end = date('Y-m-d', strtotime('-1 day', time()));
+    $start = date('Y-m-d', strtotime('-30 days', time()));
+    $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+    $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
     $end = date('Y-m-d', strtotime('-3 day', time()));
     $ga_user = $google->get_ga_user($gsa, $VIEW_ID, $start, $end);
-    $data = ["user"=>$ga_user];
-
+    $ga_userOne = $ga_user[0];
+    $ga_userType = $ga_user[1];
+    $data = [
+      "user"=>$ga_userOne,
+      "userTypes"=>$ga_userType
+    ];
     return $data;
   }
   // 流入元分析

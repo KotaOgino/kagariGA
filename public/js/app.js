@@ -1792,6 +1792,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1815,7 +1818,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/analytics').then(function (res) {
-      _this.data = res.data, _this.fillData(); // console.log(this.data);
+      _this.data = res.data, _this.fillData();
     })["catch"](function (error) {
       console.log(error);
     });
@@ -1825,24 +1828,38 @@ __webpack_require__.r(__webpack_exports__);
      * 入力されたデータの数に応じてランダムなチャートデータを作成する
      */
     fillData: function fillData() {
+      var originUser = this.data['originUser'];
+      var compareUser = this.data['compareUser'];
+      var arrayLabel = [];
+      var arrayDataOne = [];
+      var arrayDataTwo = [];
+
+      for (var key in originUser) {
+        // console.log(key+':'+originUser[key]);
+        arrayLabel.push(key);
+        arrayDataOne.push(originUser[key]);
+      }
+
+      for (var key in compareUser) {
+        // console.log(key+':'+originUser[key]);
+        arrayDataTwo.push(compareUser[key]);
+      }
+
       this.datacollection = {
         animation: true,
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: arrayLabel,
         datasets: [{
           label: 'Data One',
           borderColor: 'red',
           backgroundColor: 'rgba(0, 0, 0, 0)',
-          data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+          data: arrayDataOne
         }, {
           label: 'Data Two',
           borderColor: 'blue',
           backgroundColor: 'rgba(0, 0, 0, 0)',
-          data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+          data: arrayDataTwo
         }]
       };
-    },
-    getRandomInt: function getRandomInt() {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     }
   }
 });
@@ -1992,6 +2009,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2010,7 +2033,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/user').then(function (res) {
       _this.data = res.data, _this.widthCountry(), _this.widthCity(), _this.widthDevice(), _this.widthMale(), _this.widthFemale();
     })["catch"](function (error) {
-      console.log(error);
+      console.error(error);
     });
   },
   methods: {
@@ -78457,77 +78480,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _vm._m(0),
-      _vm._v(" "),
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
       _c(
         "div",
-        { staticClass: "col-8-lg" },
+        { staticClass: "userLineGraph" },
         [
-          _c("line-chart", { attrs: { "chart-data": _vm.datacollection } }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.fillData()
-                }
-              }
-            },
-            [_vm._v("Randomize")]
-          )
+          _c("line-chart", {
+            attrs: { "chart-data": _vm.datacollection, height: "150" }
+          })
         ],
         1
-      )
-    ]),
-    _vm._v(" "),
-    _c("h1", { style: _vm.styles }, [_vm._v("Summary")]),
-    _vm._v(" "),
-    _c("p", [_vm._v("セッション数：" + _vm._s(_vm.data.session))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("セッション数：" + _vm._s(_vm.data.comSession))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ページ/セッション：" + _vm._s(_vm.data.pSession))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ページ/セッション：" + _vm._s(_vm.data.comPSession))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ユーザー数：" + _vm._s(_vm.data.user))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ユーザー数：" + _vm._s(_vm.data.comUser))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("滞在時間：" + _vm._s(_vm.data.time))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("滞在時間：" + _vm._s(_vm.data.comTime))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("直帰率：" + _vm._s(_vm.data.bRate))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("直帰率：" + _vm._s(_vm.data.comBRate))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ページの価値：" + _vm._s(_vm.data.value))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ページの価値：" + _vm._s(_vm.data.comValue))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("CV：" + _vm._s(_vm.data.cv))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("CV：" + _vm._s(_vm.data.comCv))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ページの早さ：" + _vm._s(_vm.data.speed))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("ページの早さ：" + _vm._s(_vm.data.comSpeed))])
-  ])
+      ),
+      _vm._v(" "),
+      _c("h2", [_vm._v("User")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("今期間")]),
+      _vm._v(" "),
+      _vm._l(_vm.data.originUser, function(user, date, index) {
+        return _c("div", [_c("p", [_vm._v(_vm._s(date) + ":" + _vm._s(user))])])
+      }),
+      _vm._v(" "),
+      _c("h3", [_vm._v("前期間")]),
+      _vm._v(" "),
+      _vm._l(_vm.data.compareUser, function(user, date, index) {
+        return _c("div", [_c("p", [_vm._v(_vm._s(date) + ":" + _vm._s(user))])])
+      }),
+      _vm._v(" "),
+      _c("h2", { style: _vm.styles }, [_vm._v("Summary")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("セッション数：" + _vm._s(_vm.data.session))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前セッション数：" + _vm._s(_vm.data.comSession))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("ページ/セッション：" + _vm._s(_vm.data.pSession))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前ページ/セッション：" + _vm._s(_vm.data.comPSession))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("ユーザー数：" + _vm._s(_vm.data.user))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前ユーザー数：" + _vm._s(_vm.data.comUser))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("滞在時間：" + _vm._s(_vm.data.time))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前滞在時間：" + _vm._s(_vm.data.comTime))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("直帰率：" + _vm._s(_vm.data.bRate))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前直帰率：" + _vm._s(_vm.data.comBRate))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("ページの価値：" + _vm._s(_vm.data.value))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前ページの価値：" + _vm._s(_vm.data.comValue))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("CV：" + _vm._s(_vm.data.cv))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前CV：" + _vm._s(_vm.data.comCv))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("ページの早さ：" + _vm._s(_vm.data.speed))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("前ページの早さ：" + _vm._s(_vm.data.comSpeed))])
+    ],
+    2
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4-lg" }, [
-      _c("p", [_vm._v("ユーザー")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -78833,6 +78852,23 @@ var render = function() {
                   staticClass: "barDevice",
                   style: { width: _vm.stylesDevice[index] }
                 })
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "userType graphBox" },
+      [
+        _c("h2", [_vm._v("UserType")]),
+        _vm._v(" "),
+        _vm._l(_vm.data.userTypes, function(userType, index) {
+          return _c("div", [
+            _c("p", [
+              _vm._v(_vm._s(userType[0][0]) + ":" + _vm._s(userType[0][1]))
+            ])
           ])
         })
       ],
