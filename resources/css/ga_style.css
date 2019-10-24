@@ -1,0 +1,100 @@
+body{
+  background-color: #FAFAFA!important;
+  color: #545A5D;
+}
+.container p{
+  margin: 0;
+  padding: 0;
+}
+.flex{
+  display: flex;
+}
+.bg-white{
+  background-color: #ffffff;
+}
+.border{
+  border: 1px solid #EDEDED;
+}
+.bold{
+  font-weight: bold;
+}
+.dark-gray{
+  color: #545A5D;
+}
+.gray{
+  color:#6F7579;
+}
+.blue{
+  color:#007AFF;
+}
+.red{
+  color:#FF2D55;
+}
+.fourteen{
+  font-size: 14px;
+}
+.sixteen{
+  font-size: 16px;
+}
+.shadow{
+  box-shadow: 0px 2px 6px #0000000D;
+}
+
+.top-line{
+  line-height: 0.9rem;
+}
+.top-nav{
+  background-color: #0000001A;
+  box-shadow: 0px 1px 3px #0000001A;
+  height: 54px;
+}
+.top-nav p{
+  color: #545A5D;
+  font-weight: bold;
+  font-size: 14px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.router-link:hover{
+  text-decoration: none;
+  color: #545A5D;
+}
+.top-nav .active{
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+.graphBox{
+  width: 350px;
+  border: 1px solid #EDEDED;
+  background-color: #FFFFFF;
+}
+.barCountry{
+  display:inline-block;
+  background-color: green;
+  height:1rem;
+}
+.barCity{
+  display:inline-block;
+  background-color: skyblue;
+  height:1rem;
+}
+.barDevice{
+  display:inline-block;
+  background-color: gray;
+  height:1rem;
+}
+.barGender{
+  display:flex;
+  height:1rem;
+}
+.barGenderMale{
+  display:inline-block;
+  background-color: blue;
+}
+.barGenderFemale{
+  display:inline-block;
+  background-color: red;
+}
+.small {
+    max-width: 600px;
+  }
