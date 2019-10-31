@@ -15,7 +15,10 @@
 // Route::get('/', function () {
 //     return view('top');
 // });
+Route::get('/{path}', 'HomeController@index')->where( 'path', '([ A-z\d-\/_.]+)?' );
+
 Route::get('/','HomeController@index')->name('top');
+
 // ユーザー認証
 Auth::routes();
 

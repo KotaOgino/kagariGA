@@ -154,8 +154,7 @@ class VueController extends Controller
     $start = date('Y-m-d', strtotime('-30 days', time()));
     $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
     $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
-    $end = date('Y-m-d', strtotime('-3 day', time()));
-    $ga_user = $google->get_ga_user($gsa, $VIEW_ID, $start, $end);
+    $ga_user = $google->get_ga_user($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
     $ga_userOne = $ga_user[0];
     $ga_userType = $ga_user[1];
     $data = [
@@ -257,6 +256,53 @@ class VueController extends Controller
     $ga_action = $google->get_ga_action($gsa, $VIEW_ID, $start, $end);
     $data = $ga_action;
 
+    return $data;
+  }
+  public function ad(Google $google, AddSite $addSite){
+    $user = Auth::user();
+    $id =  $user->id;
+    $add_sites = AddSite::where('user_id', $id)->get();
+    if (empty($add_sites) || $add_sites == []) {
+        return redirect('/accounts.google');
+    }
+    $addSite = AddSite::where('user_id', $id)->first();
+    if (is_null($addSite)) {
+        return redirect('/accounts.google');
+    }
+    $VIEW_ID =(string)$addSite->VIEW_ID;
+    $url = $addSite->url;
+    $client = $google->client();
+    $timeCreated = $user->createdAtToken;
+    $refreshToken = $user->refresh_token;
+    $time = time();
+    $timeDifference = $time - $timeCreated;
+    if ($timeDifference < 3600) {
+        $accessToken = $user->Gtoken;
+        $client->setAccessToken($accessToken);
+    } elseif ($timeDifference > 3600) {
+        try {
+            $client = $client ->refreshToken($refreshToken);
+            $newTimeCreated = $client['created'];
+            $newAccessToken = $client['access_token'];
+            $newRefreshToken = $client['refresh_token'];
+            $user->Gtoken = $newAccessToken;
+            $user->refresh_token = $newRefreshToken;
+            $user->createdAtToken = $newTimeCreated;
+            $user->update();
+            $client = $google->client();
+            $accessToken = $user->Gtoken;
+            $client->setAccessToken($accessToken);
+        } catch (ErrorException $e) {
+            return redirect('login');
+        }
+    }
+    $gsa = new Google_Service_AnalyticsReporting($client);
+    $end = date('Y-m-d', strtotime('-1 day', time()));
+    $start = date('Y-m-d', strtotime('-30 days', time()));
+    $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+    $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
+    $ga_ad = $google->get_ga_ad($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
+    $data = $ga_ad;
     return $data;
   }
 

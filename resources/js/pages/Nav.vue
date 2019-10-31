@@ -21,6 +21,11 @@
                 ユーザー行動分析
             </router-link>
         </p>
+        <p v-on:click='isActive=5' v-bind:class="[ isActive === 5 ? 'active' : '' ]" class="nav-item nav-link">
+            <router-link to='/ad' class="dark-gray router-link">
+                広告分析
+            </router-link>
+        </p>
     </nav>
 </div>
 </template>

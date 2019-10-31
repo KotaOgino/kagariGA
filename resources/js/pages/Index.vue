@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       datacollection: {},
+      options: {},
       data: {},
       styles: {
         backgroundColor: 'green',
@@ -45,7 +46,7 @@ export default {
   mounted() {
     axios.get('/api/analytics')
       .then((res) => {
-          this.data = res.data,
+        this.data = res.data,
           this.fillData()
       })
       .catch(error => {
@@ -88,7 +89,7 @@ export default {
           }]
         },
         this.options = {
-          responsive:false,
+          responsive: false,
           scales: {
             yAxes: [{
               ticks: {

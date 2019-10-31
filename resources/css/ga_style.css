@@ -79,23 +79,12 @@ body{
   background-color: skyblue;
   height:1rem;
 }
-.barDevice{
+.barAge{
   display:inline-block;
-  background-color: gray;
+  background-color: orange;
   height:1rem;
 }
-.barGender{
-  display:flex;
-  height:1rem;
-}
-.barGenderMale{
-  display:inline-block;
-  background-color: blue;
-}
-.barGenderFemale{
-  display:inline-block;
-  background-color: red;
-}
+
 .small {
     max-width: 600px;
   }

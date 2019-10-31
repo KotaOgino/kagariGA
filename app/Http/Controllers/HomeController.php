@@ -84,7 +84,7 @@ class HomeController extends Controller
         $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
         $ga_result = $google->get_ga_data($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
         $ga_result = $ga_result[0];
-        $ga_user = $google->get_ga_user($gsa, $VIEW_ID, $start, $end);
+        $ga_user = $google->get_ga_ad($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
         // $ga_inflow = $google->get_ga_inflow($gsa, $VIEW_ID, $start, $end);
         // $data = ["inflow"=>$ga_inflow];
         // dd($ga_inflow,$ga_user,$data);
