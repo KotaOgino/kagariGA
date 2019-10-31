@@ -6,6 +6,7 @@
             <p>{{ country[0] }}:{{ country[1] }}</p>
             <span v-if="index===0" v-bind:style="{width:styleMax}" class="barCountry"></span>
             <span v-else v-bind:style="{width:stylesCountry[index]}" class="barCountry"></span>
+            <p>前期間：{{country[2]}}</p>
         </div>
     </div>
     <div class="city graphBox">
@@ -18,8 +19,10 @@
     </div>
     <div class="age graphBox">
         <h2>Age</h2>
-        <div v-for="age in data.user[1]">
+        <div v-for="(age,index) in data.user[1]">
             <p>{{ age[0] }}:{{ age[1] }}</p>
+            <span v-if="index===0" v-bind:style="{width:styleMax}" class="barAge"></span>
+            <span v-else v-bind:style="{width:stylesAge[index]}" class="barAge"></span>
         </div>
 </div>
     <div class="gender graphBox">
@@ -28,18 +31,10 @@
     </div>
     <div class="device graphBox">
         <h2>Deivce</h2>
-        <!-- <div v-for="(device,index) in data.user[0]">
-            <p>{{ device[0] }}:{{ device[1] }}</p>
-            <span v-if="index===0" v-bind:style="{width:styleMax}" class="barDevice"></span>
-            <span v-else v-bind:style="{width:stylesDevice[index]}" class="barDevice"></span>
-        </div> -->
         <DoughnutChartDevice :chart-data="datacollectionDevice" :options="optionsDevice" :width="150" :height="150"></DoughnutChartDevice>
     </div>
     <div class="userType graphBox">
       <h2>UserType</h2>
-      <!-- <div v-for="(userType,index) in data.userTypes">
-        <p>{{userType[0][0]}}:{{userType[0][1]}}</p>
-      </div> -->
       <DoughnutChartUser :chart-data="datacollectionUser" :options="optionsUser" :width="150" :height="150"></DoughnutChartUser>
     </div>
 </div>
@@ -63,13 +58,14 @@ export default {
             datacollectionSex: {},
             datacollectionUser: {},
             datacollectionDevice: {},
+            optionsSex: {},
+            optionsDevice: {},
+            optionsUser: {},
             data: {},
             styleMax: '100%',
             stylesCountry: {},
             stylesCity: {},
-            stylesDevice: {},
-            stylesMale: '',
-            stylesFemale: ''
+            stylesAge: {}
         }
     },
     created() {
@@ -78,6 +74,7 @@ export default {
                     this.data = res.data,
                     this.widthCountry(),
                     this.widthCity(),
+                    this.widthAge(),
                     this.DoughnutChartDataSex(),
                     this.DoughnutChartDataUser(),
                     this.DoughnutChartDataDevice()
@@ -114,13 +111,23 @@ export default {
             }
             this.stylesCity = w_arry;
         },
-    DoughnutChartDataSex:function(){
-      var maleNumber = this.data.user[2][0][1];
-      var femaleNumber = this.data.user[2][1][1];
-      var sexData = [];
-      sexData.push(maleNumber,femaleNumber);
-      this.datacollectionSex = {
-        // ラベル
+        widthAge: function() {
+            var maxNumber = this.data.user[1][0][1];
+            var w_arry = {};
+            for (var i = 1; i < 4; i++) {
+                var number = this.data.user[1][i][1];
+                var width = this.calRate(number,maxNumber);
+                w_arry[i] = width;
+            }
+            this.stylesAge = w_arry;
+        },
+        DoughnutChartDataSex:function(){
+        var maleNumber = this.data.user[2][0][1];
+        var femaleNumber = this.data.user[2][1][1];
+        var sexData = [];
+        sexData.push(maleNumber,femaleNumber);
+        this.datacollectionSex = {
+          // ラベル
           labels: ["男性", "女性"],
           // データ詳細
           datasets: [{
