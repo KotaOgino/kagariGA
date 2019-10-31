@@ -7,16 +7,17 @@ import User from './pages/User.vue'
 import Inflow from './pages/Inflow.vue'
 import Action from './pages/Action.vue'
 import Conversion from './pages/Conversion.vue'
+import Ad from './pages/Ad.vue'
+import NotFound from './pages/NotFound.vue'
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
 Vue.use(VueRouter)
 
 // パスとコンポーネントのマッピング
-const routes = [
-  {
+const routes = [{
     path: '/',
-    component:Index,
+    component: Index,
     name: 'index',
   },
   {
@@ -38,6 +39,15 @@ const routes = [
     path: '/conversion',
     component: Conversion,
     name: 'Conversion'
+  },
+  {
+    path: '/ad',
+    component: Ad,
+    name: 'Ad'
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ]
 
