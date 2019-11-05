@@ -1,90 +1,298 @@
-body{
-  background-color: #FAFAFA!important;
+body {
+  background-color: #FAFAFA !important;
   color: #545A5D;
 }
-.container p{
+
+.container p {
   margin: 0;
   padding: 0;
 }
-.flex{
+
+.flex {
   display: flex;
 }
-.bg-white{
+
+.center {
+  margin: 0 auto;
+}
+
+.bg-white {
   background-color: #ffffff;
 }
-.border{
+
+.border {
   border: 1px solid #EDEDED;
 }
-.bold{
+
+.bold {
   font-weight: bold;
 }
-.dark-gray{
+
+.textCenter {
+  text-align: center;
+}
+
+.bottom1Rem {
+  margin-bottom: 1rem;
+}
+
+.kagariBorder {
+  border: 1px solid #EDEDED;
+  border-radius: 5px;
+}
+
+.dark-gray {
   color: #545A5D;
 }
-.gray{
-  color:#6F7579;
+
+.gray {
+  color: #6F7579;
 }
-.blue{
-  color:#007AFF;
+
+.blue {
+  color: #007AFF;
 }
-.red{
-  color:#FF2D55;
+
+.red {
+  color: #FF2D55;
 }
-.fourteen{
+
+.green {
+  color: #34C759;
+}
+
+.tewlve {
+  font-size: 12px;
+}
+
+.fourteen {
   font-size: 14px;
 }
-.sixteen{
+
+.sixteen {
   font-size: 16px;
 }
-.shadow{
-  box-shadow: 0px 2px 6px #0000000D;
+
+/* アイコン関連のCSS */
+.iconUser {
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #007AFF;
+  font-size: 16px;
+  background-color: #007AFF1A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
 }
 
-.top-line{
+.iconSession{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #FF9500;
+  font-size: 16px;
+  background-color: #FF95001A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconPv{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #34C759;
+  font-size: 16px;
+  background-color: #34C7591A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconPs{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #5AC8FA;
+  font-size: 16px;
+  background-color: #5AC8FA1A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconAveSs{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #FF3B30;
+  font-size: 16px;
+  background-color: #FF3B301A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconAveTime{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #FF2D55;
+  font-size: 16px;
+  background-color: #FF2D551A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconBr{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #5856D6;
+  font-size: 16px;
+  background-color: #5856D61A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconBye{
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #AF52DE;
+  font-size: 16px;
+  background-color: #AF52DE1A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconComment{
+  margin:2rem auto 2rem 1rem ;
+  color: #FF9500;
+  font-size: 16px;
+  background-color: #FF95001A;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.iconTop i {
+  padding-top: 0.7rem;
+}
+
+.top-line {
   line-height: 0.9rem;
 }
-.top-nav{
-  background-color: #0000001A;
-  box-shadow: 0px 1px 3px #0000001A;
-  height: 54px;
-}
-.top-nav p{
-  color: #545A5D;
-  font-weight: bold;
-  font-size: 14px;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.router-link:hover{
-  text-decoration: none;
-  color: #545A5D;
-}
-.top-nav .active{
-  background-color: #ffffff;
-  border-radius: 4px;
+
+.top-nav {
+  margin-left: 0.5rem;
+  padding-bottom: 1rem;
 }
 
-.graphBox{
+.router-link {
+  color: #959EA7;
+  font-size: 14px;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.router-link:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.active .router-link {
+  color: #007AFF !important;
+  background: #ffffff;
+}
+
+/* サマリーのグラフ */
+.userLineGraph {
+  display: flex;
+  background-color: #ffffff;
+  width: auto;
+  padding: 1rem;
+}
+
+.LineInfo {
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.userLine {
+  margin-right: 0;
+}
+
+.user-span p {
+  text-align: center;
+}
+
+.user-span p:first-child {
+  margin-bottom: 1.25rem;
+}
+
+/* ユーザー分析のグラフ */
+.graphBox {
   width: 350px;
   border: 1px solid #EDEDED;
   background-color: #FFFFFF;
 }
-.barCountry{
-  display:inline-block;
+
+.barCountry {
+  display: inline-block;
   background-color: green;
-  height:1rem;
+  height: 1rem;
 }
-.barCity{
-  display:inline-block;
+
+.barCity {
+  display: inline-block;
   background-color: skyblue;
-  height:1rem;
+  height: 1rem;
 }
-.barAge{
-  display:inline-block;
+
+.barAge {
+  display: inline-block;
   background-color: orange;
-  height:1rem;
+  height: 1rem;
 }
 
 .small {
-    max-width: 600px;
-  }
+  max-width: 600px;
+}
+
+/* レポートカード */
+.nowNumber {
+  font-size: 28px;
+  color: #3B4043;
+}
+
+.preNumber {
+  font-size: 14px;
+  color: #6F7579;
+}
+
+.comRate {
+  font-size: 14px;
+  color: #34C759;
+}
+
+.borderTop {
+  border-top: 1px solid #EDEDED;
+}
+
+.cardExp {
+  font-size: 11px;
+  color: #6F7579;
+}
+
+/* コメントエリア */
+.commentArea{
+  width: auto;
+  background-color: #ffffff;
+}
