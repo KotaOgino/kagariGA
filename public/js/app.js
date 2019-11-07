@@ -1732,21 +1732,251 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data: {}
+      data: {},
+      styleMax: '100%',
+      stylesSs: {},
+      stylesBr: {},
+      stylesTime: {},
+      stylesUser: {},
+      stylesPs: {},
+      stylesPv: {}
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/api/action').then(function (res) {
-      _this.data = res.data;
-      console.log(_this.data);
+      _this.data = res.data, // console.log(this.data);
+      _this.makeArrayBr(), _this.makeArrayTime(), _this.makeArrayUser(), _this.makeArrayPs(), _this.makeArrayPv(), _this.widthSs();
     })["catch"](function (error) {
       console.log(error);
     });
+  },
+  methods: {
+    calRate: function calRate(number, maxNumber) {
+      var resultNumber = number / maxNumber * 100;
+
+      var _pow = Math.pow(10, 1);
+
+      var result = Math.round(resultNumber * _pow) / _pow;
+
+      var width = result + '%';
+      return width;
+    },
+    mathRound: function mathRound(number, n) {
+      var _pow = Math.pow(10, n);
+
+      return Math.round(number * _pow) / _pow;
+    },
+    widthSs: function widthSs() {
+      var maxNumber = this.data[0][0][0][1];
+      var w_arry = {};
+
+      for (var i = 1; i < 10; i++) {
+        var number = this.data[i][0][0][1];
+        var width = this.calRate(number, maxNumber);
+        w_arry[i] = width;
+      }
+
+      this.stylesSs = w_arry;
+    },
+    makeArrayBr: function makeArrayBr() {
+      var brArray = [];
+      var brArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data[i][0][0][6], 1);
+        brArrays[i] = a;
+        brArray.push(a);
+      }
+
+      var maxBr = Math.max.apply(null, brArray); // console.log(maxBr);
+      // console.log(brArrays);
+
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = brArrays[i];
+        var width = this.calRate(number, maxBr);
+        w_arry[i] = width;
+      }
+
+      this.stylesBr = w_arry;
+    },
+    makeArrayTime: function makeArrayTime() {
+      var timeArray = [];
+      var timeArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data[i][0][0][5], 1);
+        timeArrays[i] = a;
+        timeArray.push(a);
+      }
+
+      var maxTime = Math.max.apply(null, timeArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = timeArrays[i];
+        var width = this.calRate(number, maxTime);
+        w_arry[i] = width;
+      }
+
+      this.stylesTime = w_arry;
+    },
+    makeArrayUser: function makeArrayUser() {
+      var userArray = [];
+      var userArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.data[i][0][0][4];
+        userArrays[i] = a;
+        userArray.push(a);
+      }
+
+      var maxUser = Math.max.apply(null, userArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = userArrays[i];
+        var width = this.calRate(number, maxUser);
+        w_arry[i] = width;
+      }
+
+      this.stylesUser = w_arry;
+    },
+    makeArrayPs: function makeArrayPs() {
+      var psArray = [];
+      var psArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data[i][0][0][3], 1);
+        psArrays[i] = a;
+        psArray.push(a);
+      }
+
+      var maxPs = Math.max.apply(null, psArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = psArrays[i];
+        var width = this.calRate(number, maxPs);
+        w_arry[i] = width;
+      }
+
+      this.stylesPs = w_arry;
+    },
+    makeArrayPv: function makeArrayPv() {
+      var pvArray = [];
+      var pvArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data[i][0][0][2], 1);
+        pvArrays[i] = a;
+        pvArray.push(a);
+      }
+
+      var maxPv = Math.max.apply(null, pvArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = pvArrays[i];
+        var width = this.calRate(number, maxPv);
+        w_arry[i] = width;
+      }
+
+      this.stylesPv = w_arry;
+    }
   }
 });
 
@@ -1779,20 +2009,499 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data: {}
+      data: {},
+      stylesClick: {},
+      stylesCost: {},
+      stylesClickCost: {},
+      stylesSs: {},
+      stylesCv: {},
+      stylesCvr: {}
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/api/ad').then(function (res) {
-      _this.data = res.data;
+      _this.data = res.data, console.log(_this.data.cv, _this.data.cvReport);
+      _this.makeArraySs(), _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayCost(), _this.widthClick();
     })["catch"](function (error) {
       console.log(error);
     });
+  },
+  methods: {
+    calRate: function calRate(number, maxNumber) {
+      var resultNumber = number / maxNumber * 100;
+
+      var _pow = Math.pow(10, 1);
+
+      var result = Math.round(resultNumber * _pow) / _pow;
+
+      var width = result + '%';
+      return width;
+    },
+    mathRound: function mathRound(number, n) {
+      var _pow = Math.pow(10, n);
+
+      return Math.round(number * _pow) / _pow;
+    },
+    widthClick: function widthClick() {
+      var maxNumber = this.data.cvReport[0][0][0][1];
+      var w_arry = {};
+
+      for (var i = 1; i < 10; i++) {
+        var number = this.data.cvReport[i][0][0][1];
+        var width = this.calRate(number, maxNumber);
+        w_arry[i] = width;
+      }
+
+      this.stylesClick = w_arry;
+    },
+    makeArrayCv: function makeArrayCv() {
+      var cvArray = [];
+      var cvArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.data.cvReport[i][0][0][4];
+        cvArrays[i] = a;
+        cvArray.push(a);
+      }
+
+      var maxCv = Math.max.apply(null, cvArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = cvArrays[i];
+        var width = this.calRate(number, maxCv);
+        w_arry[i] = width;
+      }
+
+      this.stylesCv = w_arry;
+    },
+    makeArrayCvr: function makeArrayCvr() {
+      var cvrArray = [];
+      var cvrArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data.cvReport[i][0][0][5], 1);
+        cvrArrays[i] = a;
+        cvrArray.push(a);
+      }
+
+      var maxCvr = Math.max.apply(null, cvrArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = cvrArrays[i];
+        var width = this.calRate(number, maxCvr);
+        w_arry[i] = width;
+      }
+
+      this.stylesCvr = w_arry;
+    },
+    makeArrayCost: function makeArrayCost() {
+      var brArray = [];
+      var brArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.data.cvReport[i][0][0][2];
+        brArrays[i] = a;
+        brArray.push(a);
+      }
+
+      var maxBr = Math.max.apply(null, brArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = brArrays[i];
+        var width = this.calRate(number, maxBr);
+        w_arry[i] = width;
+      }
+
+      this.stylesCost = w_arry;
+    },
+    makeArraySs: function makeArraySs() {
+      var psArray = [];
+      var psArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.data.cvReport[i][0][0][3];
+        psArrays[i] = a;
+        psArray.push(a);
+      }
+
+      var maxPs = Math.max.apply(null, psArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = psArrays[i];
+        var width = this.calRate(number, maxPs);
+        w_arry[i] = width;
+      }
+
+      this.stylesSs = w_arry;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Conversion.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Conversion.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      data: {},
+      styleMax: '100%',
+      stylesCv: {},
+      stylesBr: {},
+      stylesTime: {},
+      stylesUser: {},
+      stylesPs: {},
+      stylesCvr: {}
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/api/conversion').then(function (res) {
+      _this.data = res.data, console.log(_this.data.cv, _this.data.cvReport);
+      _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayBr(), _this.makeArrayPs(), _this.makeArrayTime(), _this.widthUser();
+    })["catch"](function (error) {
+      console.error(error);
+    });
+  },
+  methods: {
+    calRate: function calRate(number, maxNumber) {
+      var resultNumber = number / maxNumber * 100;
+
+      var _pow = Math.pow(10, 1);
+
+      var result = Math.round(resultNumber * _pow) / _pow;
+
+      var width = result + '%';
+      return width;
+    },
+    mathRound: function mathRound(number, n) {
+      var _pow = Math.pow(10, n);
+
+      return Math.round(number * _pow) / _pow;
+    },
+    widthUser: function widthUser() {
+      var maxNumber = this.data.cvReport[0][0][0][3];
+      var w_arry = {};
+
+      for (var i = 1; i < 10; i++) {
+        var number = this.data.cvReport[i][0][0][3];
+        var width = this.calRate(number, maxNumber);
+        w_arry[i] = width;
+      }
+
+      this.stylesUser = w_arry;
+    },
+    makeArrayCv: function makeArrayCv() {
+      var cvArray = [];
+      var cvArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.data.cvReport[i][0][0][1];
+        cvArrays[i] = a;
+        cvArray.push(a);
+      }
+
+      var maxCv = Math.max.apply(null, cvArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = cvArrays[i];
+        var width = this.calRate(number, maxCv);
+        w_arry[i] = width;
+      }
+
+      this.stylesCv = w_arry;
+    },
+    makeArrayCvr: function makeArrayCvr() {
+      var cvrArray = [];
+      var cvrArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data.cvReport[i][0][0][2], 1);
+        cvrArrays[i] = a;
+        cvrArray.push(a);
+      }
+
+      var maxCvr = Math.max.apply(null, cvrArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = cvrArrays[i];
+        var width = this.calRate(number, maxCvr);
+        w_arry[i] = width;
+      }
+
+      this.stylesCvr = w_arry;
+    },
+    makeArrayBr: function makeArrayBr() {
+      var brArray = [];
+      var brArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data.cvReport[i][0][0][4], 1);
+        brArrays[i] = a;
+        brArray.push(a);
+      }
+
+      var maxBr = Math.max.apply(null, brArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = brArrays[i];
+        var width = this.calRate(number, maxBr);
+        w_arry[i] = width;
+      }
+
+      this.stylesBr = w_arry;
+    },
+    makeArrayPs: function makeArrayPs() {
+      var psArray = [];
+      var psArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data.cvReport[i][0][0][5], 1);
+        psArrays[i] = a;
+        psArray.push(a);
+      }
+
+      var maxPs = Math.max.apply(null, psArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = psArrays[i];
+        var width = this.calRate(number, maxPs);
+        w_arry[i] = width;
+      }
+
+      this.stylesPs = w_arry;
+    },
+    makeArrayTime: function makeArrayTime() {
+      var timeArray = [];
+      var timeArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var a = this.mathRound(this.data.cvReport[i][0][0][6], 1);
+        timeArrays[i] = a;
+        timeArray.push(a);
+      }
+
+      var maxTime = Math.max.apply(null, timeArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = timeArrays[i];
+        var width = this.calRate(number, maxTime);
+        w_arry[i] = width;
+      }
+
+      this.stylesTime = w_arry;
+    }
   }
 });
 
@@ -1808,6 +2517,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chart_LineChart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../chart/LineChart.js */ "./resources/js/chart/LineChart.js");
+//
+//
+//
+//
 //
 //
 //
@@ -2100,20 +2813,151 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data: {}
+      data: {},
+      styleMax: '100%',
+      stylesChanel: {},
+      stylesSocial: {},
+      stylesReferral: {}
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     axios.get('/api/inflow').then(function (res) {
-      _this.data = res.data;
+      _this.data = res.data, console.log(_this.data.inflow);
+      _this.widthChanel(), _this.widthSocial(), _this.widthReferral();
     })["catch"](function (error) {
       console.log(error);
     });
+  },
+  methods: {
+    calRate: function calRate(number, maxNumber) {
+      var resultNumber = number / maxNumber * 100;
+
+      var _pow = Math.pow(10, 1);
+
+      var result = Math.round(resultNumber * _pow) / _pow;
+
+      var width = result + '%';
+      return width;
+    },
+    widthChanel: function widthChanel() {
+      var maxNumber = this.data.inflow[0][0][1];
+      var w_arry = {};
+
+      for (var i = 1; i < 4; i++) {
+        var number = this.data.inflow[0][i][1];
+        var width = this.calRate(number, maxNumber);
+        w_arry[i] = width;
+      }
+
+      this.stylesChanel = w_arry;
+    },
+    widthSocial: function widthSocial() {
+      var maxNumber = this.data.inflow[1][0][1];
+      var w_arry = {};
+
+      for (var i = 1; i < 4; i++) {
+        var number = this.data.inflow[1][i][1];
+        var width = this.calRate(number, maxNumber);
+        w_arry[i] = width;
+      }
+
+      this.stylesSocial = w_arry;
+    },
+    widthReferral: function widthReferral() {
+      var maxNumber = this.data.inflow[2][0][1];
+      var w_arry = {};
+
+      for (var i = 1; i < 5; i++) {
+        var number = this.data.inflow[2][i][1];
+        var width = this.calRate(number, maxNumber);
+        w_arry[i] = width;
+      }
+
+      this.stylesReferral = w_arry;
+    }
   }
 });
 
@@ -2244,6 +3088,170 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2273,7 +3281,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/user').then(function (res) {
-      _this.data = res.data, _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
+      _this.data = res.data, // console.log(this.data);
+      _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
     })["catch"](function (error) {
       console.error(error);
     });
@@ -2336,16 +3345,13 @@ __webpack_require__.r(__webpack_exports__);
         // データ詳細
         datasets: [{
           data: sexData,
-          backgroundColor: ['blue', 'red']
+          backgroundColor: ['#007AFF', '#FF2D55']
         }]
       }, this.optionsSex = {
         responsive: false,
-        cutoutPercentage: 80,
+        cutoutPercentage: 85,
         legend: {
-          position: 'bottom',
-          labels: {
-            fontSize: 12
-          }
+          display: false
         }
       };
     },
@@ -2360,18 +3366,14 @@ __webpack_require__.r(__webpack_exports__);
         // データ詳細
         datasets: [{
           data: userData,
-          backgroundColor: ['blue', 'skyblue']
+          backgroundColor: ['rgba(255, 59, 48, 1)', 'rgba(255, 59, 48, 0.6)']
         }]
       }, this.optionsUser = {
-        responsive: false,
-        cutoutPercentage: 80,
         legend: {
-          position: 'bottom',
-          // ★ [labels]を追加
-          labels: {
-            fontSize: 12
-          }
-        }
+          display: false
+        },
+        responsive: false,
+        cutoutPercentage: 85
       };
     },
     DoughnutChartDataDevice: function DoughnutChartDataDevice() {
@@ -2386,17 +3388,13 @@ __webpack_require__.r(__webpack_exports__);
         // データ詳細
         datasets: [{
           data: deviceData,
-          backgroundColor: ['red', 'orange', 'pink']
+          backgroundColor: ['#007AFF', '#007AFF99', '#007AFF66']
         }]
       }, this.optionsDevice = {
         responsive: false,
-        cutoutPercentage: 80,
+        cutoutPercentage: 85,
         legend: {
-          position: 'bottom',
-          // ★ [labels]を追加
-          labels: {
-            fontSize: 12
-          }
+          display: false
         }
       };
     }
@@ -79708,37 +80706,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("Action")]),
-      _vm._v(" "),
-      _vm._l(this.data, function(action) {
-        return _c("div", [
-          _c("p", [
-            _vm._v(
-              _vm._s(action[0]) +
-                ":" +
-                _vm._s(action[1]) +
-                "," +
-                _vm._s(action[2]) +
-                "," +
-                _vm._s(action[3]) +
-                "," +
-                _vm._s(action[4]) +
-                "," +
-                _vm._s(action[5]) +
-                "," +
-                _vm._s(action[6])
-            )
-          ])
-        ])
-      })
-    ],
-    2
-  )
+  return _c("div", { staticClass: "action container" }, [
+    _c(
+      "table",
+      {
+        staticClass: "table table-striped",
+        staticStyle: { "table-layout": "fixed" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.data, function(action, index) {
+            return _c("tr", { staticClass: "fourteen" }, [
+              _c("td", { staticClass: "textLeft wordBreak" }, [
+                _vm._v(_vm._s(action[0][0][0][0]))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        " + _vm._s(action[0][0][1]) + "\n        "),
+                index === 0
+                  ? _c("span", {
+                      staticClass: "barSsMax mb-1",
+                      style: { width: _vm.styleMax }
+                    })
+                  : _c("span", {
+                      staticClass: "barSs mb-1",
+                      style: { width: _vm.stylesSs[index] }
+                    }),
+                _vm._v(" "),
+                _vm._m(1, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        " + _vm._s(action[0][0][2]) + "\n        "),
+                _c("span", {
+                  staticClass: "barPv mb-1",
+                  style: { width: _vm.stylesPv[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(2, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(action[0][0][3], 1)) +
+                    "\n          "
+                ),
+                _c("span", {
+                  staticClass: "barPs mb-1",
+                  style: { width: _vm.stylesPs[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(3, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        " + _vm._s(action[0][0][4]) + "\n        "),
+                _c("span", {
+                  staticClass: "barAge mb-1",
+                  style: { width: _vm.stylesUser[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(4, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(action[0][0][5], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barTime mb-1",
+                  style: { width: _vm.stylesTime[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(5, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(action[0][0][6], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barCountry mb-1",
+                  style: { width: _vm.stylesBr[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(6, true)
+              ])
+            ])
+          }),
+          0
+        )
+      ]
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "textCenter fourteen" }, [
+        _c("th", { staticStyle: { width: "16%" } }),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconSession" }, [
+            _c("i", { staticClass: "fas fa-bolt marginIcon" })
+          ]),
+          _vm._v("\n      セッション数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconPv" }, [
+            _c("i", { staticClass: "fas fa-eye marginIcon" })
+          ]),
+          _vm._v("\n      PV数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconPs" }, [
+            _c("i", { staticClass: "fas fa-pager marginIcon" })
+          ]),
+          _vm._v("\n      ページ"),
+          _c("br"),
+          _vm._v("/セッション\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconUser" }, [
+            _c("i", { staticClass: "fas fa-user marginIcon" })
+          ]),
+          _vm._v("\n      ユーザー数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconAveTime" }, [
+            _c("i", { staticClass: "far fa-clock marginIcon" })
+          ]),
+          _vm._v("\n      平均"),
+          _c("br"),
+          _vm._v("ページ滞在時間\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconBr" }, [
+            _c("i", { staticClass: "fas fa-arrow-alt-circle-left marginIcon" })
+          ]),
+          _vm._v("\n      直帰率\n      ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -79760,31 +80953,256 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "ad container" }, [
     _c("h2", [_vm._v("広告")]),
     _vm._v(" "),
     _c("ul", [
       _c("li", [_vm._v("今期間")]),
       _vm._v(" "),
-      _c("li", [_vm._v("広告費用：" + _vm._s(_vm.data[0][0]))]),
+      _c("li", [_vm._v("広告費用：" + _vm._s(_vm.data.cv[0][0]))]),
       _vm._v(" "),
-      _c("li", [_vm._v("広告クリック：" + _vm._s(_vm.data[0][1]))]),
+      _c("li", [_vm._v("広告クリック：" + _vm._s(_vm.data.cv[0][1]))]),
       _vm._v(" "),
-      _c("li", [_vm._v("コンバージョン：" + _vm._s(_vm.data[0][2]))])
+      _c("li", [_vm._v("コンバージョン：" + _vm._s(_vm.data.cv[0][2]))])
     ]),
     _vm._v(" "),
     _c("ul", [
       _c("li", [_vm._v("前期間")]),
       _vm._v(" "),
-      _c("li", [_vm._v("広告費用：" + _vm._s(_vm.data[1][0]))]),
+      _c("li", [_vm._v("広告費用：" + _vm._s(_vm.data.cv[1][0]))]),
       _vm._v(" "),
-      _c("li", [_vm._v("広告クリック：" + _vm._s(_vm.data[1][1]))]),
+      _c("li", [_vm._v("広告クリック：" + _vm._s(_vm.data.cv[1][1]))]),
       _vm._v(" "),
-      _c("li", [_vm._v("コンバージョン：" + _vm._s(_vm.data[1][2]))])
-    ])
+      _c("li", [_vm._v("コンバージョン：" + _vm._s(_vm.data.cv[1][2]))])
+    ]),
+    _vm._v(" "),
+    _c(
+      "table",
+      {
+        staticClass: "table table-striped",
+        staticStyle: { "table-layout": "fixed" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.data.cvReport, function(report, index) {
+            return _c("tr", { staticClass: "fourteen" }, [
+              _c("td", { staticClass: "textLeft wordBreak" }, [
+                _vm._v(_vm._s(report[0][0][0][0]))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        " + _vm._s(report[0][0][1]) + "\n          "),
+                index === 0
+                  ? _c("span", {
+                      staticClass: "barAgeMax mb-1",
+                      style: { width: _vm.styleMax }
+                    })
+                  : _c("span", {
+                      staticClass: "barAge mb-1",
+                      style: { width: _vm.stylesClick[index] }
+                    }),
+                _vm._v(" "),
+                _vm._m(1, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][2], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barCountry mb-1",
+                  style: { width: _vm.stylesCost[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(2, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        1000\n          "),
+                _c("span", {
+                  staticClass: "barAge mb-1",
+                  style: { width: _vm.styleMax }
+                }),
+                _vm._v(" "),
+                _vm._m(3, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][3], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barTime mb-1",
+                  style: { width: _vm.stylesSs[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(4, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][4], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barSs mb-1",
+                  style: { width: _vm.stylesCv[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(5, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][5], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barCity mb-1",
+                  style: { width: _vm.stylesCvr[index] }
+                }),
+                _vm._v(" "),
+                _vm._m(6, true)
+              ])
+            ])
+          }),
+          0
+        )
+      ]
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "textCenter fourteen" }, [
+        _c("th", { staticStyle: { width: "16%" } }),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconUser" }, [
+            _c("i", { staticClass: "fas fa-mouse-pointer marginIcon" })
+          ]),
+          _vm._v("\n      クリック数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconBr" }, [
+            _c("i", { staticClass: "fas fa-yen-sign marginIcon" })
+          ]),
+          _vm._v("\n      費用\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconPs" }, [
+            _c("i", { staticClass: "fas fa-yen-sign marginIcon" })
+          ]),
+          _vm._v("\n      クリック単価\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconAveSs" }, [
+            _c("i", { staticClass: "fas fa-bolt marginIcon" })
+          ]),
+          _vm._v("\n      セッション数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconSession" }, [
+            _c("i", { staticClass: "fas fa-flag marginIcon" })
+          ]),
+          _vm._v("\n      コンバージョン"),
+          _c("br"),
+          _vm._v("数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconBye" }, [
+            _c("i", { staticClass: "far fa-flag marginIcon" })
+          ]),
+          _vm._v("\n      コンバージョン率\n      ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -79806,9 +81224,251 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Conversion")])
+  return _c(
+    "div",
+    { staticClass: "conversion container" },
+    [
+      _vm._l(_vm.data.cv, function(cv, index) {
+        return _c("div", [_c("p", [_vm._v(_vm._s(cv))])])
+      }),
+      _vm._v(" "),
+      _c(
+        "table",
+        {
+          staticClass: "table table-striped",
+          staticStyle: { "table-layout": "fixed" }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.data.cvReport, function(report, index) {
+              return _c("tr", { staticClass: "fourteen" }, [
+                _c("td", { staticClass: "textLeft wordBreak" }, [
+                  _vm._v(_vm._s(report[0][0][0][0]))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "textRight" }, [
+                  _vm._v("\n        " + _vm._s(report[0][0][1]) + "\n        "),
+                  _c("span", {
+                    staticClass: "barSs mb-1",
+                    style: { width: _vm.stylesCv[index] }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(1, true)
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "textRight" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.mathRound(report[0][0][2], 1)) +
+                      "\n        "
+                  ),
+                  _c("span", {
+                    staticClass: "barCity mb-1",
+                    style: { width: _vm.stylesCvr[index] }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(2, true)
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "textRight" }, [
+                  _vm._v(
+                    "\n        " + _vm._s(report[0][0][3]) + "\n          "
+                  ),
+                  index === 0
+                    ? _c("span", {
+                        staticClass: "barAgeMax mb-1",
+                        style: { width: _vm.styleMax }
+                      })
+                    : _c("span", {
+                        staticClass: "barAge mb-1",
+                        style: { width: _vm.stylesUser[index] }
+                      }),
+                  _vm._v(" "),
+                  _vm._m(3, true)
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "textRight" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.mathRound(report[0][0][4], 1)) +
+                      "\n        "
+                  ),
+                  _c("span", {
+                    staticClass: "barCountry mb-1",
+                    style: { width: _vm.stylesBr[index] }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(4, true)
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "textRight" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.mathRound(report[0][0][5], 1)) +
+                      "\n        "
+                  ),
+                  _c("span", {
+                    staticClass: "barPs mb-1",
+                    style: { width: _vm.stylesPs[index] }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(5, true)
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "textRight" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.mathRound(report[0][0][6], 1)) +
+                      "\n        "
+                  ),
+                  _c("span", {
+                    staticClass: "barTimeMax mb-1",
+                    style: { width: _vm.stylesTime[index] }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(6, true)
+                ])
+              ])
+            }),
+            0
+          )
+        ]
+      )
+    ],
+    2
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "textCenter fourteen" }, [
+        _c("th", { staticStyle: { width: "16%" } }),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconSession" }, [
+            _c("i", { staticClass: "fas fa-flag marginIcon" })
+          ]),
+          _vm._v("\n      コンバージョン"),
+          _c("br"),
+          _vm._v("数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconBye" }, [
+            _c("i", { staticClass: "far fa-flag marginIcon" })
+          ]),
+          _vm._v("\n      コンバージョン"),
+          _c("br"),
+          _vm._v("率\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconUser" }, [
+            _c("i", { staticClass: "fas fa-user marginIcon" })
+          ]),
+          _vm._v("\n      ユーザー数\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconBr" }, [
+            _c("i", { staticClass: "fas fa-arrow-alt-circle-left marginIcon" })
+          ]),
+          _vm._v("\n      直帰率\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconPs" }, [
+            _c("i", { staticClass: "fas fa-pager marginIcon" })
+          ]),
+          _vm._v("\n      ページ"),
+          _c("br"),
+          _vm._v("/セッション\n      ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
+          _c("div", { staticClass: "iconAveSs" }, [
+            _c("i", { staticClass: "fas fa-clock marginIcon" })
+          ]),
+          _vm._v("\n      平均"),
+          _c("br"),
+          _vm._v("セッション時間\n      ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate tewlve" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -80256,9 +81916,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("section", [
-      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem" }, [
+      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem flex" }, [
         _c("div", { staticClass: "iconComment iconTop" }, [
           _c("i", { staticClass: "fas fa-comment-dots" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "commentTextArea" }, [
+          _c("h6", { staticClass: "dark-gray sixteen bold" }, [
+            _vm._v("コメント")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticStyle: { border: "none" },
+            attrs: { placeholder: "コメントを入力" }
+          })
         ])
       ])
     ])
@@ -80285,37 +81956,225 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("チャネル")]),
-      _vm._v(" "),
-      _vm._l(_vm.data.inflow[0], function(medium, index) {
-        return _c("div", [
-          _c("p", [_vm._v(_vm._s(medium[0]) + ":" + _vm._s(medium[1]))])
+  return _c("div", { staticClass: "container inflow" }, [
+    _c("section", [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter" }, [
+                  _vm._v("チャネル")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.data.inflow[0], function(medium, index) {
+                  return _c("div", [
+                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                      _c("p", { staticClass: "fourteen black" }, [
+                        _vm._v(_vm._s(medium[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "eighteen black bold" }, [
+                        _vm._v(_vm._s(medium[1]))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    index === 0
+                      ? _c("span", {
+                          staticClass: "barAgeMax mb-1",
+                          style: { width: _vm.styleMax }
+                        })
+                      : _c("span", {
+                          staticClass: "barAge mb-1",
+                          style: { width: _vm.stylesChanel[index] }
+                        }),
+                    _vm._v(" "),
+                    _vm._m(1, true)
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter" }, [
+                  _vm._v("ソーシャル")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.data.inflow[1], function(social, index) {
+                  return _c("div", [
+                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                      _c("p", { staticClass: "fourteen black" }, [
+                        _vm._v(_vm._s(social[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "eighteen black bold" }, [
+                        _vm._v(_vm._s(social[1]))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    index === 0
+                      ? _c("span", {
+                          staticClass: "barCountryMax mb-1",
+                          style: { width: _vm.styleMax }
+                        })
+                      : _c("span", {
+                          staticClass: "barCountry mb-1",
+                          style: { width: _vm.stylesSocial[index] }
+                        }),
+                    _vm._v(" "),
+                    _vm._m(3, true)
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter dark-gray" }, [
+                  _vm._v("他サイトのリンク")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.data.inflow[2], function(referral, index) {
+                  return _c("div", [
+                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                      _c("p", { staticClass: "fourteen black" }, [
+                        _vm._v(_vm._s(referral[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "eighteen black bold" }, [
+                        _vm._v(_vm._s(referral[1]))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    index === 0
+                      ? _c("span", {
+                          staticClass: "barCityMax mb-1",
+                          style: { width: _vm.styleMax }
+                        })
+                      : _c("span", {
+                          staticClass: "barCity mb-1",
+                          style: { width: _vm.stylesReferral[index] }
+                        }),
+                    _vm._v(" "),
+                    _vm._m(5, true)
+                  ])
+                })
+              ],
+              2
+            )
+          ])
         ])
-      }),
-      _vm._v(" "),
-      _c("h2", [_vm._v("ソーシャル")]),
-      _vm._v(" "),
-      _vm._l(_vm.data.inflow[0], function(social, index) {
-        return _c("div", [
-          _c("p", [_vm._v(_vm._s(social[0]) + ":" + _vm._s(social[1]))])
-        ])
-      }),
-      _vm._v(" "),
-      _c("h2", [_vm._v("他サイトのリンク")]),
-      _vm._v(" "),
-      _vm._l(_vm.data.inflow[0], function(referral, index) {
-        return _c("div", [
-          _c("p", [_vm._v(_vm._s(referral[0]) + ":" + _vm._s(referral[1]))])
-        ])
-      })
-    ],
-    2
-  )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(6)
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconUser iconTop" }, [
+      _c("i", { staticClass: "fas fa-project-diagram" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate fourteen" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconBr iconTop" }, [
+      _c("i", { staticClass: "fas fa-retweet" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate fourteen" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconBye iconTop" }, [
+      _c("i", { staticClass: "fas fa-link" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate fourteen" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem flex" }, [
+        _c("div", { staticClass: "iconComment iconTop" }, [
+          _c("i", { staticClass: "fas fa-comment-dots" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "commentTextArea" }, [
+          _c("h6", { staticClass: "dark-gray sixteen bold" }, [
+            _vm._v("コメント")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticStyle: { border: "none" },
+            attrs: { placeholder: "コメントを入力" }
+          })
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -80454,7 +82313,7 @@ var render = function() {
               [
                 _c(
                   "router-link",
-                  { staticClass: "router-link", attrs: { to: "/action" } },
+                  { staticClass: "router-link", attrs: { to: "/conversion" } },
                   [
                     _c("i", { staticClass: "fas fa-flag mr-1" }),
                     _vm._v("コンバージョン分析\n      ")
@@ -80564,140 +82423,456 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "user" }, [
-    _c(
-      "div",
-      { staticClass: "country graphBox" },
-      [
-        _c("h2", [_vm._v("Country")]),
-        _vm._v(" "),
-        _vm._l(_vm.data.user[3], function(country, index) {
-          return _c("div", [
-            _c("p", [_vm._v(_vm._s(country[0]) + ":" + _vm._s(country[1]))]),
-            _vm._v(" "),
-            index === 0
-              ? _c("span", {
-                  staticClass: "barCountry",
-                  style: { width: _vm.styleMax }
-                })
-              : _c("span", {
-                  staticClass: "barCountry",
-                  style: { width: _vm.stylesCountry[index] }
-                }),
-            _vm._v(" "),
-            _c("p", [_vm._v("前期間：" + _vm._s(country[2]))])
+  return _c("div", { staticClass: "user container" }, [
+    _c("section", [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-title textCenter fourteen" }, [
+                _vm._v("新規ユーザー")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-text doughnutChart" },
+                [
+                  _c("DoughnutChartUser", {
+                    attrs: {
+                      "chart-data": _vm.datacollectionUser,
+                      options: _vm.optionsUser,
+                      width: 150,
+                      height: 150
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
           ])
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "city graphBox" },
-      [
-        _c("h2", [_vm._v("City")]),
+        ]),
         _vm._v(" "),
-        _vm._l(_vm.data.user[4], function(city, index) {
-          return _c("div", [
-            _c("p", [_vm._v(_vm._s(city[0]) + ":" + _vm._s(city[1]))]),
-            _vm._v(" "),
-            index === 0
-              ? _c("span", {
-                  staticClass: "barCity",
-                  style: { width: _vm.styleMax }
-                })
-              : _c("span", {
-                  staticClass: "barCity",
-                  style: { width: _vm.stylesCity[index] }
-                })
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-title textCenter" }, [
+                _vm._v("性別")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-text doughnutChart" },
+                [
+                  _c("DoughnutChartSex", {
+                    attrs: {
+                      "chart-data": _vm.datacollectionSex,
+                      options: _vm.optionsSex,
+                      width: 150,
+                      height: 150
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
           ])
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "age graphBox" },
-      [
-        _c("h2", [_vm._v("Age")]),
+        ]),
         _vm._v(" "),
-        _vm._l(_vm.data.user[1], function(age, index) {
-          return _c("div", [
-            _c("p", [_vm._v(_vm._s(age[0]) + ":" + _vm._s(age[1]))]),
-            _vm._v(" "),
-            index === 0
-              ? _c("span", {
-                  staticClass: "barAge",
-                  style: { width: _vm.styleMax }
-                })
-              : _c("span", {
-                  staticClass: "barAge",
-                  style: { width: _vm.stylesAge[index] }
-                })
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-title textCenter" }, [
+                _vm._v("デバイス")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-text doughnutChart" },
+                [
+                  _c("DoughnutChartDevice", {
+                    attrs: {
+                      "chart-data": _vm.datacollectionDevice,
+                      options: _vm.optionsDevice,
+                      width: 150,
+                      height: 150
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
           ])
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "gender graphBox" },
-      [
-        _c("h2", [_vm._v("Gender")]),
+        ]),
         _vm._v(" "),
-        _c("DoughnutChartSex", {
-          attrs: {
-            "chart-data": _vm.datacollectionSex,
-            options: _vm.optionsSex,
-            width: 150,
-            height: 150
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "device graphBox" },
-      [
-        _c("h2", [_vm._v("Deivce")]),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._m(6),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter" }, [
+                  _vm._v("年齢")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.data.user[1], function(age, index) {
+                  return _c("div", [
+                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                      _c("p", { staticClass: "fourteen black" }, [
+                        _vm._v(_vm._s(age[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "eighteen black bold" }, [
+                        _vm._v(_vm._s(age[1]))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    index === 0
+                      ? _c("span", {
+                          staticClass: "barAgeMax mb-1",
+                          style: { width: _vm.styleMax }
+                        })
+                      : _c("span", {
+                          staticClass: "barAge mb-1",
+                          style: { width: _vm.stylesAge[index] }
+                        }),
+                    _vm._v(" "),
+                    _vm._m(7, true)
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
         _vm._v(" "),
-        _c("DoughnutChartDevice", {
-          attrs: {
-            "chart-data": _vm.datacollectionDevice,
-            options: _vm.optionsDevice,
-            width: 150,
-            height: 150
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "userType graphBox" },
-      [
-        _c("h2", [_vm._v("UserType")]),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._m(8),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter" }, [
+                  _vm._v("国")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.data.user[3], function(country, index) {
+                  return _c("div", [
+                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                      _c("p", { staticClass: "fourteen black" }, [
+                        _vm._v(_vm._s(country[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "eighteen black bold" }, [
+                        _vm._v(_vm._s(country[1]))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    index === 0
+                      ? _c("span", {
+                          staticClass: "barCountryMax mb-1",
+                          style: { width: _vm.styleMax }
+                        })
+                      : _c("span", {
+                          staticClass: "barCountry mb-1",
+                          style: { width: _vm.stylesCountry[index] }
+                        }),
+                    _vm._v(" "),
+                    _vm._m(9, true)
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
         _vm._v(" "),
-        _c("DoughnutChartUser", {
-          attrs: {
-            "chart-data": _vm.datacollectionUser,
-            options: _vm.optionsUser,
-            width: 150,
-            height: 150
-          }
-        })
-      ],
-      1
-    )
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card bottom1Rem" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._m(10),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter dark-gray" }, [
+                  _vm._v("地域")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.data.user[4], function(city, index) {
+                  return _c("div", [
+                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                      _c("p", { staticClass: "fourteen black" }, [
+                        _vm._v(_vm._s(city[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "eighteen black bold" }, [
+                        _vm._v(_vm._s(city[1]))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    index === 0
+                      ? _c("span", {
+                          staticClass: "barCityMax mb-1",
+                          style: { width: _vm.styleMax }
+                        })
+                      : _c("span", {
+                          staticClass: "barCity mb-1",
+                          style: { width: _vm.stylesCity[index] }
+                        }),
+                    _vm._v(" "),
+                    _vm._m(11, true)
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(12)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconAveSs iconTop" }, [
+      _c("i", { staticClass: "fas fa-user-plus" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyCenter" }, [
+      _c("div", { staticClass: "newUser textCenter mr-3" }, [
+        _c("i", { staticClass: "fas fa-user-plus newUserColor" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+          _vm._v("新規ユーザー")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "returnUser textCenter ml-3" }, [
+        _c("i", { staticClass: "fas fa-user returnUserColor" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+          _vm._v("既存ユーザー")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconSession iconTop" }, [
+      _c("i", { staticClass: "fas fa-venus-mars" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyCenter" }, [
+      _c("div", { staticClass: "newUser textCenter mr-3" }, [
+        _c("i", { staticClass: "fas fa-male blue" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [_vm._v("男性")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "returnUser textCenter ml-3" }, [
+        _c("i", { staticClass: "fas fa-female red" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [_vm._v("女性")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconUser iconTop" }, [
+      _c("i", { staticClass: "fas fa-mobile-alt" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyCenter" }, [
+      _c("div", { staticClass: "newUser textCenter mr-3" }, [
+        _c("i", { staticClass: "fas fa-mobile-alt blue" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+          _vm._v("モバイル")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "returnUser textCenter ml-3 mr-3" }, [
+        _c("i", { staticClass: "fas fa-desktop pcColor" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [_vm._v("PC")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "returnUser textCenter ml-3" }, [
+        _c("i", { staticClass: "fas fa-tablet-alt mobileColor" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+          _vm._v("タブレット")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "textCenter comRate" }, [
+          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+          _vm._v("10%")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconUser iconTop" }, [
+      _c("i", { staticClass: "fas fa-user" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate fourteen" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconBr iconTop" }, [
+      _c("i", { staticClass: "fas fa-globe-asia" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate fourteen" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconBye iconTop" }, [
+      _c("i", { staticClass: "fas fa-map-marker-alt" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+      _c("p", { staticClass: "textCenter comRate fourteen" }, [
+        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+        _vm._v("10%")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem flex" }, [
+        _c("div", { staticClass: "iconComment iconTop" }, [
+          _c("i", { staticClass: "fas fa-comment-dots" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "commentTextArea" }, [
+          _c("h6", { staticClass: "dark-gray sixteen bold" }, [
+            _vm._v("コメント")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticStyle: { border: "none" },
+            attrs: { placeholder: "コメントを入力" }
+          })
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -96117,15 +98292,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Conversion_vue_vue_type_template_id_631a9c5f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Conversion.vue?vue&type=template&id=631a9c5f& */ "./resources/js/pages/Conversion.vue?vue&type=template&id=631a9c5f&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Conversion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Conversion.vue?vue&type=script&lang=js& */ "./resources/js/pages/Conversion.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Conversion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Conversion_vue_vue_type_template_id_631a9c5f___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Conversion_vue_vue_type_template_id_631a9c5f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -96139,6 +98316,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/pages/Conversion.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Conversion.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/pages/Conversion.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Conversion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Conversion.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Conversion.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Conversion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

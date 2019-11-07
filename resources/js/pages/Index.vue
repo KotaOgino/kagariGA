@@ -138,9 +138,13 @@
     </div>
   </div>
   <section>
-    <div class="commentArea kagariBorder bottom1Rem">
+    <div class="commentArea kagariBorder bottom1Rem flex">
       <div class="iconComment iconTop">
         <i class="fas fa-comment-dots"></i>
+      </div>
+      <div class="commentTextArea">
+        <h6 class="dark-gray sixteen bold">コメント</h6>
+      <textarea placeholder="コメントを入力" style="border:none;"></textarea>
       </div>
     </div>
   </section>

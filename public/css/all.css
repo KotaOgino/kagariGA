@@ -1928,8 +1928,22 @@ body {
   padding: 0;
 }
 
+.block{
+  display: block;
+}
+
 .flex {
   display: flex;
+}
+
+.justifyCenter{
+  justify-content: center;
+}
+.justifyBetween{
+  justify-content:space-between;
+}
+.justifyEnd{
+  justify-content: flex-end;
 }
 
 .center {
@@ -1948,12 +1962,28 @@ body {
   font-weight: bold;
 }
 
+.normal{
+  font-weight: normal;
+}
+
 .textCenter {
   text-align: center;
 }
 
+.textRight{
+  text-align: right;
+}
+
+.textLeft{
+  text-align: left;
+}
+
 .bottom1Rem {
   margin-bottom: 1rem;
+}
+
+.wordBreak{
+  word-break:break-all;
 }
 
 .kagariBorder {
@@ -1968,6 +1998,9 @@ body {
 .gray {
   color: #6F7579;
 }
+.black{
+  color: #3B4043;
+}
 
 .blue {
   color: #007AFF;
@@ -1980,7 +2013,18 @@ body {
 .green {
   color: #34C759;
 }
-
+.newUserColor{
+  color: rgba(255, 59, 48, 1);
+}
+.returnUserColor{
+  color: rgba(255, 59, 48, 0.6);
+}
+.pcColor{
+  color: #007AFF99;
+}
+.mobileColor{
+  color: #007AFF66;
+}
 .tewlve {
   font-size: 12px;
 }
@@ -1992,11 +2036,17 @@ body {
 .sixteen {
   font-size: 16px;
 }
+.eighteen{
+  font-size: 18px;
+}
 
 /* アイコン関連のCSS */
+.marginIcon{
+  margin-top: 0.8rem;
+}
 .iconUser {
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #007AFF;
   font-size: 16px;
   background-color: #007AFF1A;
@@ -2008,7 +2058,7 @@ body {
 
 .iconSession{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #FF9500;
   font-size: 16px;
   background-color: #FF95001A;
@@ -2020,7 +2070,7 @@ body {
 
 .iconPv{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #34C759;
   font-size: 16px;
   background-color: #34C7591A;
@@ -2032,7 +2082,7 @@ body {
 
 .iconPs{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #5AC8FA;
   font-size: 16px;
   background-color: #5AC8FA1A;
@@ -2044,7 +2094,7 @@ body {
 
 .iconAveSs{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #FF3B30;
   font-size: 16px;
   background-color: #FF3B301A;
@@ -2056,7 +2106,7 @@ body {
 
 .iconAveTime{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #FF2D55;
   font-size: 16px;
   background-color: #FF2D551A;
@@ -2068,7 +2118,7 @@ body {
 
 .iconBr{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #5856D6;
   font-size: 16px;
   background-color: #5856D61A;
@@ -2080,7 +2130,7 @@ body {
 
 .iconBye{
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #AF52DE;
   font-size: 16px;
   background-color: #AF52DE1A;
@@ -2091,7 +2141,7 @@ body {
 }
 
 .iconComment{
-  margin:2rem auto 2rem 1rem ;
+  margin:2rem 1rem 2rem 1rem ;
   color: #FF9500;
   font-size: 16px;
   background-color: #FF95001A;
@@ -2164,22 +2214,102 @@ body {
   background-color: #FFFFFF;
 }
 
+.barCountryMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(88, 86, 214, 1);
+}
+
 .barCountry {
-  display: inline-block;
-  background-color: green;
-  height: 1rem;
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(88, 86, 214, 0.6);
+}
+
+.barCityMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(175, 82, 222, 1);
 }
 
 .barCity {
-  display: inline-block;
-  background-color: skyblue;
-  height: 1rem;
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(175, 82, 222, 0.6);
+}
+
+.barAgeMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(0, 122, 255, 1);
 }
 
 .barAge {
-  display: inline-block;
-  background-color: orange;
-  height: 1rem;
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(0, 122, 255, 0.6);
+}
+
+.barSsMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(255, 149, 0, 1);
+}
+
+.barSs {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(255, 149, 0, 0.6);
+}
+
+.barTimeMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(255, 45, 85, 1);
+}
+
+.barTime {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(255, 45, 85, 0.6);
+}
+
+.barPsMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(90, 200, 250, 1);
+}
+
+.barPs {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(90, 200, 250, 0.6);
+}
+
+.barPvMax {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(52, 199, 89, 1);
+}
+
+.barPv {
+  display: flex;
+  height: 5px;
+  border-radius: 8px;
+  background-color: rgba(52, 199, 89, 0.6);
 }
 
 .small {
@@ -2215,4 +2345,18 @@ body {
 .commentArea{
   width: auto;
   background-color: #ffffff;
+  padding: 0.5rem;
+  margin-bottom: 5rem;
+}
+
+.commentArea .commentTextArea textarea{
+  width: 800px;
+}
+/* ドーナツチャート */
+#doughnut-chart{
+  margin: 1rem auto;
+}
+/* テーブル */
+.table thead th{
+  vertical-align: top!important;
 }

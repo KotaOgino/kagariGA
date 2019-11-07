@@ -22,5 +22,6 @@ Route::group(['middleware' => 'api'], function(){
     Route::get('user','VueController@user');
     Route::get('inflow','VueController@inflow');
     Route::get('action','VueController@action');
+    Route::get('conversion','VueController@cv');
     Route::get('ad','VueController@ad');
 });

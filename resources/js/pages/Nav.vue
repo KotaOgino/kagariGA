@@ -37,7 +37,7 @@
       </router-link>
   </p>
   <p v-on:click='isActive=5' v-bind:class="[ isActive === 5 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to='/action' class="router-link">
+      <router-link to='/conversion' class="router-link">
           <i class="fas fa-flag mr-1"></i>コンバージョン分析
       </router-link>
   </p>

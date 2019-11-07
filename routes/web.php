@@ -16,13 +16,12 @@
 //     return view('top');
 // });
 
+// ユーザー認証
+Auth::routes();
+
 Route::get('/{path}', 'HomeController@index')->where( 'path', '([ A-z\d-\/_.]+)?' );
 
 Route::get('/','HomeController@index')->name('top');
-
-
-// ユーザー認証
-Auth::routes();
 
 
 // Google認証
