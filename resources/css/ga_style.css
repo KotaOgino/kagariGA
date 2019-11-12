@@ -12,10 +12,18 @@ body {
   display: block;
 }
 
-.flex {
-  display: flex;
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
 }
 
+.flex {
+  display: -webkit-box; /*Android4.3*/
+  display: -moz-box;    /*Firefox21*/
+  display: -ms-flexbox; /*IE10*/
+  display: -webkit-flex; /*PC-Safari,iOS8.4*/
+  display: flex
+}
 .justifyCenter{
   justify-content: center;
 }

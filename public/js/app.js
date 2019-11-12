@@ -3252,6 +3252,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -82425,7 +82427,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "user container" }, [
     _c("section", [
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row row-eq-height" }, [
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card bottom1Rem" }, [
             _c("div", { staticClass: "card-body" }, [
@@ -82516,132 +82518,134 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card bottom1Rem" }, [
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("p", { staticClass: "card-title textCenter" }, [
-                  _vm._v("年齢")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.data.user[1], function(age, index) {
-                  return _c("div", [
-                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
-                      _c("p", { staticClass: "fourteen black" }, [
-                        _vm._v(_vm._s(age[0]))
+        _c("div", { staticClass: "row-eq-height" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card bottom1Rem" }, [
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-title textCenter" }, [
+                    _vm._v("年齢")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.data.user[1], function(age, index) {
+                    return _c("div", [
+                      _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                        _c("p", { staticClass: "fourteen black" }, [
+                          _vm._v(_vm._s(age[0]))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "eighteen black bold" }, [
+                          _vm._v(_vm._s(age[1]))
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "eighteen black bold" }, [
-                        _vm._v(_vm._s(age[1]))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    index === 0
-                      ? _c("span", {
-                          staticClass: "barAgeMax mb-1",
-                          style: { width: _vm.styleMax }
-                        })
-                      : _c("span", {
-                          staticClass: "barAge mb-1",
-                          style: { width: _vm.stylesAge[index] }
-                        }),
-                    _vm._v(" "),
-                    _vm._m(7, true)
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card bottom1Rem" }, [
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _vm._m(8),
-                _vm._v(" "),
-                _c("p", { staticClass: "card-title textCenter" }, [
-                  _vm._v("国")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.data.user[3], function(country, index) {
-                  return _c("div", [
-                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
-                      _c("p", { staticClass: "fourteen black" }, [
-                        _vm._v(_vm._s(country[0]))
+                      index === 0
+                        ? _c("span", {
+                            staticClass: "barAgeMax mb-1",
+                            style: { width: _vm.styleMax }
+                          })
+                        : _c("span", {
+                            staticClass: "barAge mb-1",
+                            style: { width: _vm.stylesAge[index] }
+                          }),
+                      _vm._v(" "),
+                      _vm._m(7, true)
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card bottom1Rem" }, [
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-title textCenter" }, [
+                    _vm._v("国")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.data.user[3], function(country, index) {
+                    return _c("div", [
+                      _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                        _c("p", { staticClass: "fourteen black" }, [
+                          _vm._v(_vm._s(country[0]))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "eighteen black bold" }, [
+                          _vm._v(_vm._s(country[1]))
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "eighteen black bold" }, [
-                        _vm._v(_vm._s(country[1]))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    index === 0
-                      ? _c("span", {
-                          staticClass: "barCountryMax mb-1",
-                          style: { width: _vm.styleMax }
-                        })
-                      : _c("span", {
-                          staticClass: "barCountry mb-1",
-                          style: { width: _vm.stylesCountry[index] }
-                        }),
-                    _vm._v(" "),
-                    _vm._m(9, true)
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card bottom1Rem" }, [
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _vm._m(10),
-                _vm._v(" "),
-                _c("p", { staticClass: "card-title textCenter dark-gray" }, [
-                  _vm._v("地域")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.data.user[4], function(city, index) {
-                  return _c("div", [
-                    _c("div", { staticClass: "flex justifyBetween mb-1" }, [
-                      _c("p", { staticClass: "fourteen black" }, [
-                        _vm._v(_vm._s(city[0]))
+                      index === 0
+                        ? _c("span", {
+                            staticClass: "barCountryMax mb-1",
+                            style: { width: _vm.styleMax }
+                          })
+                        : _c("span", {
+                            staticClass: "barCountry mb-1",
+                            style: { width: _vm.stylesCountry[index] }
+                          }),
+                      _vm._v(" "),
+                      _vm._m(9, true)
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card bottom1Rem" }, [
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _vm._m(10),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-title textCenter dark-gray" }, [
+                    _vm._v("地域")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.data.user[4], function(city, index) {
+                    return _c("div", [
+                      _c("div", { staticClass: "flex justifyBetween mb-1" }, [
+                        _c("p", { staticClass: "fourteen black" }, [
+                          _vm._v(_vm._s(city[0]))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "eighteen black bold" }, [
+                          _vm._v(_vm._s(city[1]))
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "eighteen black bold" }, [
-                        _vm._v(_vm._s(city[1]))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    index === 0
-                      ? _c("span", {
-                          staticClass: "barCityMax mb-1",
-                          style: { width: _vm.styleMax }
-                        })
-                      : _c("span", {
-                          staticClass: "barCity mb-1",
-                          style: { width: _vm.stylesCity[index] }
-                        }),
-                    _vm._v(" "),
-                    _vm._m(11, true)
-                  ])
-                })
-              ],
-              2
-            )
+                      index === 0
+                        ? _c("span", {
+                            staticClass: "barCityMax mb-1",
+                            style: { width: _vm.styleMax }
+                          })
+                        : _c("span", {
+                            staticClass: "barCity mb-1",
+                            style: { width: _vm.stylesCity[index] }
+                          }),
+                      _vm._v(" "),
+                      _vm._m(11, true)
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
           ])
         ])
       ])
