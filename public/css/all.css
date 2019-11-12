@@ -2335,10 +2335,16 @@ body {
   color: #6F7579;
 }
 
-.comRate {
+.comRateUp {
   font-size: 14px;
   color: #34C759;
 }
+
+.comRateDown {
+  font-size: 14px;
+  color: #FF2D55;
+}
+
 
 .borderTop {
   border-top: 1px solid #EDEDED;
@@ -2370,8 +2376,8 @@ body {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #ffffff;
+    background-color: #ffffff!important;
 }
 .table-striped tbody tr:nth-of-type(even) {
-    background-color: red;
+    background-color: #F8FAFC!important;
 }

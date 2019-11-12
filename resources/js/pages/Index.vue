@@ -25,7 +25,8 @@
           <p class="card-title textCenter">ユーザー</p>
           <p class="card-text textCenter nowNumber bold">{{ data.user }}</p>
           <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ data.comUser }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p v-if="data.user >= data.comUser" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.user, data.comUser)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.user, data.comUser)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -40,7 +41,8 @@
           <p class="card-title textCenter">セッション</p>
           <p class="card-text textCenter nowNumber bold">{{ data.session }}</p>
           <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ data.comSession }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p v-if="Number(data.session) >= Number(data.comSession)" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.session, data.comSession)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.session, data.comSession)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -53,9 +55,10 @@
             <i class="fas fa-eye"></i>
           </div>
           <p class="card-title textCenter">ページビュー数</p>
-          <p class="card-text textCenter nowNumber bold">{{ data.user }}</p>
-          <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ data.comUser }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p class="card-text textCenter nowNumber bold">{{ data.pv }}</p>
+          <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ data.comPv }}</p>
+          <p v-if="data.pv >= data.comPv" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.pv, data.comPv)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.pv, data.comPv)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -70,7 +73,8 @@
           <p class="card-title textCenter">ページ/セッション</p>
           <p class="card-text textCenter nowNumber bold">{{ mathRound(data.pSession, 1) }}</p>
           <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ mathRound(data.comPSession, 1) }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p v-if="data.pSession >= data.comPSession" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.pSession, data.comPSession)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.pSession, data.comPSession)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -83,9 +87,10 @@
             <i class="fas fa-clock"></i>
           </div>
           <p class="card-title textCenter">平均セッション時間</p>
-          <p class="card-text textCenter nowNumber bold">{{ data.session }}</p>
-          <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ data.comSession }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p class="card-text textCenter nowNumber bold">{{ mathRound(data.aveSs, 1) }}</p>
+          <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ mathRound(data.comAveSs, 1) }}</p>
+          <p v-if="Number(data.aveSs) >= Number(data.comAveSs)" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.aveSs, data.comAveSs)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.aveSs, data.comAveSs)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -100,7 +105,8 @@
           <p class="card-title textCenter">平均ページ滞在時間</p>
           <p class="card-text textCenter nowNumber bold">{{ mathRound(data.time, 1) }}</p>
           <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ mathRound(data.comTime, 1) }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p v-if="Number(data.time) >= Number(data.comTime)" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.time, data.comTime)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.time, data.comTime)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -115,7 +121,8 @@
           <p class="card-title textCenter">直帰率</p>
           <p class="card-text textCenter nowNumber bold">{{ mathRound(data.bRate, 1) }}</p>
           <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ mathRound(data.comBRate, 1) }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p v-if="data.bRate >= data.comBRate" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.bRate, data.comBRate)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.bRate, data.comBRate)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -128,9 +135,10 @@
             <i class="fas fa-times-circle"></i>
           </div>
           <p class="card-title textCenter">離脱率</p>
-          <p class="card-text textCenter nowNumber bold">{{ data.user }}</p>
-          <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ data.comUser }}</p>
-          <p class="card-text textCenter comRate"><span class="mr-1">▲</span>10%</p>
+          <p class="card-text textCenter nowNumber bold">{{ mathRound(data.exit, 1) }}</p>
+          <p class="card-text textCenter preNumber mb-1"><i class="fas fa-arrows-alt-h mr-1"></i>{{ mathRound(data.comExit, 1) }}</p>
+          <p v-if="data.exit >= data.comExit" class="card-text textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(data.exit, data.comExit)}}%</p>
+          <p v-else class="card-text textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(data.exit, data.comExit)}}%</p>
           <p class="card-text borderTop my-3"></p>
           <p class="card-text cardExp">期間中に１回以上のセッションを開始したユーザー数。</p>
         </div>
@@ -188,6 +196,7 @@ export default {
     axios.get('/api/analytics')
       .then((res) => {
         this.data = res.data,
+        console.log(this.data);
           this.fillData()
       })
       .catch(error => {
@@ -201,6 +210,10 @@ export default {
     mathRound: function(number, n){
         var _pow = Math.pow( 10 , n );
         return Math.round( number * _pow ) / _pow;
+    },
+    comparRate: function(numberNow, numberPast){
+      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+      return result;
     },
     fillData: function() {
       var originUser = this.data['originUser'];
@@ -224,11 +237,13 @@ export default {
           datasets: [{
             label: '今期間',
             borderColor: '#007AFF',
+            pointBackgroundColor: 'blue',
             backgroundColor: 'rgba(0, 0, 0, 0)',
             data: arrayDataOne
           }, {
             label: '前期間',
             borderColor: '#FF2D55',
+            pointBackgroundColor: 'red',
             backgroundColor: 'rgba(0, 0, 0, 0)',
             data: arrayDataTwo
           }]
@@ -246,20 +261,22 @@ export default {
               // display: true,
               // stacked: false,
               gridLines: {
-                drawBorder: false,
-                color: '#EDEDED'
+                display: false
               },
+              ticks: {
+                display: false
+              }
             }],
             yAxes: [{
               scaleLabel: {
                 fontColor: '#EDEDED'
               },
               gridLines: {
-                drawBorder: false,
-                color: '#EDEDED'
+
               },
               ticks: {
-                suggestedMin: 0
+                suggestedMin: 0,
+                autoSkip: true
               },
             }]
           }

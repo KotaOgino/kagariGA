@@ -1,8 +1,8 @@
 <template>
   <div class="conversion container">
-    <div v-for="(cv,index) in data.cv">
+    <!-- <div v-for="(cv,index) in data.cv">
       <p>{{cv}}</p>
-    </div>
+    </div> -->
     <table class="table table-striped" style="table-layout:fixed;">
     <thead>
       <tr class="textCenter fourteen">

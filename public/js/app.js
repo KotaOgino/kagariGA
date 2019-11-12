@@ -2109,15 +2109,17 @@ __webpack_require__.r(__webpack_exports__);
       stylesClickCost: {},
       stylesSs: {},
       stylesCv: {},
-      stylesCvr: {}
+      stylesCvr: {},
+      stylesCc: {},
+      styleMax: "100%"
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/api/ad').then(function (res) {
-      _this.data = res.data, console.log(_this.data.cv, _this.data.cvReport);
-      _this.makeArraySs(), _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayCost(), _this.widthClick();
+      _this.data = res.data, // console.log(this.data.cv,this.data.cvReport);
+      _this.makeArraySs(), _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayCost(), _this.widthClick(), _this.makeArrayClickCost();
     })["catch"](function (error) {
       console.log(error);
     });
@@ -2191,6 +2193,29 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.stylesCvr = w_arry;
+    },
+    makeArrayClickCost: function makeArrayClickCost() {
+      var ccArray = [];
+      var ccArrays = {};
+
+      for (var i = 0; i < 10; i++) {
+        var cost = this.mathRound(this.data.cvReport[i][0][0][2], 1);
+        var click = this.data.cvReport[i][0][0][1];
+        var cc = this.mathRound(cost / click, 1);
+        ccArrays[i] = cc;
+        ccArray.push(cc);
+      }
+
+      var maxCc = Math.max.apply(null, ccArray);
+      var w_arry = {};
+
+      for (var i = 0; i < 10; i++) {
+        var number = ccArrays[i];
+        var width = this.calRate(number, maxCc);
+        w_arry[i] = width;
+      }
+
+      this.stylesCc = w_arry;
     },
     makeArrayCost: function makeArrayCost() {
       var brArray = [];
@@ -2685,6 +2710,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2705,7 +2738,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/analytics').then(function (res) {
-      _this.data = res.data, _this.fillData();
+      _this.data = res.data, console.log(_this.data);
+
+      _this.fillData();
     })["catch"](function (error) {
       console.log(error);
     });
@@ -2718,6 +2753,10 @@ __webpack_require__.r(__webpack_exports__);
       var _pow = Math.pow(10, n);
 
       return Math.round(number * _pow) / _pow;
+    },
+    comparRate: function comparRate(numberNow, numberPast) {
+      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+      return result;
     },
     fillData: function fillData() {
       var originUser = this.data['originUser'];
@@ -2743,11 +2782,13 @@ __webpack_require__.r(__webpack_exports__);
         datasets: [{
           label: '今期間',
           borderColor: '#007AFF',
+          pointBackgroundColor: 'blue',
           backgroundColor: 'rgba(0, 0, 0, 0)',
           data: arrayDataOne
         }, {
           label: '前期間',
           borderColor: '#FF2D55',
+          pointBackgroundColor: 'red',
           backgroundColor: 'rgba(0, 0, 0, 0)',
           data: arrayDataTwo
         }]
@@ -2764,20 +2805,20 @@ __webpack_require__.r(__webpack_exports__);
             // display: true,
             // stacked: false,
             gridLines: {
-              drawBorder: false,
-              color: '#EDEDED'
+              display: false
+            },
+            ticks: {
+              display: false
             }
           }],
           yAxes: [{
             scaleLabel: {
               fontColor: '#EDEDED'
             },
-            gridLines: {
-              drawBorder: false,
-              color: '#EDEDED'
-            },
+            gridLines: {},
             ticks: {
-              suggestedMin: 0
+              suggestedMin: 0,
+              autoSkip: true
             }
           }]
         }
@@ -3257,6 +3298,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3285,7 +3329,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/user').then(function (res) {
-      _this.data = res.data, // console.log(this.data.user);
+      _this.data = res.data, console.log(_this.data.user);
       _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
     })["catch"](function (error) {
       console.error(error);
@@ -3301,6 +3345,26 @@ __webpack_require__.r(__webpack_exports__);
 
       var width = result + '%';
       return width;
+    },
+    mathRound: function mathRound(number, n) {
+      var _pow = Math.pow(10, n);
+
+      return Math.round(number * _pow) / _pow;
+    },
+    comparRate: function comparRate(numberNow, numberPast) {
+      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+      return result;
+    },
+    calTwoNumber: function calTwoNumber(numberOne, numberTwo) {
+      var sumNumber = Number(numberOne) + Number(numberTwo);
+      var result = this.mathRound(Number(numberOne) / sumNumber * 100, 1);
+      return result;
+    },
+    calThreeNumber: function calThreeNumber(numberOne, numberTwo, numberThree) {
+      var sumNumber = Number(numberOne) + Number(numberTwo) + Number(numberThree);
+      var result = this.mathRound(Number(numberOne) / sumNumber * 100, 1); // console.log(result,sumNumber);
+
+      return result;
     },
     widthCountry: function widthCountry() {
       var maxNumber = this.data.user[3][0][1];
@@ -80960,28 +81024,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ad container" }, [
-    _c("h2", [_vm._v("広告")]),
-    _vm._v(" "),
-    _c("ul", [
-      _c("li", [_vm._v("今期間")]),
-      _vm._v(" "),
-      _c("li", [_vm._v("広告費用：" + _vm._s(_vm.data.cv[0][0]))]),
-      _vm._v(" "),
-      _c("li", [_vm._v("広告クリック：" + _vm._s(_vm.data.cv[0][1]))]),
-      _vm._v(" "),
-      _c("li", [_vm._v("コンバージョン：" + _vm._s(_vm.data.cv[0][2]))])
-    ]),
-    _vm._v(" "),
-    _c("ul", [
-      _c("li", [_vm._v("前期間")]),
-      _vm._v(" "),
-      _c("li", [_vm._v("広告費用：" + _vm._s(_vm.data.cv[1][0]))]),
-      _vm._v(" "),
-      _c("li", [_vm._v("広告クリック：" + _vm._s(_vm.data.cv[1][1]))]),
-      _vm._v(" "),
-      _c("li", [_vm._v("コンバージョン：" + _vm._s(_vm.data.cv[1][2]))])
-    ]),
-    _vm._v(" "),
     _c(
       "table",
       {
@@ -81029,10 +81071,16 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
-                _vm._v("\n        1000\n          "),
+                _vm._v(
+                  "\n        " +
+                    _vm._s(
+                      _vm.mathRound(report[0][0][2] / report[0][0][1], 1)
+                    ) +
+                    "\n          "
+                ),
                 _c("span", {
                   staticClass: "barAge mb-1",
-                  style: { width: _vm.styleMax }
+                  style: { width: _vm.stylesCc[index] }
                 }),
                 _vm._v(" "),
                 _vm._m(3, true)
@@ -81230,122 +81278,111 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "conversion container" },
-    [
-      _vm._l(_vm.data.cv, function(cv, index) {
-        return _c("div", [_c("p", [_vm._v(_vm._s(cv))])])
-      }),
-      _vm._v(" "),
-      _c(
-        "table",
-        {
-          staticClass: "table table-striped",
-          staticStyle: { "table-layout": "fixed" }
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.data.cvReport, function(report, index) {
-              return _c("tr", { staticClass: "fourteen" }, [
-                _c("td", { staticClass: "textLeft wordBreak" }, [
-                  _vm._v(_vm._s(report[0][0][0][0]))
-                ]),
+  return _c("div", { staticClass: "conversion container" }, [
+    _c(
+      "table",
+      {
+        staticClass: "table table-striped",
+        staticStyle: { "table-layout": "fixed" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.data.cvReport, function(report, index) {
+            return _c("tr", { staticClass: "fourteen" }, [
+              _c("td", { staticClass: "textLeft wordBreak" }, [
+                _vm._v(_vm._s(report[0][0][0][0]))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        " + _vm._s(report[0][0][1]) + "\n        "),
+                _c("span", {
+                  staticClass: "barSs mb-1",
+                  style: { width: _vm.stylesCv[index] }
+                }),
                 _vm._v(" "),
-                _c("td", { staticClass: "textRight" }, [
-                  _vm._v("\n        " + _vm._s(report[0][0][1]) + "\n        "),
-                  _c("span", {
-                    staticClass: "barSs mb-1",
-                    style: { width: _vm.stylesCv[index] }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(1, true)
-                ]),
+                _vm._m(1, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][2], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barCity mb-1",
+                  style: { width: _vm.stylesCvr[index] }
+                }),
                 _vm._v(" "),
-                _c("td", { staticClass: "textRight" }, [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.mathRound(report[0][0][2], 1)) +
-                      "\n        "
-                  ),
-                  _c("span", {
-                    staticClass: "barCity mb-1",
-                    style: { width: _vm.stylesCvr[index] }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(2, true)
-                ]),
+                _vm._m(2, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v("\n        " + _vm._s(report[0][0][3]) + "\n          "),
+                index === 0
+                  ? _c("span", {
+                      staticClass: "barAgeMax mb-1",
+                      style: { width: _vm.styleMax }
+                    })
+                  : _c("span", {
+                      staticClass: "barAge mb-1",
+                      style: { width: _vm.stylesUser[index] }
+                    }),
                 _vm._v(" "),
-                _c("td", { staticClass: "textRight" }, [
-                  _vm._v(
-                    "\n        " + _vm._s(report[0][0][3]) + "\n          "
-                  ),
-                  index === 0
-                    ? _c("span", {
-                        staticClass: "barAgeMax mb-1",
-                        style: { width: _vm.styleMax }
-                      })
-                    : _c("span", {
-                        staticClass: "barAge mb-1",
-                        style: { width: _vm.stylesUser[index] }
-                      }),
-                  _vm._v(" "),
-                  _vm._m(3, true)
-                ]),
+                _vm._m(3, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][4], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barCountry mb-1",
+                  style: { width: _vm.stylesBr[index] }
+                }),
                 _vm._v(" "),
-                _c("td", { staticClass: "textRight" }, [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.mathRound(report[0][0][4], 1)) +
-                      "\n        "
-                  ),
-                  _c("span", {
-                    staticClass: "barCountry mb-1",
-                    style: { width: _vm.stylesBr[index] }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(4, true)
-                ]),
+                _vm._m(4, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][5], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barPs mb-1",
+                  style: { width: _vm.stylesPs[index] }
+                }),
                 _vm._v(" "),
-                _c("td", { staticClass: "textRight" }, [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.mathRound(report[0][0][5], 1)) +
-                      "\n        "
-                  ),
-                  _c("span", {
-                    staticClass: "barPs mb-1",
-                    style: { width: _vm.stylesPs[index] }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(5, true)
-                ]),
+                _vm._m(5, true)
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "textRight" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.mathRound(report[0][0][6], 1)) +
+                    "\n        "
+                ),
+                _c("span", {
+                  staticClass: "barTimeMax mb-1",
+                  style: { width: _vm.stylesTime[index] }
+                }),
                 _vm._v(" "),
-                _c("td", { staticClass: "textRight" }, [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.mathRound(report[0][0][6], 1)) +
-                      "\n        "
-                  ),
-                  _c("span", {
-                    staticClass: "barTimeMax mb-1",
-                    style: { width: _vm.stylesTime[index] }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(6, true)
-                ])
+                _vm._m(6, true)
               ])
-            }),
-            0
-          )
-        ]
-      )
-    ],
-    2
-  )
+            ])
+          }),
+          0
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -81536,7 +81573,66 @@ var render = function() {
               _vm._v(_vm._s(_vm.data.comUser))
             ]),
             _vm._v(" "),
+            _vm.data.user >= _vm.data.comUser
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.user, _vm.data.comUser)) +
+                      "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.user, _vm.data.comUser)) +
+                      "%"
+                  )
+                ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "card bottom1Rem" }, [
+          _c("div", { staticClass: "card-body" }, [
             _vm._m(2),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-title textCenter" }, [
+              _vm._v("セッション")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
+              _vm._v(_vm._s(_vm.data.session))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
+              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+              _vm._v(_vm._s(_vm.data.comSession))
+            ]),
+            _vm._v(" "),
+            Number(_vm.data.session) >= Number(_vm.data.comSession)
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.session, _vm.data.comSession)
+                    ) + "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.session, _vm.data.comSession)
+                    ) + "%"
+                  )
+                ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text borderTop my-3" }),
             _vm._v(" "),
@@ -81553,19 +81649,76 @@ var render = function() {
             _vm._m(3),
             _vm._v(" "),
             _c("p", { staticClass: "card-title textCenter" }, [
-              _vm._v("セッション")
+              _vm._v("ページビュー数")
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
-              _vm._v(_vm._s(_vm.data.session))
+              _vm._v(_vm._s(_vm.data.pv))
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
               _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
-              _vm._v(_vm._s(_vm.data.comSession))
+              _vm._v(_vm._s(_vm.data.comPv))
             ]),
             _vm._v(" "),
+            _vm.data.pv >= _vm.data.comPv
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.pv, _vm.data.comPv)) + "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.pv, _vm.data.comPv)) + "%"
+                  )
+                ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "card bottom1Rem" }, [
+          _c("div", { staticClass: "card-body" }, [
             _vm._m(4),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-title textCenter" }, [
+              _vm._v("ページ/セッション")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.pSession, 1)))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
+              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.comPSession, 1)))
+            ]),
+            _vm._v(" "),
+            _vm.data.pSession >= _vm.data.comPSession
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.pSession, _vm.data.comPSession)
+                    ) + "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.pSession, _vm.data.comPSession)
+                    ) + "%"
+                  )
+                ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text borderTop my-3" }),
             _vm._v(" "),
@@ -81582,19 +81735,76 @@ var render = function() {
             _vm._m(5),
             _vm._v(" "),
             _c("p", { staticClass: "card-title textCenter" }, [
-              _vm._v("ページビュー数")
+              _vm._v("平均セッション時間")
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
-              _vm._v(_vm._s(_vm.data.user))
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.aveSs, 1)))
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
               _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
-              _vm._v(_vm._s(_vm.data.comUser))
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.comAveSs, 1)))
             ]),
             _vm._v(" "),
+            Number(_vm.data.aveSs) >= Number(_vm.data.comAveSs)
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.aveSs, _vm.data.comAveSs)) +
+                      "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.aveSs, _vm.data.comAveSs)) +
+                      "%"
+                  )
+                ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "card bottom1Rem" }, [
+          _c("div", { staticClass: "card-body" }, [
             _vm._m(6),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-title textCenter" }, [
+              _vm._v("平均ページ滞在時間")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.time, 1)))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
+              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.comTime, 1)))
+            ]),
+            _vm._v(" "),
+            Number(_vm.data.time) >= Number(_vm.data.comTime)
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.time, _vm.data.comTime)) +
+                      "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.time, _vm.data.comTime)) +
+                      "%"
+                  )
+                ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text borderTop my-3" }),
             _vm._v(" "),
@@ -81611,93 +81821,6 @@ var render = function() {
             _vm._m(7),
             _vm._v(" "),
             _c("p", { staticClass: "card-title textCenter" }, [
-              _vm._v("ページ/セッション")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
-              _vm._v(_vm._s(_vm.mathRound(_vm.data.pSession, 1)))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
-              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
-              _vm._v(_vm._s(_vm.mathRound(_vm.data.comPSession, 1)))
-            ]),
-            _vm._v(" "),
-            _vm._m(8),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text borderTop my-3" }),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text cardExp" }, [
-              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "card bottom1Rem" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._m(9),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-title textCenter" }, [
-              _vm._v("平均セッション時間")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
-              _vm._v(_vm._s(_vm.data.session))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
-              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
-              _vm._v(_vm._s(_vm.data.comSession))
-            ]),
-            _vm._v(" "),
-            _vm._m(10),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text borderTop my-3" }),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text cardExp" }, [
-              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "card bottom1Rem" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._m(11),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-title textCenter" }, [
-              _vm._v("平均ページ滞在時間")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
-              _vm._v(_vm._s(_vm.mathRound(_vm.data.time, 1)))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
-              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
-              _vm._v(_vm._s(_vm.mathRound(_vm.data.comTime, 1)))
-            ]),
-            _vm._v(" "),
-            _vm._m(12),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text borderTop my-3" }),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text cardExp" }, [
-              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "card bottom1Rem" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._m(13),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-title textCenter" }, [
               _vm._v("直帰率")
             ]),
             _vm._v(" "),
@@ -81710,7 +81833,21 @@ var render = function() {
               _vm._v(_vm._s(_vm.mathRound(_vm.data.comBRate, 1)))
             ]),
             _vm._v(" "),
-            _vm._m(14),
+            _vm.data.bRate >= _vm.data.comBRate
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.bRate, _vm.data.comBRate)) +
+                      "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.bRate, _vm.data.comBRate)) +
+                      "%"
+                  )
+                ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text borderTop my-3" }),
             _vm._v(" "),
@@ -81724,22 +81861,36 @@ var render = function() {
       _c("div", { staticClass: "col-md-3" }, [
         _c("div", { staticClass: "card bottom1Rem" }, [
           _c("div", { staticClass: "card-body" }, [
-            _vm._m(15),
+            _vm._m(8),
             _vm._v(" "),
             _c("p", { staticClass: "card-title textCenter" }, [
               _vm._v("離脱率")
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
-              _vm._v(_vm._s(_vm.data.user))
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.exit, 1)))
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
               _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
-              _vm._v(_vm._s(_vm.data.comUser))
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.comExit, 1)))
             ]),
             _vm._v(" "),
-            _vm._m(16),
+            _vm.data.exit >= _vm.data.comExit
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.exit, _vm.data.comExit)) +
+                      "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(_vm.comparRate(_vm.data.exit, _vm.data.comExit)) +
+                      "%"
+                  )
+                ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-text borderTop my-3" }),
             _vm._v(" "),
@@ -81751,7 +81902,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(17)
+    _vm._m(9)
   ])
 }
 var staticRenderFns = [
@@ -81793,26 +81944,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconSession iconTop" }, [
       _c("i", { staticClass: "fas fa-bolt" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
     ])
   },
   function() {
@@ -81827,26 +81960,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconPs iconTop" }, [
       _c("i", { staticClass: "fas fa-pager" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
     ])
   },
   function() {
@@ -81861,26 +81976,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconAveTime iconTop" }, [
       _c("i", { staticClass: "far fa-clock" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
     ])
   },
   function() {
@@ -81895,26 +81992,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconBye iconTop" }, [
       _c("i", { staticClass: "fas fa-times-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
     ])
   },
   function() {
@@ -82431,7 +82510,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "user container" }, [
     _c("section", [
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row mb-5" }, [
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card bottom1Rem" }, [
             _c("div", { staticClass: "card-body" }, [
@@ -82457,7 +82536,49 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "flex justifyCenter" }, [
+                _c("div", { staticClass: "newUser textCenter mr-3" }, [
+                  _c("i", { staticClass: "fas fa-user-plus newUserColor" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                    _vm._v("新規ユーザー")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calTwoNumber(
+                          _vm.data.userTypes[0][0][1],
+                          _vm.data.userTypes[0][0][2]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "returnUser textCenter ml-3" }, [
+                  _c("i", { staticClass: "fas fa-user returnUserColor" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                    _vm._v("既存ユーザー")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calTwoNumber(
+                          _vm.data.userTypes[0][0][2],
+                          _vm.data.userTypes[0][0][1]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ])
+              ])
             ])
           ])
         ]),
@@ -82465,7 +82586,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card bottom1Rem" }, [
             _c("div", { staticClass: "card-body" }, [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c("p", { staticClass: "card-title textCenter" }, [
                 _vm._v("性別")
@@ -82487,7 +82608,49 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm._m(3)
+              _c("div", { staticClass: "flex justifyCenter" }, [
+                _c("div", { staticClass: "newUser textCenter mr-3" }, [
+                  _c("i", { staticClass: "fas fa-male blue" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                    _vm._v("男性")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calTwoNumber(
+                          _vm.data.user[2][0][1],
+                          _vm.data.user[2][1][1]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(4)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "returnUser textCenter ml-3" }, [
+                  _c("i", { staticClass: "fas fa-female red" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                    _vm._v("女性")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calTwoNumber(
+                          _vm.data.user[2][1][1],
+                          _vm.data.user[2][0][1]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(5)
+                ])
+              ])
             ])
           ])
         ]),
@@ -82495,7 +82658,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card bottom1Rem" }, [
             _c("div", { staticClass: "card-body" }, [
-              _vm._m(4),
+              _vm._m(6),
               _vm._v(" "),
               _c("p", { staticClass: "card-title textCenter" }, [
                 _vm._v("デバイス")
@@ -82517,18 +82680,84 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm._m(5)
+              _c("div", { staticClass: "flex justifyCenter" }, [
+                _c("div", { staticClass: "newUser textCenter mr-3" }, [
+                  _c("i", { staticClass: "fas fa-mobile-alt blue" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "tewlve dark-gray mb-1" }, [
+                    _vm._v("モバイル")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calThreeNumber(
+                          _vm.data.user[0][1][1],
+                          _vm.data.user[0][0][1],
+                          _vm.data.user[0][2][1]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(7)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "returnUser textCenter ml-3 mr-3" }, [
+                  _c("i", { staticClass: "fas fa-desktop pcColor" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                    _vm._v("PC")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calThreeNumber(
+                          _vm.data.user[0][0][1],
+                          _vm.data.user[0][1][1],
+                          _vm.data.user[0][2][1]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(8)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "returnUser textCenter ml-3" }, [
+                  _c("i", { staticClass: "fas fa-tablet-alt mobileColor" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                    _vm._v("タブレット")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "dark-gray bold mb-1" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.calThreeNumber(
+                          _vm.data.user[0][2][1],
+                          _vm.data.user[0][1][1],
+                          _vm.data.user[0][0][1]
+                        )
+                      ) + "%"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(9)
+                ])
+              ])
             ])
           ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card bottom1Rem" }, [
+          _c("div", { staticClass: "card bottom1Rem h-100" }, [
             _c(
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(6),
+                _vm._m(10),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter" }, [
                   _vm._v("年齢")
@@ -82556,7 +82785,33 @@ var render = function() {
                           style: { width: _vm.stylesAge[index] }
                         }),
                     _vm._v(" "),
-                    _vm._m(7, true)
+                    _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                      Number(age[1]) > Number(age[2])
+                        ? _c(
+                            "p",
+                            { staticClass: "textCenter comRateUp fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▲")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(age[1], age[2])) + "%"
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            { staticClass: "textCenter comRateDown fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▼")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(age[1], age[2])) + "%"
+                              )
+                            ]
+                          )
+                    ])
                   ])
                 })
               ],
@@ -82566,12 +82821,12 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card bottom1Rem" }, [
+          _c("div", { staticClass: "card bottom1Rem h-100" }, [
             _c(
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(8),
+                _vm._m(11),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter" }, [
                   _vm._v("国")
@@ -82599,7 +82854,35 @@ var render = function() {
                           style: { width: _vm.stylesCountry[index] }
                         }),
                     _vm._v(" "),
-                    _vm._m(9, true)
+                    _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                      Number(country[1]) > Number(country[2])
+                        ? _c(
+                            "p",
+                            { staticClass: "textCenter comRateUp fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▲")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(country[1], country[2])) +
+                                  "%"
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            { staticClass: "textCenter comRateDown fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▼")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(country[1], country[2])) +
+                                  "%"
+                              )
+                            ]
+                          )
+                    ])
                   ])
                 })
               ],
@@ -82609,12 +82892,12 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card bottom1Rem" }, [
+          _c("div", { staticClass: "card bottom1Rem h-100" }, [
             _c(
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(10),
+                _vm._m(12),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter dark-gray" }, [
                   _vm._v("地域")
@@ -82642,7 +82925,33 @@ var render = function() {
                           style: { width: _vm.stylesCity[index] }
                         }),
                     _vm._v(" "),
-                    _vm._m(11, true)
+                    _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                      Number(city[1]) > Number(city[2])
+                        ? _c(
+                            "p",
+                            { staticClass: "textCenter comRateUp fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▲")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(city[1], city[2])) + "%"
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            { staticClass: "textCenter comRateDown fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▼")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(city[1], city[2])) + "%"
+                              )
+                            ]
+                          )
+                    ])
                   ])
                 })
               ],
@@ -82653,7 +82962,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(12)
+    _vm._m(13)
   ])
 }
 var staticRenderFns = [
@@ -82669,36 +82978,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyCenter" }, [
-      _c("div", { staticClass: "newUser textCenter mr-3" }, [
-        _c("i", { staticClass: "fas fa-user-plus newUserColor" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
-          _vm._v("新規ユーザー")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "returnUser textCenter ml-3" }, [
-        _c("i", { staticClass: "fas fa-user returnUserColor" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
-          _vm._v("既存ユーザー")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ])
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
     ])
   },
   function() {
@@ -82713,32 +83004,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyCenter" }, [
-      _c("div", { staticClass: "newUser textCenter mr-3" }, [
-        _c("i", { staticClass: "fas fa-male blue" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [_vm._v("男性")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "returnUser textCenter ml-3" }, [
-        _c("i", { staticClass: "fas fa-female red" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [_vm._v("女性")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ])
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
     ])
   },
   function() {
@@ -82753,49 +83030,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyCenter" }, [
-      _c("div", { staticClass: "newUser textCenter mr-3" }, [
-        _c("i", { staticClass: "fas fa-mobile-alt blue" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
-          _vm._v("モバイル")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "returnUser textCenter ml-3 mr-3" }, [
-        _c("i", { staticClass: "fas fa-desktop pcColor" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [_vm._v("PC")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "returnUser textCenter ml-3" }, [
-        _c("i", { staticClass: "fas fa-tablet-alt mobileColor" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
-          _vm._v("タブレット")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dark-gray bold mb-1" }, [_vm._v("XX%")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "textCenter comRate" }, [
-          _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-          _vm._v("10%")
-        ])
-      ])
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "textCenter comRate" }, [
+      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+      _vm._v("10%")
     ])
   },
   function() {
@@ -82810,17 +83065,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate fourteen" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconBr iconTop" }, [
       _c("i", { staticClass: "fas fa-globe-asia" })
     ])
@@ -82829,30 +83073,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate fourteen" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconBye iconTop" }, [
       _c("i", { staticClass: "fas fa-map-marker-alt" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate fourteen" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
     ])
   },
   function() {

@@ -1,6 +1,6 @@
 <template>
 <div class="ad container">
-  <h2>広告</h2>
+  <!-- <h2>広告</h2>
   <ul>
     <li>今期間</li>
     <li>広告費用：{{data.cv[0][0]}}</li>
@@ -12,7 +12,7 @@
     <li>広告費用：{{data.cv[1][0]}}</li>
     <li>広告クリック：{{data.cv[1][1]}}</li>
     <li>コンバージョン：{{data.cv[1][2]}}</li>
-  </ul>
+  </ul> -->
   <table class="table table-striped" style="table-layout:fixed;">
   <thead>
     <tr class="textCenter fourteen">
@@ -74,8 +74,8 @@
         </div>
       </td>
       <td class="textRight">
-        1000
-          <span v-bind:style="{width:styleMax}" class="barAge mb-1"></span>
+        {{mathRound(report[0][0][2] / report[0][0][1] ,1)}}
+          <span v-bind:style="{width:stylesCc[index]}" class="barAge mb-1"></span>
           <div class="flex justifyEnd mb-2">
             <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
           </div>
@@ -117,19 +117,22 @@ export default {
       stylesClickCost :{},
       stylesSs :{},
       stylesCv :{},
-      stylesCvr :{}
+      stylesCvr :{},
+      stylesCc :{},
+      styleMax :"100%"
     }
   },
   mounted() {
     axios.get('/api/ad')
       .then((res) => {
         this.data = res.data,
-        console.log(this.data.cv,this.data.cvReport);
+        // console.log(this.data.cv,this.data.cvReport);
         this.makeArraySs(),
         this.makeArrayCv(),
         this.makeArrayCvr(),
         this.makeArrayCost(),
-        this.widthClick()
+        this.widthClick(),
+        this.makeArrayClickCost()
       })
       .catch(error => {
         console.log(error);
@@ -190,6 +193,25 @@ export default {
         w_arry[i] = width;
       }
       this.stylesCvr = w_arry;
+    },
+    makeArrayClickCost: function(){
+      var ccArray = [];
+      var ccArrays ={};
+       for(var i=0; i<10; i++){
+         var cost = this.mathRound(this.data.cvReport[i][0][0][2], 1);
+         var click = this.data.cvReport[i][0][0][1];
+         var cc = this.mathRound(cost / click, 1);
+         ccArrays[i] = cc;
+         ccArray.push(cc);
+       }
+      var maxCc= Math.max.apply(null,ccArray);
+      var w_arry = {};
+      for(var i=0; i<10; i++){
+        var number = ccArrays[i];
+        var width = this.calRate(number, maxCc);
+        w_arry[i] = width;
+      }
+      this.stylesCc = w_arry;
     },
     makeArrayCost: function(){
       var brArray = [];

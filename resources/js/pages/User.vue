@@ -1,7 +1,7 @@
 <template>
 <div class="user container">
   <section>
-    <div class="row">
+    <div class="row mb-5">
       <div class="col-md-4">
         <div class="card bottom1Rem">
           <div class="card-body">
@@ -16,13 +16,13 @@
               <div class="newUser textCenter mr-3">
                 <i class="fas fa-user-plus newUserColor"></i>
                 <p class="fourteen dark-gray mb-1">新規ユーザー</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="dark-gray bold mb-1">{{calTwoNumber(data.userTypes[0][0][1],data.userTypes[0][0][2])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
               <div class="returnUser textCenter ml-3">
                 <i class="fas fa-user returnUserColor"></i>
                 <p class="fourteen dark-gray mb-1">既存ユーザー</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="dark-gray bold mb-1">{{calTwoNumber(data.userTypes[0][0][2],data.userTypes[0][0][1])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
             </div>
@@ -43,13 +43,13 @@
               <div class="newUser textCenter mr-3">
                 <i class="fas fa-male blue"></i>
                 <p class="fourteen dark-gray mb-1">男性</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="dark-gray bold mb-1">{{calTwoNumber(data.user[2][0][1],data.user[2][1][1])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
               <div class="returnUser textCenter ml-3">
                 <i class="fas fa-female red"></i>
                 <p class="fourteen dark-gray mb-1">女性</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="dark-gray bold mb-1">{{calTwoNumber(data.user[2][1][1],data.user[2][0][1])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
             </div>
@@ -69,20 +69,20 @@
             <div class="flex justifyCenter">
               <div class="newUser textCenter mr-3">
                 <i class="fas fa-mobile-alt blue"></i>
-                <p class="fourteen dark-gray mb-1">モバイル</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="tewlve dark-gray mb-1">モバイル</p>
+                <p class="dark-gray bold mb-1">{{calThreeNumber(data.user[0][1][1],data.user[0][0][1],data.user[0][2][1])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
               <div class="returnUser textCenter ml-3 mr-3">
                 <i class="fas fa-desktop pcColor"></i>
                 <p class="fourteen dark-gray mb-1">PC</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="dark-gray bold mb-1">{{calThreeNumber(data.user[0][0][1],data.user[0][1][1],data.user[0][2][1])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
               <div class="returnUser textCenter ml-3">
                 <i class="fas fa-tablet-alt mobileColor"></i>
                 <p class="fourteen dark-gray mb-1">タブレット</p>
-                <p class="dark-gray bold mb-1">XX%</p>
+                <p class="dark-gray bold mb-1">{{calThreeNumber(data.user[0][2][1],data.user[0][1][1],data.user[0][0][1])}}%</p>
                 <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
               </div>
             </div>
@@ -90,7 +90,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card bottom1Rem">
+        <div class="card bottom1Rem h-100">
           <div class="card-body">
             <div class="iconUser iconTop">
               <i class="fas fa-user"></i>
@@ -104,14 +104,15 @@
               <span v-if="index===0" v-bind:style="{width:styleMax}" class="barAgeMax mb-1"></span>
               <span v-else v-bind:style="{width:stylesAge[index]}" class="barAge mb-1"></span>
               <div class="flex justifyEnd mb-2">
-                <p class="textCenter comRate fourteen"><span class="mr-1">▲</span>10%</p>
+                <p v-if="Number(age[1]) > Number(age[2])" class="textCenter comRateUp fourteen"><span class="mr-1">▲</span>{{comparRate(age[1],age[2])}}%</p>
+                <p v-else class="textCenter comRateDown fourteen"><span class="mr-1">▼</span>{{comparRate(age[1],age[2])}}%</p>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card bottom1Rem">
+        <div class="card bottom1Rem h-100">
           <div class="card-body">
             <div class="iconBr iconTop">
               <i class="fas fa-globe-asia"></i>
@@ -125,14 +126,15 @@
               <span v-if="index===0" v-bind:style="{width:styleMax}" class="barCountryMax mb-1"></span>
               <span v-else v-bind:style="{width:stylesCountry[index]}" class="barCountry mb-1"></span>
               <div class="flex justifyEnd mb-2">
-                <p class="textCenter comRate fourteen"><span class="mr-1">▲</span>10%</p>
+                <p v-if="Number(country[1]) > Number(country[2])" class="textCenter comRateUp fourteen"><span class="mr-1">▲</span>{{comparRate(country[1],country[2])}}%</p>
+                <p v-else class="textCenter comRateDown fourteen"><span class="mr-1">▼</span>{{comparRate(country[1],country[2])}}%</p>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card bottom1Rem">
+        <div class="card bottom1Rem h-100">
           <div class="card-body">
             <div class="iconBye iconTop">
               <i class="fas fa-map-marker-alt"></i>
@@ -146,7 +148,8 @@
               <span v-if="index===0" v-bind:style="{width:styleMax}" class="barCityMax mb-1"></span>
               <span v-else v-bind:style="{width:stylesCity[index]}" class="barCity mb-1"></span>
               <div class="flex justifyEnd mb-2">
-                <p class="textCenter comRate fourteen"><span class="mr-1">▲</span>10%</p>
+                <p v-if="Number(city[1]) > Number(city[2])" class="textCenter comRateUp fourteen"><span class="mr-1">▲</span>{{comparRate(city[1],city[2])}}%</p>
+                <p v-else class="textCenter comRateDown fourteen"><span class="mr-1">▼</span>{{comparRate(city[1],city[2])}}%</p>
               </div>
             </div>
           </div>
@@ -235,7 +238,7 @@ export default {
     axios.get('/api/user')
       .then((res) => {
           this.data = res.data,
-          // console.log(this.data.user);
+          console.log(this.data.user);
           this.widthCountry(),
           this.widthCity(),
           this.widthAge(),
@@ -254,6 +257,25 @@ export default {
       var result = Math.round(resultNumber * _pow) / _pow;
       var width = result + '%';
       return width;
+    },
+    mathRound: function(number, n){
+        var _pow = Math.pow( 10 , n );
+        return Math.round( number * _pow ) / _pow;
+    },
+    comparRate: function(numberNow, numberPast){
+      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+      return result;
+    },
+    calTwoNumber: function(numberOne, numberTwo){
+      var sumNumber = Number(numberOne) + Number(numberTwo);
+      var result = this.mathRound((Number(numberOne) / sumNumber) * 100 , 1);
+      return result;
+    },
+    calThreeNumber: function(numberOne, numberTwo, numberThree){
+      var sumNumber = Number(numberOne) + Number(numberTwo) + Number(numberThree);
+      var result = this.mathRound((Number(numberOne) / sumNumber) * 100 , 1);
+      // console.log(result,sumNumber);
+      return result;
     },
     widthCountry: function() {
       var maxNumber = this.data.user[3][0][1];
