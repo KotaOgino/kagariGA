@@ -212,7 +212,6 @@ import DoughnutChartDevice from '../chart/DoughnutChart.js'
 export default {
 
   components: {
-    // ここで読んだコンポーネントをケバブケースにしたら普通に使えるっぽい
     DoughnutChartSex,
     DoughnutChartUser,
     DoughnutChartDevice,
@@ -236,7 +235,7 @@ export default {
     axios.get('/api/user')
       .then((res) => {
           this.data = res.data,
-          // console.log(this.data);
+          // console.log(this.data.user);
           this.widthCountry(),
           this.widthCity(),
           this.widthAge(),
@@ -277,9 +276,12 @@ export default {
       this.stylesCity = w_arry;
     },
     widthAge: function() {
+      var number = this.data.user[1];
       var maxNumber = this.data.user[1][0][1];
       var w_arry = {};
-      for (var i = 1; i < 4; i++) {
+      var numberLength = number.length;
+      // console.log(numberLength);
+      for (var i = 1; i < numberLength; i++) {
         var number = this.data.user[1][i][1];
         var width = this.calRate(number, maxNumber);
         w_arry[i] = width;

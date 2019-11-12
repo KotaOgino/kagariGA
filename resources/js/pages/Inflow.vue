@@ -125,7 +125,10 @@ export default {
           return width;
         },
         widthChanel: function() {
+          var number = this.data.inflow[0];
           var maxNumber = this.data.inflow[0][0][1];
+          var numberLength = number.length;
+          console.log(numberLength);
           var w_arry = {};
           for (var i = 1; i < 4; i++) {
             var number = this.data.inflow[0][i][1];
