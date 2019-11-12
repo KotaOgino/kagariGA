@@ -1,7 +1,7 @@
 <template>
 <div class="user container">
   <section>
-    <div class="row row-eq-height">
+    <div class="row">
       <div class="col-md-4">
         <div class="card bottom1Rem">
           <div class="card-body">
@@ -89,7 +89,6 @@
           </div>
         </div>
       </div>
-    <div class="row-eq-height">
       <div class="col-md-4">
         <div class="card bottom1Rem">
           <div class="card-body">
@@ -153,7 +152,6 @@
           </div>
         </div>
       </div>
-    </div>
     </div>
   </section>
   <section>
