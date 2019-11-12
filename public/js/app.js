@@ -2925,11 +2925,11 @@ __webpack_require__.r(__webpack_exports__);
     widthChanel: function widthChanel() {
       var number = this.data.inflow[0];
       var maxNumber = this.data.inflow[0][0][1];
-      var numberLength = number.length;
-      console.log(numberLength);
+      var numberLength = number.length; // console.log(numberLength);
+
       var w_arry = {};
 
-      for (var i = 1; i < 4; i++) {
+      for (var i = 1; i < numberLength; i++) {
         var number = this.data.inflow[0][i][1];
         var width = this.calRate(number, maxNumber);
         w_arry[i] = width;
@@ -2938,10 +2938,12 @@ __webpack_require__.r(__webpack_exports__);
       this.stylesChanel = w_arry;
     },
     widthSocial: function widthSocial() {
+      var number = this.data.inflow[1];
       var maxNumber = this.data.inflow[1][0][1];
+      var numberLength = number.length;
       var w_arry = {};
 
-      for (var i = 1; i < 4; i++) {
+      for (var i = 1; i < numberLength; i++) {
         var number = this.data.inflow[1][i][1];
         var width = this.calRate(number, maxNumber);
         w_arry[i] = width;
