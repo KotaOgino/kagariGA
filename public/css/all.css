@@ -2044,6 +2044,7 @@ body {
 .sixteen {
   font-size: 16px;
 }
+
 .eighteen{
   font-size: 18px;
 }
@@ -2373,8 +2374,14 @@ body {
 /* テーブル */
 .table thead th{
   vertical-align: top!important;
+  border: none!important;
 }
-
+.table tr {
+  background-color: #ffffff;
+}
+.table td {
+  border: none!important;
+}
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #ffffff!important;
 }
