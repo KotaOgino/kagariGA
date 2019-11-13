@@ -152,7 +152,7 @@
       </div>
       <div class="commentTextArea">
         <h6 class="dark-gray sixteen bold">コメント</h6>
-      <textarea placeholder="コメントを入力" style="border:none;"></textarea>
+        <textarea placeholder="コメントを入力" style="border:none;"></textarea>
       </div>
     </div>
   </section>
@@ -196,8 +196,8 @@ export default {
     axios.get('/api/analytics')
       .then((res) => {
         this.data = res.data,
-        console.log(this.data);
-          this.fillData()
+          console.log(this.data);
+        this.fillData()
       })
       .catch(error => {
         console.log(error);
@@ -207,12 +207,18 @@ export default {
     /**
      * 入力されたデータの数に応じてランダムなチャートデータを作成する
      */
-    mathRound: function(number, n){
-        var _pow = Math.pow( 10 , n );
-        return Math.round( number * _pow ) / _pow;
+    mathRound: function(number, n) {
+      var _pow = Math.pow(10, n);
+      return Math.round(number * _pow) / _pow;
     },
-    comparRate: function(numberNow, numberPast){
-      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+    comparRate: function(numberNow, numberPast) {
+      if(numberPast == 0 || numberNow == 0){
+        var result = '-';
+      }else{
+        var result = this.mathRound(
+          (Number(numberNow) / Number(numberPast) - 1) * 100,
+          1);
+      }
       return result;
     },
     fillData: function() {

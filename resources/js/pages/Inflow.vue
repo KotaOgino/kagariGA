@@ -17,7 +17,8 @@
               <span v-if="index===0" v-bind:style="{width:styleMax}" class="barAgeMax mb-1"></span>
               <span v-else v-bind:style="{width:stylesChanel[index]}" class="barAge mb-1"></span>
               <div class="flex justifyEnd mb-2">
-                <p class="textCenter comRate fourteen"><span class="mr-1">▲</span>10%</p>
+                <p v-if="medium[1] >= medium[2]" class="textCenter comRateUp fourteen"><span class="mr-1">▲</span>{{comparRate(medium[1],medium[2])}}%</p>
+                <p v-else class="textCenter comRateDown fourteen"><span class="mr-1">▼</span>{{comparRate(medium[1],medium[2])}}%</p>
               </div>
             </div>
           </div>
@@ -38,7 +39,8 @@
               <span v-if="index===0" v-bind:style="{width:styleMax}" class="barCountryMax mb-1"></span>
               <span v-else v-bind:style="{width:stylesSocial[index]}" class="barCountry mb-1"></span>
               <div class="flex justifyEnd mb-2">
-                <p class="textCenter comRate fourteen"><span class="mr-1">▲</span>10%</p>
+                <p v-if="social[1] >= social[2]" class="textCenter comRateUp fourteen"><span class="mr-1">▲</span>{{comparRate(social[1],social[2])}}%</p>
+                <p v-else class="textCenter comRateDown fourteen"><span class="mr-1">▼</span>{{comparRate(social[1],social[2])}}%</p>
               </div>
             </div>
           </div>
@@ -59,7 +61,8 @@
               <span v-if="index===0" v-bind:style="{width:styleMax}" class="barCityMax mb-1"></span>
               <span v-else v-bind:style="{width:stylesReferral[index]}" class="barCity mb-1"></span>
               <div class="flex justifyEnd mb-2">
-                <p class="textCenter comRate fourteen"><span class="mr-1">▲</span>10%</p>
+                <p v-if="referral[1] >= referral[2]" class="textCenter comRateUp fourteen"><span class="mr-1">▲</span>{{comparRate(referral[1],referral[2])}}%</p>
+                <p v-else class="textCenter comRateDown fourteen"><span class="mr-1">▼</span>{{comparRate(referral[1],referral[2])}}%</p>
               </div>
             </div>
           </div>
@@ -123,6 +126,20 @@ export default {
           var result = Math.round(resultNumber * _pow) / _pow;
           var width = result + '%';
           return width;
+        },
+        mathRound: function(number, n) {
+          var _pow = Math.pow(10, n);
+          return Math.round(number * _pow) / _pow;
+        },
+        comparRate: function(numberNow, numberPast) {
+            if(numberPast == 0 || numberNow == 0){
+              var result = '-';
+            }else{
+              var result = this.mathRound(
+                (Number(numberNow) / Number(numberPast) - 1) * 100,
+                1);
+            }
+          return result;
         },
         widthChanel: function() {
           var number = this.data.inflow[0];

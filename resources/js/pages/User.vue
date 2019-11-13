@@ -16,14 +16,16 @@
               <div class="newUser textCenter mr-3">
                 <i class="fas fa-user-plus newUserColor"></i>
                 <p class="fourteen dark-gray mb-1">新規ユーザー</p>
-                <p class="dark-gray bold mb-1">{{calTwoNumber(data.userTypes[0][0][1],data.userTypes[0][0][2])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="dark-gray bold mb-1">{{newUser}}%</p>
+                <p v-if=" newUser >= pastNewUser " class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(newUser,pastNewUser)}}%</p>
+                <p v-else class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(newUser,pastNewUser)}}%</p>
               </div>
               <div class="returnUser textCenter ml-3">
                 <i class="fas fa-user returnUserColor"></i>
                 <p class="fourteen dark-gray mb-1">既存ユーザー</p>
-                <p class="dark-gray bold mb-1">{{calTwoNumber(data.userTypes[0][0][2],data.userTypes[0][0][1])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="dark-gray bold mb-1">{{returnUser}}%</p>
+                <p v-if="returnUser >= pastReturnUser" class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(returnUser,pastReturnUser)}}%</p>
+                <p v-else class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(returnUser,pastReturnUser)}}%</p>
               </div>
             </div>
           </div>
@@ -43,14 +45,16 @@
               <div class="newUser textCenter mr-3">
                 <i class="fas fa-male blue"></i>
                 <p class="fourteen dark-gray mb-1">男性</p>
-                <p class="dark-gray bold mb-1">{{calTwoNumber(data.user[2][0][1],data.user[2][1][1])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="dark-gray bold mb-1">{{male}}%</p>
+                <p v-if="male >= pastMale" class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(male,pastMale)}}%</p>
+                <p v-else class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(male,pastMale)}}%</p>
               </div>
               <div class="returnUser textCenter ml-3">
                 <i class="fas fa-female red"></i>
                 <p class="fourteen dark-gray mb-1">女性</p>
-                <p class="dark-gray bold mb-1">{{calTwoNumber(data.user[2][1][1],data.user[2][0][1])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="dark-gray bold mb-1">{{female}}%</p>
+                <p v-if="female >= pastFemale" class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(female,pastFemale)}}%</p>
+                <p v-else class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(female,pastFemale)}}%</p>
               </div>
             </div>
           </div>
@@ -70,20 +74,23 @@
               <div class="newUser textCenter mr-3">
                 <i class="fas fa-mobile-alt blue"></i>
                 <p class="tewlve dark-gray mb-1">モバイル</p>
-                <p class="dark-gray bold mb-1">{{calThreeNumber(data.user[0][1][1],data.user[0][0][1],data.user[0][2][1])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="dark-gray bold mb-1">{{mobile}}%</p>
+                <p v-if="mobile >= pastMobile" class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(mobile,pastMobile)}}%</p>
+                <p v-else class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(mobile,pastMobile)}}%</p>
               </div>
               <div class="returnUser textCenter ml-3 mr-3">
                 <i class="fas fa-desktop pcColor"></i>
-                <p class="fourteen dark-gray mb-1">PC</p>
-                <p class="dark-gray bold mb-1">{{calThreeNumber(data.user[0][0][1],data.user[0][1][1],data.user[0][2][1])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="tewlve dark-gray mb-1">PC</p>
+                <p class="dark-gray bold mb-1">{{pc}}%</p>
+                <p v-if="pc >= pastPc" class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(pc,pastPc)}}%</p>
+                <p v-else class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(pc,pastPc)}}%</p>
               </div>
               <div class="returnUser textCenter ml-3">
                 <i class="fas fa-tablet-alt mobileColor"></i>
-                <p class="fourteen dark-gray mb-1">タブレット</p>
-                <p class="dark-gray bold mb-1">{{calThreeNumber(data.user[0][2][1],data.user[0][1][1],data.user[0][0][1])}}%</p>
-                <p class="textCenter comRate"><span class="mr-1">▲</span>10%</p>
+                <p class="tewlve dark-gray mb-1">タブレット</p>
+                <p class="dark-gray bold mb-1">{{tablet}}%</p>
+                <p v-if="tablet >= pastTablet" class="textCenter comRateUp"><span class="mr-1">▲</span>{{comparRate(tablet,pastTablet)}}%</p>
+                <p class="textCenter comRateDown"><span class="mr-1">▼</span>{{comparRate(tablet,pastTablet)}}%</p>
               </div>
             </div>
           </div>
@@ -164,7 +171,7 @@
       </div>
       <div class="commentTextArea">
         <h6 class="dark-gray sixteen bold">コメント</h6>
-      <textarea placeholder="コメントを入力" style="border:none;"></textarea>
+        <textarea placeholder="コメントを入力" style="border:none;"></textarea>
       </div>
     </div>
   </section>
@@ -213,7 +220,6 @@ import DoughnutChartUser from '../chart/DoughnutChart.js'
 import DoughnutChartDevice from '../chart/DoughnutChart.js'
 
 export default {
-
   components: {
     DoughnutChartSex,
     DoughnutChartUser,
@@ -231,15 +237,30 @@ export default {
       styleMax: '100%',
       stylesCountry: {},
       stylesCity: {},
-      stylesAge: {}
+      stylesAge: {},
+      newUser: '',
+      pastNewUser: '',
+      returnUser: '',
+      pastReturnUser: '',
+      male: '',
+      pastMale: '',
+      female: '',
+      pastFemale: '',
+      mobile: '',
+      pastMobile: '',
+      pc: '',
+      pastPc: '',
+      tablet: '',
+      pastTablet:''
     }
   },
   created() {
     axios.get('/api/user')
       .then((res) => {
-          this.data = res.data,
+        this.data = res.data,
           console.log(this.data.user);
-          this.widthCountry(),
+        this.setNumber(),
+        this.widthCountry(),
           this.widthCity(),
           this.widthAge(),
           this.DoughnutChartDataSex(),
@@ -251,6 +272,37 @@ export default {
       })
   },
   methods: {
+    setNumber: function(){
+      var newUserRate = this.calTwoNumber(this.data.userTypes[0][0][1],this.data.userTypes[1][0][1]);
+      var pastNewUserRate = this.calTwoNumber(this.data.userTypes[0][0][2],this.data.userTypes[1][0][2]);
+      var returnUserRate = this.calTwoNumber(this.data.userTypes[1][0][1],this.data.userTypes[0][0][1]);
+      var pastReturnUserRate = this.calTwoNumber(this.data.userTypes[1][0][2],this.data.userTypes[0][0][2]);
+      var maleRate = this.calTwoNumber(this.data.user[2][0][1],this.data.user[2][1][1]);
+      var pastMaleRate = this.calTwoNumber(this.data.user[2][0][2],this.data.user[2][1][2]);
+      var femaleRate = this.calTwoNumber(this.data.user[2][1][1],this.data.user[2][0][1]);
+      var pastFemaleRate = this.calTwoNumber(this.data.user[2][1][2],this.data.user[2][0][2]);
+      var mobileRate = this.calThreeNumber(this.data.user[0][0][1],this.data.user[0][1][1],this.data.user[0][2][1]);
+      var pastMobileRate = this.calThreeNumber(this.data.user[0][0][2],this.data.user[0][1][2],this.data.user[0][2][2]);
+      var pcRate = this.calThreeNumber(this.data.user[0][1][1],this.data.user[0][0][1],this.data.user[0][2][1]);
+      var pastPcRate = this.calThreeNumber(this.data.user[0][1][2],this.data.user[0][0][2],this.data.user[0][2][2]);
+      var tabletRate = this.calThreeNumber(this.data.user[0][2][1],this.data.user[0][1][1],this.data.user[0][0][1]);
+      var pastTabletRate = this.calThreeNumber(this.data.user[0][2][2],this.data.user[0][1][2],this.data.user[0][0][2]);
+
+      this.newUser = newUserRate;
+      this.pastNewUser = pastNewUserRate;
+      this.returnUser = returnUserRate;
+      this.pastReturnUser = pastReturnUserRate;
+      this.male = maleRate;
+      this.pastMale = pastMaleRate;
+      this.female = pastFemaleRate;
+      this.pastFemale = pastFemaleRate;
+      this.mobile = mobileRate;
+      this.pastMobile = pastMaleRate;
+      this.pc = pcRate;
+      this.pastPc = pastPcRate;
+      this.tablet = tabletRate;
+      this.pastTablet = pastTabletRate;
+    },
     calRate: function(number, maxNumber) {
       var resultNumber = (number / maxNumber) * 100;
       var _pow = Math.pow(10, 1);
@@ -258,22 +310,28 @@ export default {
       var width = result + '%';
       return width;
     },
-    mathRound: function(number, n){
-        var _pow = Math.pow( 10 , n );
-        return Math.round( number * _pow ) / _pow;
+    mathRound: function(number, n) {
+      var _pow = Math.pow(10, n);
+      return Math.round(number * _pow) / _pow;
     },
-    comparRate: function(numberNow, numberPast){
-      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+    comparRate: function(numberNow, numberPast) {
+      if(numberPast == 0 || numberNow == 0){
+        var result = '-';
+      }else{
+        var result = this.mathRound(
+          (Number(numberNow) / Number(numberPast) - 1) * 100,
+          1);
+      }
       return result;
     },
-    calTwoNumber: function(numberOne, numberTwo){
+    calTwoNumber: function(numberOne, numberTwo) {
       var sumNumber = Number(numberOne) + Number(numberTwo);
-      var result = this.mathRound((Number(numberOne) / sumNumber) * 100 , 1);
+      var result = this.mathRound((Number(numberOne) / sumNumber) * 100, 1);
       return result;
     },
-    calThreeNumber: function(numberOne, numberTwo, numberThree){
+    calThreeNumber: function(numberOne, numberTwo, numberThree) {
       var sumNumber = Number(numberOne) + Number(numberTwo) + Number(numberThree);
-      var result = this.mathRound((Number(numberOne) / sumNumber) * 100 , 1);
+      var result = this.mathRound((Number(numberOne) / sumNumber) * 100, 1);
       // console.log(result,sumNumber);
       return result;
     },
@@ -361,8 +419,8 @@ export default {
         }
     },
     DoughnutChartDataDevice: function() {
-      var mobileNumber = this.data.user[0][1][1];
-      var pcNumber = this.data.user[0][0][1];
+      var mobileNumber = this.data.user[0][0][1];
+      var pcNumber = this.data.user[0][1][1];
       var tabletNumber = this.data.user[0][2][1];
       var deviceData = [];
       deviceData.push(mobileNumber, pcNumber, tabletNumber);

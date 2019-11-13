@@ -1819,6 +1819,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1857,6 +1863,15 @@ __webpack_require__.r(__webpack_exports__);
       var _pow = Math.pow(10, n);
 
       return Math.round(number * _pow) / _pow;
+    },
+    comparRate: function comparRate(numberNow, numberPast) {
+      if (numberPast == 0 || numberNow == 0) {
+        var result = '-';
+      } else {
+        var result = this.mathRound((Number(numberNow) / Number(numberPast) - 1) * 100, 1);
+      }
+
+      return result;
     },
     widthSs: function widthSs() {
       var maxNumber = this.data[0][0][0][1];
@@ -2100,6 +2115,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2139,6 +2160,19 @@ __webpack_require__.r(__webpack_exports__);
       var _pow = Math.pow(10, n);
 
       return Math.round(number * _pow) / _pow;
+    },
+    comparRate: function comparRate(numberNow, numberPast) {
+      if (numberPast == 0 || numberNow == 0) {
+        var result = '-';
+      } else {
+        var result = this.mathRound((Number(numberNow) / Number(numberPast) - 1) * 100, 1);
+      }
+
+      return result;
+    },
+    clickCost: function clickCost(cost, click) {
+      var result = this.mathRound(Number(cost) / Number(click), 1);
+      return result;
     },
     widthClick: function widthClick() {
       var maxNumber = this.data.cvReport[0][0][0][1];
@@ -2371,6 +2405,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2409,6 +2449,15 @@ __webpack_require__.r(__webpack_exports__);
       var _pow = Math.pow(10, n);
 
       return Math.round(number * _pow) / _pow;
+    },
+    comparRate: function comparRate(numberNow, numberPast) {
+      if (numberPast == 0 || numberNow == 0) {
+        var result = '-';
+      } else {
+        var result = this.mathRound((Number(numberNow) / Number(numberPast) - 1) * 100, 1);
+      }
+
+      return result;
     },
     widthUser: function widthUser() {
       var maxNumber = this.data.cvReport[0][0][0][3];
@@ -2755,7 +2804,12 @@ __webpack_require__.r(__webpack_exports__);
       return Math.round(number * _pow) / _pow;
     },
     comparRate: function comparRate(numberNow, numberPast) {
-      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+      if (numberPast == 0 || numberNow == 0) {
+        var result = '-';
+      } else {
+        var result = this.mathRound((Number(numberNow) / Number(numberPast) - 1) * 100, 1);
+      }
+
       return result;
     },
     fillData: function fillData() {
@@ -2932,6 +2986,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2962,6 +3019,20 @@ __webpack_require__.r(__webpack_exports__);
 
       var width = result + '%';
       return width;
+    },
+    mathRound: function mathRound(number, n) {
+      var _pow = Math.pow(10, n);
+
+      return Math.round(number * _pow) / _pow;
+    },
+    comparRate: function comparRate(numberNow, numberPast) {
+      if (numberPast == 0 || numberNow == 0) {
+        var result = '-';
+      } else {
+        var result = this.mathRound((Number(numberNow) / Number(numberPast) - 1) * 100, 1);
+      }
+
+      return result;
     },
     widthChanel: function widthChanel() {
       var number = this.data.inflow[0];
@@ -3301,6 +3372,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3322,7 +3400,21 @@ __webpack_require__.r(__webpack_exports__);
       styleMax: '100%',
       stylesCountry: {},
       stylesCity: {},
-      stylesAge: {}
+      stylesAge: {},
+      newUser: '',
+      pastNewUser: '',
+      returnUser: '',
+      pastReturnUser: '',
+      male: '',
+      pastMale: '',
+      female: '',
+      pastFemale: '',
+      mobile: '',
+      pastMobile: '',
+      pc: '',
+      pastPc: '',
+      tablet: '',
+      pastTablet: ''
     };
   },
   created: function created() {
@@ -3330,12 +3422,42 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/api/user').then(function (res) {
       _this.data = res.data, console.log(_this.data.user);
-      _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
+      _this.setNumber(), _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
     })["catch"](function (error) {
       console.error(error);
     });
   },
   methods: {
+    setNumber: function setNumber() {
+      var newUserRate = this.calTwoNumber(this.data.userTypes[0][0][1], this.data.userTypes[1][0][1]);
+      var pastNewUserRate = this.calTwoNumber(this.data.userTypes[0][0][2], this.data.userTypes[1][0][2]);
+      var returnUserRate = this.calTwoNumber(this.data.userTypes[1][0][1], this.data.userTypes[0][0][1]);
+      var pastReturnUserRate = this.calTwoNumber(this.data.userTypes[1][0][2], this.data.userTypes[0][0][2]);
+      var maleRate = this.calTwoNumber(this.data.user[2][0][1], this.data.user[2][1][1]);
+      var pastMaleRate = this.calTwoNumber(this.data.user[2][0][2], this.data.user[2][1][2]);
+      var femaleRate = this.calTwoNumber(this.data.user[2][1][1], this.data.user[2][0][1]);
+      var pastFemaleRate = this.calTwoNumber(this.data.user[2][1][2], this.data.user[2][0][2]);
+      var mobileRate = this.calThreeNumber(this.data.user[0][0][1], this.data.user[0][1][1], this.data.user[0][2][1]);
+      var pastMobileRate = this.calThreeNumber(this.data.user[0][0][2], this.data.user[0][1][2], this.data.user[0][2][2]);
+      var pcRate = this.calThreeNumber(this.data.user[0][1][1], this.data.user[0][0][1], this.data.user[0][2][1]);
+      var pastPcRate = this.calThreeNumber(this.data.user[0][1][2], this.data.user[0][0][2], this.data.user[0][2][2]);
+      var tabletRate = this.calThreeNumber(this.data.user[0][2][1], this.data.user[0][1][1], this.data.user[0][0][1]);
+      var pastTabletRate = this.calThreeNumber(this.data.user[0][2][2], this.data.user[0][1][2], this.data.user[0][0][2]);
+      this.newUser = newUserRate;
+      this.pastNewUser = pastNewUserRate;
+      this.returnUser = returnUserRate;
+      this.pastReturnUser = pastReturnUserRate;
+      this.male = maleRate;
+      this.pastMale = pastMaleRate;
+      this.female = pastFemaleRate;
+      this.pastFemale = pastFemaleRate;
+      this.mobile = mobileRate;
+      this.pastMobile = pastMaleRate;
+      this.pc = pcRate;
+      this.pastPc = pastPcRate;
+      this.tablet = tabletRate;
+      this.pastTablet = pastTabletRate;
+    },
     calRate: function calRate(number, maxNumber) {
       var resultNumber = number / maxNumber * 100;
 
@@ -3352,7 +3474,12 @@ __webpack_require__.r(__webpack_exports__);
       return Math.round(number * _pow) / _pow;
     },
     comparRate: function comparRate(numberNow, numberPast) {
-      var result = this.mathRound((Number(numberNow) - Number(numberPast)) / Number(numberPast) * 100, 1);
+      if (numberPast == 0 || numberNow == 0) {
+        var result = '-';
+      } else {
+        var result = this.mathRound((Number(numberNow) / Number(numberPast) - 1) * 100, 1);
+      }
+
       return result;
     },
     calTwoNumber: function calTwoNumber(numberOne, numberTwo) {
@@ -3447,8 +3574,8 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     DoughnutChartDataDevice: function DoughnutChartDataDevice() {
-      var mobileNumber = this.data.user[0][1][1];
-      var pcNumber = this.data.user[0][0][1];
+      var mobileNumber = this.data.user[0][0][1];
+      var pcNumber = this.data.user[0][1][1];
       var tabletNumber = this.data.user[0][2][1];
       var deviceData = [];
       deviceData.push(mobileNumber, pcNumber, tabletNumber);
@@ -80806,7 +80933,29 @@ var render = function() {
                       style: { width: _vm.stylesSs[index] }
                     }),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  action[0][0][1] >= action[1][0][1]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(action[0][0][1], action[1][0][1])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(action[0][0][1], action[1][0][1])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -80816,7 +80965,29 @@ var render = function() {
                   style: { width: _vm.stylesPv[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(2, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  action[0][0][2] >= action[1][0][2]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(action[0][0][2], action[1][0][2])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(action[0][0][2], action[1][0][2])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -80830,7 +81001,35 @@ var render = function() {
                   style: { width: _vm.stylesPs[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(3, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  action[0][0][3] >= action[1][0][3]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(action[0][0][3], 1),
+                              _vm.mathRound(action[1][0][3], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(action[0][0][3], 1),
+                                _vm.mathRound(action[1][0][3], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -80840,7 +81039,29 @@ var render = function() {
                   style: { width: _vm.stylesUser[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(4, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  action[0][0][4] >= action[1][0][4]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(action[0][0][4], action[1][0][4])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(action[0][0][4], action[1][0][4])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -80854,7 +81075,35 @@ var render = function() {
                   style: { width: _vm.stylesTime[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(5, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  action[0][0][5] >= action[1][0][5]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(action[0][0][5], 1),
+                              _vm.mathRound(action[1][0][5], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(action[0][0][5], 1),
+                                _vm.mathRound(action[1][0][5], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -80868,7 +81117,35 @@ var render = function() {
                   style: { width: _vm.stylesBr[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(6, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  action[0][0][6] >= action[1][0][6]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(action[0][0][6], 1),
+                              _vm.mathRound(action[1][0][6], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(action[0][0][6], 1),
+                                _vm.mathRound(action[1][0][6], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ])
             ])
           }),
@@ -80934,72 +81211,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -81053,7 +81264,29 @@ var render = function() {
                       style: { width: _vm.stylesClick[index] }
                     }),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][1] >= report[1][0][1]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][1], report[1][0][1])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][1], report[1][0][1])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81067,15 +81300,35 @@ var render = function() {
                   style: { width: _vm.stylesCost[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(2, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][2] >= report[1][0][2]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][2], report[1][0][2])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][2], report[1][0][2])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
                   "\n        " +
-                    _vm._s(
-                      _vm.mathRound(report[0][0][2] / report[0][0][1], 1)
-                    ) +
+                    _vm._s(_vm.clickCost(report[0][0][2], report[0][0][1])) +
                     "\n          "
                 ),
                 _c("span", {
@@ -81083,7 +81336,36 @@ var render = function() {
                   style: { width: _vm.stylesCc[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(3, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  _vm.clickCost(report[0][0][2], report[0][0][1]) >=
+                  _vm.clickCost(report[1][0][2], report[1][0][1])
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.clickCost(report[0][0][2], report[0][0][1]),
+                              _vm.clickCost(report[1][0][2], report[1][0][1])
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.clickCost(report[0][0][2], report[0][0][1]),
+                                _vm.clickCost(report[1][0][2], report[1][0][1])
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81097,7 +81379,29 @@ var render = function() {
                   style: { width: _vm.stylesSs[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(4, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][3] >= report[1][0][3]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][3], report[1][0][3])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][3], report[1][0][3])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81111,7 +81415,29 @@ var render = function() {
                   style: { width: _vm.stylesCv[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(5, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][4] >= report[1][0][4]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][4], report[1][0][4])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][4], report[1][0][4])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81125,7 +81451,29 @@ var render = function() {
                   style: { width: _vm.stylesCvr[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(6, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][5] >= report[1][0][5]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][5], report[1][0][5])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][5], report[1][0][5])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ])
             ])
           }),
@@ -81189,72 +81537,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -81303,7 +81585,29 @@ var render = function() {
                   style: { width: _vm.stylesCv[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][1] >= report[1][0][1]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][1], report[1][0][1])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][1], report[1][0][1])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81317,7 +81621,35 @@ var render = function() {
                   style: { width: _vm.stylesCvr[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(2, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][2] >= report[1][0][2]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(report[0][0][2], 1),
+                              _vm.mathRound(report[1][0][2], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(report[0][0][2], 1),
+                                _vm.mathRound(report[1][0][2], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81332,7 +81664,29 @@ var render = function() {
                       style: { width: _vm.stylesUser[index] }
                     }),
                 _vm._v(" "),
-                _vm._m(3, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][3] >= report[1][0][3]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(report[0][0][3], report[1][0][3])
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(report[0][0][3], report[1][0][3])
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81346,7 +81700,35 @@ var render = function() {
                   style: { width: _vm.stylesBr[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(4, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][4] >= report[1][0][4]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(report[0][0][4], 1),
+                              _vm.mathRound(report[1][0][4], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(report[0][0][4], 1),
+                                _vm.mathRound(report[1][0][4], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81360,7 +81742,35 @@ var render = function() {
                   style: { width: _vm.stylesPs[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(5, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][5] >= report[1][0][5]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(report[0][0][5], 1),
+                              _vm.mathRound(report[1][0][5], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(report[0][0][5], 1),
+                                _vm.mathRound(report[1][0][5], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
@@ -81374,7 +81784,35 @@ var render = function() {
                   style: { width: _vm.stylesTime[index] }
                 }),
                 _vm._v(" "),
-                _vm._m(6, true)
+                _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                  report[0][0][6] >= report[1][0][6]
+                    ? _c("p", { staticClass: "textCenter comRateUp tewlve" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(
+                              _vm.mathRound(report[0][0][6], 1),
+                              _vm.mathRound(report[1][0][6], 1)
+                            )
+                          ) + "%"
+                        )
+                      ])
+                    : _c(
+                        "p",
+                        { staticClass: "textCenter comRateDown tewlve" },
+                        [
+                          _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                          _vm._v(
+                            _vm._s(
+                              _vm.comparRate(
+                                _vm.mathRound(report[0][0][6], 1),
+                                _vm.mathRound(report[1][0][6], 1)
+                              )
+                            ) + "%"
+                          )
+                        ]
+                      )
+                ])
               ])
             ])
           }),
@@ -81442,72 +81880,6 @@ var staticRenderFns = [
           _c("br"),
           _vm._v("セッション時間\n      ")
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate tewlve" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
       ])
     ])
   }
@@ -82078,7 +82450,35 @@ var render = function() {
                           style: { width: _vm.stylesChanel[index] }
                         }),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                      medium[1] >= medium[2]
+                        ? _c(
+                            "p",
+                            { staticClass: "textCenter comRateUp fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▲")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(medium[1], medium[2])) +
+                                  "%"
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            { staticClass: "textCenter comRateDown fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▼")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(medium[1], medium[2])) +
+                                  "%"
+                              )
+                            ]
+                          )
+                    ])
                   ])
                 })
               ],
@@ -82093,7 +82493,7 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter" }, [
                   _vm._v("ソーシャル")
@@ -82121,7 +82521,35 @@ var render = function() {
                           style: { width: _vm.stylesSocial[index] }
                         }),
                     _vm._v(" "),
-                    _vm._m(3, true)
+                    _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                      social[1] >= social[2]
+                        ? _c(
+                            "p",
+                            { staticClass: "textCenter comRateUp fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▲")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(social[1], social[2])) +
+                                  "%"
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            { staticClass: "textCenter comRateDown fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▼")
+                              ]),
+                              _vm._v(
+                                _vm._s(_vm.comparRate(social[1], social[2])) +
+                                  "%"
+                              )
+                            ]
+                          )
+                    ])
                   ])
                 })
               ],
@@ -82136,7 +82564,7 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(4),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter dark-gray" }, [
                   _vm._v("他サイトのリンク")
@@ -82164,7 +82592,37 @@ var render = function() {
                           style: { width: _vm.stylesReferral[index] }
                         }),
                     _vm._v(" "),
-                    _vm._m(5, true)
+                    _c("div", { staticClass: "flex justifyEnd mb-2" }, [
+                      referral[1] >= referral[2]
+                        ? _c(
+                            "p",
+                            { staticClass: "textCenter comRateUp fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▲")
+                              ]),
+                              _vm._v(
+                                _vm._s(
+                                  _vm.comparRate(referral[1], referral[2])
+                                ) + "%"
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            { staticClass: "textCenter comRateDown fourteen" },
+                            [
+                              _c("span", { staticClass: "mr-1" }, [
+                                _vm._v("▼")
+                              ]),
+                              _vm._v(
+                                _vm._s(
+                                  _vm.comparRate(referral[1], referral[2])
+                                ) + "%"
+                              )
+                            ]
+                          )
+                    ])
                   ])
                 })
               ],
@@ -82175,7 +82633,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(6)
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -82191,17 +82649,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate fourteen" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconBr iconTop" }, [
       _c("i", { staticClass: "fas fa-retweet" })
     ])
@@ -82210,30 +82657,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate fourteen" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconBye iconTop" }, [
       _c("i", { staticClass: "fas fa-link" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justifyEnd mb-2" }, [
-      _c("p", { staticClass: "textCenter comRate fourteen" }, [
-        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-        _vm._v("10%")
-      ])
     ])
   },
   function() {
@@ -82545,17 +82970,24 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calTwoNumber(
-                          _vm.data.userTypes[0][0][1],
-                          _vm.data.userTypes[0][0][2]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.newUser) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm.newUser >= _vm.pastNewUser
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.newUser, _vm.pastNewUser)) +
+                            "%"
+                        )
+                      ])
+                    : _c("p", { staticClass: "textCenter comRateDown" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.newUser, _vm.pastNewUser)) +
+                            "%"
+                        )
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "returnUser textCenter ml-3" }, [
@@ -82566,17 +82998,26 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calTwoNumber(
-                          _vm.data.userTypes[0][0][2],
-                          _vm.data.userTypes[0][0][1]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.returnUser) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _vm.returnUser >= _vm.pastReturnUser
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(_vm.returnUser, _vm.pastReturnUser)
+                          ) + "%"
+                        )
+                      ])
+                    : _c("p", { staticClass: "textCenter comRateDown" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(_vm.returnUser, _vm.pastReturnUser)
+                          ) + "%"
+                        )
+                      ])
                 ])
               ])
             ])
@@ -82586,7 +83027,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card bottom1Rem" }, [
             _c("div", { staticClass: "card-body" }, [
-              _vm._m(3),
+              _vm._m(1),
               _vm._v(" "),
               _c("p", { staticClass: "card-title textCenter" }, [
                 _vm._v("性別")
@@ -82617,17 +83058,22 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calTwoNumber(
-                          _vm.data.user[2][0][1],
-                          _vm.data.user[2][1][1]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.male) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(4)
+                  _vm.male >= _vm.pastMale
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.male, _vm.pastMale)) + "%"
+                        )
+                      ])
+                    : _c("p", { staticClass: "textCenter comRateDown" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.male, _vm.pastMale)) + "%"
+                        )
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "returnUser textCenter ml-3" }, [
@@ -82638,17 +83084,24 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calTwoNumber(
-                          _vm.data.user[2][1][1],
-                          _vm.data.user[2][0][1]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.female) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm.female >= _vm.pastFemale
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.female, _vm.pastFemale)) +
+                            "%"
+                        )
+                      ])
+                    : _c("p", { staticClass: "textCenter comRateDown" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.female, _vm.pastFemale)) +
+                            "%"
+                        )
+                      ])
                 ])
               ])
             ])
@@ -82658,7 +83111,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card bottom1Rem" }, [
             _c("div", { staticClass: "card-body" }, [
-              _vm._m(6),
+              _vm._m(2),
               _vm._v(" "),
               _c("p", { staticClass: "card-title textCenter" }, [
                 _vm._v("デバイス")
@@ -82689,62 +83142,75 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calThreeNumber(
-                          _vm.data.user[0][1][1],
-                          _vm.data.user[0][0][1],
-                          _vm.data.user[0][2][1]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.mobile) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(7)
+                  _vm.mobile >= _vm.pastMobile
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.mobile, _vm.pastMobile)) +
+                            "%"
+                        )
+                      ])
+                    : _c("p", { staticClass: "textCenter comRateDown" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.mobile, _vm.pastMobile)) +
+                            "%"
+                        )
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "returnUser textCenter ml-3 mr-3" }, [
                   _c("i", { staticClass: "fas fa-desktop pcColor" }),
                   _vm._v(" "),
-                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                  _c("p", { staticClass: "tewlve dark-gray mb-1" }, [
                     _vm._v("PC")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calThreeNumber(
-                          _vm.data.user[0][0][1],
-                          _vm.data.user[0][1][1],
-                          _vm.data.user[0][2][1]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.pc) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(8)
+                  _vm.pc >= _vm.pastPc
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(_vm._s(_vm.comparRate(_vm.pc, _vm.pastPc)) + "%")
+                      ])
+                    : _c("p", { staticClass: "textCenter comRateDown" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(_vm._s(_vm.comparRate(_vm.pc, _vm.pastPc)) + "%")
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "returnUser textCenter ml-3" }, [
                   _c("i", { staticClass: "fas fa-tablet-alt mobileColor" }),
                   _vm._v(" "),
-                  _c("p", { staticClass: "fourteen dark-gray mb-1" }, [
+                  _c("p", { staticClass: "tewlve dark-gray mb-1" }, [
                     _vm._v("タブレット")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "dark-gray bold mb-1" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calThreeNumber(
-                          _vm.data.user[0][2][1],
-                          _vm.data.user[0][1][1],
-                          _vm.data.user[0][0][1]
-                        )
-                      ) + "%"
-                    )
+                    _vm._v(_vm._s(_vm.tablet) + "%")
                   ]),
                   _vm._v(" "),
-                  _vm._m(9)
+                  _vm.tablet >= _vm.pastTablet
+                    ? _c("p", { staticClass: "textCenter comRateUp" }, [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.tablet, _vm.pastTablet)) +
+                            "%"
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "textCenter comRateDown" }, [
+                    _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                    _vm._v(
+                      _vm._s(_vm.comparRate(_vm.tablet, _vm.pastTablet)) + "%"
+                    )
+                  ])
                 ])
               ])
             ])
@@ -82757,7 +83223,7 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(10),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter" }, [
                   _vm._v("年齢")
@@ -82826,7 +83292,7 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(11),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter" }, [
                   _vm._v("国")
@@ -82897,7 +83363,7 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(12),
+                _vm._m(5),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-title textCenter dark-gray" }, [
                   _vm._v("地域")
@@ -82962,7 +83428,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(13)
+    _vm._m(6)
   ])
 }
 var staticRenderFns = [
@@ -82978,24 +83444,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconSession iconTop" }, [
       _c("i", { staticClass: "fas fa-venus-mars" })
     ])
@@ -83004,53 +83452,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "iconUser iconTop" }, [
       _c("i", { staticClass: "fas fa-mobile-alt" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "textCenter comRate" }, [
-      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
-      _vm._v("10%")
     ])
   },
   function() {

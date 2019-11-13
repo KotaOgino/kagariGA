@@ -63,42 +63,48 @@
           <span v-if="index===0" v-bind:style="{width:styleMax}" class="barAgeMax mb-1"></span>
           <span v-else v-bind:style="{width:stylesClick[index]}" class="barAge mb-1"></span>
           <div class="flex justifyEnd mb-2">
-            <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
+            <p v-if="report[0][0][1] >= report[1][0][1]" class="textCenter comRateUp tewlve"><span class="mr-1">▲</span>{{comparRate(report[0][0][1],report[1][0][1])}}%</p>
+            <p v-else class="textCenter comRateDown tewlve"><span class="mr-1">▼</span>{{comparRate(report[0][0][1],report[1][0][1])}}%</p>
           </div>
       </td>
       <td class="textRight">
         {{ mathRound(report[0][0][2], 1) }}
         <span v-bind:style="{width:stylesCost[index]}" class="barCountry mb-1"></span>
         <div class="flex justifyEnd mb-2">
-          <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
+          <p v-if="report[0][0][2] >= report[1][0][2]" class="textCenter comRateUp tewlve"><span class="mr-1">▲</span>{{comparRate(report[0][0][2],report[1][0][2])}}%</p>
+          <p v-else class="textCenter comRateDown tewlve"><span class="mr-1">▼</span>{{comparRate(report[0][0][2],report[1][0][2])}}%</p>
         </div>
       </td>
       <td class="textRight">
-        {{mathRound(report[0][0][2] / report[0][0][1] ,1)}}
+        {{clickCost(report[0][0][2],report[0][0][1])}}
           <span v-bind:style="{width:stylesCc[index]}" class="barAge mb-1"></span>
           <div class="flex justifyEnd mb-2">
-            <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
+            <p v-if="clickCost(report[0][0][2],report[0][0][1]) >= clickCost(report[1][0][2],report[1][0][1])" class="textCenter comRateUp tewlve"><span class="mr-1">▲</span>{{comparRate(clickCost(report[0][0][2],report[0][0][1]),clickCost(report[1][0][2],report[1][0][1]))}}%</p>
+            <p v-else class="textCenter comRateDown tewlve"><span class="mr-1">▼</span>{{comparRate(clickCost(report[0][0][2],report[0][0][1]),clickCost(report[1][0][2],report[1][0][1]))}}%</p>
           </div>
       </td>
       <td class="textRight">
         {{ mathRound(report[0][0][3], 1) }}
         <span v-bind:style="{width:stylesSs[index]}" class="barTime mb-1"></span>
         <div class="flex justifyEnd mb-2">
-          <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
+          <p v-if="report[0][0][3] >= report[1][0][3]" class="textCenter comRateUp tewlve"><span class="mr-1">▲</span>{{comparRate(report[0][0][3],report[1][0][3])}}%</p>
+          <p v-else class="textCenter comRateDown tewlve"><span class="mr-1">▼</span>{{comparRate(report[0][0][3],report[1][0][3])}}%</p>
         </div>
       </td>
       <td class="textRight">
         {{ mathRound(report[0][0][4], 1) }}
         <span v-bind:style="{width:stylesCv[index]}" class="barSs mb-1"></span>
         <div class="flex justifyEnd mb-2">
-          <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
+          <p v-if="report[0][0][4] >= report[1][0][4]" class="textCenter comRateUp tewlve"><span class="mr-1">▲</span>{{comparRate(report[0][0][4],report[1][0][4])}}%</p>
+          <p v-else class="textCenter comRateDown tewlve"><span class="mr-1">▼</span>{{comparRate(report[0][0][4],report[1][0][4])}}%</p>
         </div>
       </td>
       <td class="textRight">
         {{ mathRound(report[0][0][5], 1) }}
         <span v-bind:style="{width:stylesCvr[index]}" class="barCity mb-1"></span>
         <div class="flex justifyEnd mb-2">
-          <p class="textCenter comRate tewlve"><span class="mr-1">▲</span>10%</p>
+          <p v-if="report[0][0][5] >= report[1][0][5]" class="textCenter comRateUp tewlve"><span class="mr-1">▲</span>{{comparRate(report[0][0][5],report[1][0][5])}}%</p>
+          <p v-else class="textCenter comRateDown tewlve"><span class="mr-1">▼</span>{{comparRate(report[0][0][5],report[1][0][5])}}%</p>
         </div>
       </td>
     </tr>
@@ -149,6 +155,20 @@ export default {
     mathRound: function(number, n){
         var _pow = Math.pow( 10 , n );
         return Math.round( number * _pow ) / _pow;
+    },
+    comparRate: function(numberNow, numberPast) {
+      if(numberPast == 0 || numberNow == 0){
+        var result = '-';
+      }else{
+        var result = this.mathRound(
+          (Number(numberNow) / Number(numberPast) - 1) * 100,
+          1);
+      }
+      return result;
+    },
+    clickCost: function(cost, click){
+      var result = this.mathRound(Number(cost) / Number(click), 1);
+      return result;
     },
     widthClick: function() {
       var maxNumber = this.data.cvReport[0][0][0][1];

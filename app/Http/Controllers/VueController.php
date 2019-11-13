@@ -203,9 +203,11 @@ class VueController extends Controller
         }
     }
     $gsa = new Google_Service_AnalyticsReporting($client);
-    $start = date('Y-m-d', strtotime('-33 day', time()));
-    $end = date('Y-m-d', strtotime('-3 day', time()));
-    $ga_inflow = $google->get_ga_inflow($gsa, $VIEW_ID, $start, $end);
+    $end = date('Y-m-d', strtotime('-1 day', time()));
+    $start = date('Y-m-d', strtotime('-30 days', time()));
+    $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+    $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
+    $ga_inflow = $google->get_ga_inflow($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
     $data = ["inflow"=>$ga_inflow];
     return $data;
   }
