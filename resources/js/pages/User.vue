@@ -258,7 +258,7 @@ export default {
     axios.get('/api/user')
       .then((res) => {
         this.data = res.data,
-          console.log(this.data.user);
+          console.log(this.data.user,this.data.userTypes);
         this.setNumber(),
         this.widthCountry(),
           this.widthCity(),
@@ -277,10 +277,10 @@ export default {
       var pastNewUserRate = this.calTwoNumber(this.data.userTypes[0][0][2],this.data.userTypes[1][0][2]);
       var returnUserRate = this.calTwoNumber(this.data.userTypes[1][0][1],this.data.userTypes[0][0][1]);
       var pastReturnUserRate = this.calTwoNumber(this.data.userTypes[1][0][2],this.data.userTypes[0][0][2]);
-      var maleRate = this.calTwoNumber(this.data.user[2][0][1],this.data.user[2][1][1]);
-      var pastMaleRate = this.calTwoNumber(this.data.user[2][0][2],this.data.user[2][1][2]);
-      var femaleRate = this.calTwoNumber(this.data.user[2][1][1],this.data.user[2][0][1]);
-      var pastFemaleRate = this.calTwoNumber(this.data.user[2][1][2],this.data.user[2][0][2]);
+      var maleRate = this.calTwoNumber(this.data.user[2]['male'][0],this.data.user[2]['female'][0]);
+      var pastMaleRate = this.calTwoNumber(this.data.user[2]['male'][1],this.data.user[2]['female'][1]);
+      var femaleRate = this.calTwoNumber(this.data.user[2]['female'][0],this.data.user[2]['male'][0]);
+      var pastFemaleRate = this.calTwoNumber(this.data.user[2]['female'][1],this.data.user[2]['male'][1]);
       var mobileRate = this.calThreeNumber(this.data.user[0][0][1],this.data.user[0][1][1],this.data.user[0][2][1]);
       var pastMobileRate = this.calThreeNumber(this.data.user[0][0][2],this.data.user[0][1][2],this.data.user[0][2][2]);
       var pcRate = this.calThreeNumber(this.data.user[0][1][1],this.data.user[0][0][1],this.data.user[0][2][1]);
