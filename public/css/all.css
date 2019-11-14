@@ -1928,6 +1928,11 @@ body {
   padding: 0;
 }
 
+.col-md-6,.col-md-4,.col-md-3{
+  padding-left: 8px!important;
+  padding-right: 8px!important;
+}
+
 .block{
   display: block;
 }
@@ -1944,6 +1949,12 @@ body {
   display: -webkit-flex; /*PC-Safari,iOS8.4*/
   display: flex
 }
+
+.middle{
+  justify-content: center;
+  align-items: center;
+}
+
 .justifyCenter{
   justify-content: center;
 }
@@ -2017,7 +2028,9 @@ body {
 .red {
   color: #FF2D55;
 }
-
+.purple{
+  color: #5856D6;
+}
 .green {
   color: #34C759;
 }
@@ -2047,6 +2060,10 @@ body {
 
 .eighteen{
   font-size: 18px;
+}
+
+.twenty{
+  font-size: 20px;
 }
 
 /* アイコン関連のCSS */
@@ -2372,6 +2389,9 @@ body {
   margin: 1rem auto;
 }
 /* テーブル */
+.table{
+  margin-bottom: 1.5rem!important;
+}
 .table thead th{
   vertical-align: top!important;
   border: none!important;
@@ -2387,4 +2407,45 @@ body {
 }
 .table-striped tbody tr:nth-of-type(even) {
     background-color: #F8FAFC!important;
+}
+/* コンバージョン分析右上段 */
+.cvBox{
+  width: 80%;
+  padding: .8rem 1rem;
+  background-color: #007AFF1A;
+  color: #007AFF;
+  border-radius: 8px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.rateBox{
+  width: 80%;
+  padding: .7rem 1rem;
+  color: #545A5D;
+  line-height: 1;
+  letter-spacing: 0;
+}
+/* 広告分析上段 */
+.adMainBox{
+  padding: 0 1rem;
+}
+.adBox{
+  padding: 0.6rem 3rem;
+  color: #3B4043;
+  background-color: #007AFF1A;
+  border-radius: 8px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.adBoxClick{
+  padding: 0.6rem 2.5rem;
+  color: #3B4043;
+  background-color: #5856D61A;
+  border-radius: 8px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.equal{
+  padding-top: 5rem;
 }

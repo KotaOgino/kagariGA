@@ -1825,6 +1825,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2121,6 +2132,112 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2132,15 +2249,19 @@ __webpack_require__.r(__webpack_exports__);
       stylesCv: {},
       stylesCvr: {},
       stylesCc: {},
-      styleMax: "100%"
+      styleMax: "100%",
+      cvCost: '',
+      pastCvCost: '',
+      clickCosts: '',
+      pastClickCost: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/api/ad').then(function (res) {
-      _this.data = res.data, // console.log(this.data.cv,this.data.cvReport);
-      _this.makeArraySs(), _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayCost(), _this.widthClick(), _this.makeArrayClickCost();
+      _this.data = res.data, console.log(_this.data.cv, _this.data.cvReport);
+      _this.makeArraySs(), _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayCost(), _this.widthClick(), _this.makeArrayClickCost(), _this.calCvCost(), _this.clickCostAd();
     })["catch"](function (error) {
       console.log(error);
     });
@@ -2170,9 +2291,21 @@ __webpack_require__.r(__webpack_exports__);
 
       return result;
     },
+    calCvCost: function calCvCost() {
+      var result = this.mathRound(Number(this.data.cv[0][0]) / Number(this.data.cv[0][2]), 1);
+      var pastResult = this.mathRound(Number(this.data.cv[1][0]) / Number(this.data.cv[1][2]), 1);
+      this.cvCost = result;
+      this.pastCvCost = pastResult;
+    },
     clickCost: function clickCost(cost, click) {
       var result = this.mathRound(Number(cost) / Number(click), 1);
       return result;
+    },
+    clickCostAd: function clickCostAd() {
+      var result = this.mathRound(Number(this.data.cv[0][0]) / Number(this.data.cv[0][1]), 1);
+      var pastResult = this.mathRound(Number(this.data.cv[1][0]) / Number(this.data.cv[1][1]), 1);
+      this.clickCosts = result;
+      this.pastClickCost = pastResult;
     },
     widthClick: function widthClick() {
       var maxNumber = this.data.cvReport[0][0][0][1];
@@ -2411,6 +2544,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2421,15 +2625,15 @@ __webpack_require__.r(__webpack_exports__);
       stylesTime: {},
       stylesUser: {},
       stylesPs: {},
-      stylesCvr: {}
+      stylesCvr: {},
+      siteViewNumber: ''
     };
   },
   created: function created() {
     var _this = this;
 
     axios.get('/api/conversion').then(function (res) {
-      _this.data = res.data, console.log(_this.data.cv, _this.data.cvReport);
-      _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayBr(), _this.makeArrayPs(), _this.makeArrayTime(), _this.widthUser();
+      _this.data = res.data, _this.siteView(), _this.makeArrayCv(), _this.makeArrayCvr(), _this.makeArrayBr(), _this.makeArrayPs(), _this.makeArrayTime(), _this.widthUser();
     })["catch"](function (error) {
       console.error(error);
     });
@@ -2458,6 +2662,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return result;
+    },
+    siteView: function siteView() {
+      var bRate = this.data.cv[0][3] / 100;
+      var result = this.mathRound(this.data.cv[0][0] * bRate, 1);
+      this.siteViewNumber = result;
     },
     widthUser: function widthUser() {
       var maxNumber = this.data.cvReport[0][0][0][3];
@@ -3421,7 +3630,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/user').then(function (res) {
-      _this.data = res.data, console.log(_this.data.user);
+      _this.data = res.data, console.log(_this.data.user, _this.data.userTypes);
       _this.setNumber(), _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
     })["catch"](function (error) {
       console.error(error);
@@ -3433,10 +3642,10 @@ __webpack_require__.r(__webpack_exports__);
       var pastNewUserRate = this.calTwoNumber(this.data.userTypes[0][0][2], this.data.userTypes[1][0][2]);
       var returnUserRate = this.calTwoNumber(this.data.userTypes[1][0][1], this.data.userTypes[0][0][1]);
       var pastReturnUserRate = this.calTwoNumber(this.data.userTypes[1][0][2], this.data.userTypes[0][0][2]);
-      var maleRate = this.calTwoNumber(this.data.user[2][0][1], this.data.user[2][1][1]);
-      var pastMaleRate = this.calTwoNumber(this.data.user[2][0][2], this.data.user[2][1][2]);
-      var femaleRate = this.calTwoNumber(this.data.user[2][1][1], this.data.user[2][0][1]);
-      var pastFemaleRate = this.calTwoNumber(this.data.user[2][1][2], this.data.user[2][0][2]);
+      var maleRate = this.calTwoNumber(this.data.user[2]['male'][0], this.data.user[2]['female'][0]);
+      var pastMaleRate = this.calTwoNumber(this.data.user[2]['male'][1], this.data.user[2]['female'][1]);
+      var femaleRate = this.calTwoNumber(this.data.user[2]['female'][0], this.data.user[2]['male'][0]);
+      var pastFemaleRate = this.calTwoNumber(this.data.user[2]['female'][1], this.data.user[2]['male'][1]);
       var mobileRate = this.calThreeNumber(this.data.user[0][0][1], this.data.user[0][1][1], this.data.user[0][2][1]);
       var pastMobileRate = this.calThreeNumber(this.data.user[0][0][2], this.data.user[0][1][2], this.data.user[0][2][2]);
       var pcRate = this.calThreeNumber(this.data.user[0][1][1], this.data.user[0][0][1], this.data.user[0][2][1]);
@@ -81152,7 +81361,9 @@ var render = function() {
           0
         )
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -81211,6 +81422,29 @@ var staticRenderFns = [
         ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem flex" }, [
+        _c("div", { staticClass: "iconComment iconTop" }, [
+          _c("i", { staticClass: "fas fa-comment-dots" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "commentTextArea" }, [
+          _c("h6", { staticClass: "dark-gray sixteen bold" }, [
+            _vm._v("コメント")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticStyle: { border: "none" },
+            attrs: { placeholder: "コメントを入力" }
+          })
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -81235,6 +81469,307 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ad container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6 mb-3" }, [
+        _c("div", { staticClass: "card h-100 " }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "flex justifyBetween" }, [
+              _c("div", { staticClass: "adMainBox" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter fourteen" }, [
+                  _vm._v("広告費用")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  { staticClass: "card-text textCenter nowNumber bold" },
+                  [_vm._v("¥" + _vm._s(_vm.mathRound(_vm.data.cv[0][0], 1)))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  { staticClass: "card-text textCenter preNumber mb-1" },
+                  [
+                    _c("i", { staticClass: "fas fa-arrows-alt-h mr-1 gray" }),
+                    _vm._v("¥" + _vm._s(_vm.mathRound(_vm.data.cv[1][0], 1)))
+                  ]
+                ),
+                _vm._v(" "),
+                Number(_vm.data.cv[0][0]) >= Number(_vm.data.cv[1][0])
+                  ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                      _vm._v(
+                        _vm._s(
+                          _vm.comparRate(_vm.data.cv[0][0], _vm.data.cv[1][0])
+                        ) + "%"
+                      )
+                    ])
+                  : _c(
+                      "p",
+                      { staticClass: "card-text textCenter comRateDown" },
+                      [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(
+                            _vm.comparRate(_vm.data.cv[0][0], _vm.data.cv[1][0])
+                          ) + "%"
+                        )
+                      ]
+                    )
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", [
+                _c("div", { staticClass: "adBox center textCenter" }, [
+                  _c("p", { staticClass: "fourteen mb-2" }, [
+                    _vm._v("クリック単価")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "twenty bold mb-2" }, [
+                    _vm._v("¥" + _vm._s(_vm.clickCosts))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex" }, [
+                    _c("p", { staticClass: "fourteen flex mr-2 gray" }, [
+                      _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+                      _vm._v("¥" + _vm._s(_vm.pastClickCost))
+                    ]),
+                    _vm._v(" "),
+                    _vm.clickCosts >= _vm.pastClickCost
+                      ? _c("p", { staticClass: "fourteen comRateUp" }, [
+                          _vm._v(
+                            "▲" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.clickCosts,
+                                  _vm.pastClickCost
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                      : _c("p", { staticClass: "fourteen comRateDown" }, [
+                          _vm._v(
+                            "▼" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.clickCosts,
+                                  _vm.pastClickCost
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "adBox center textCenter" }, [
+                  _c("p", { staticClass: "fourteen mb-2" }, [
+                    _vm._v("クリック数")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "twenty bold mb-2" }, [
+                    _vm._v("¥" + _vm._s(_vm.data.cv[0][1]))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex" }, [
+                    _c("p", { staticClass: "fourteen flex gray" }, [
+                      _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+                      _vm._v("¥" + _vm._s(_vm.data.cv[1][1]))
+                    ]),
+                    _vm._v(" "),
+                    _vm.data.cv[0][1] >= _vm.data.cv[1][1]
+                      ? _c("p", { staticClass: "fourteen comRateUp" }, [
+                          _vm._v(
+                            "▲" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.data.cv[0][1],
+                                  _vm.data.cv[1][1]
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                      : _c("p", { staticClass: "fourteen comRateDown" }, [
+                          _vm._v(
+                            "▼" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.data.cv[0][1],
+                                  _vm.data.cv[1][1]
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 mb-3" }, [
+        _c("div", { staticClass: "card h-100" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "flex justifyBetween" }, [
+              _c("div", { staticClass: "adMainBox" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-title textCenter fourteen" }, [
+                  _vm._v("コンバージョン単価")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  { staticClass: "card-text textCenter nowNumber bold" },
+                  [_vm._v("¥" + _vm._s(_vm.cvCost))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  { staticClass: "card-text textCenter preNumber mb-1" },
+                  [
+                    _c("i", { staticClass: "fas fa-arrows-alt-h mr-1 gray" }),
+                    _vm._v("¥" + _vm._s(_vm.pastCvCost))
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.cvCost >= _vm.pastCvCost
+                  ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                      _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                      _vm._v(
+                        _vm._s(_vm.comparRate(_vm.cvCost, _vm.pastCvCost)) + "%"
+                      )
+                    ])
+                  : _c(
+                      "p",
+                      { staticClass: "card-text textCenter comRateDown" },
+                      [
+                        _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                        _vm._v(
+                          _vm._s(_vm.comparRate(_vm.cvCost, _vm.pastCvCost)) +
+                            "%"
+                        )
+                      ]
+                    )
+              ]),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", [
+                _c("div", { staticClass: "adBoxClick center textCenter" }, [
+                  _c("p", { staticClass: "fourteen mb-2" }, [
+                    _vm._v("コンバージョン数")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "twenty bold mb-2" }, [
+                    _vm._v(_vm._s(_vm.data.cv[0][2]))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex" }, [
+                    _c("p", { staticClass: "fourteen flex mr-2 gray" }, [
+                      _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+                      _vm._v(_vm._s(_vm.data.cv[1][2]))
+                    ]),
+                    _vm._v(" "),
+                    _vm.data.cv[0][2] >= _vm.data.cv[1][2]
+                      ? _c("p", { staticClass: "fourteen comRateUp" }, [
+                          _vm._v(
+                            "▲" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.data.cv[0][2],
+                                  _vm.data.cv[1][2]
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                      : _c("p", { staticClass: "fourteen comRateDown" }, [
+                          _vm._v(
+                            "▼" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.data.cv[0][2],
+                                  _vm.data.cv[1][2]
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _c("div", { staticClass: "adBoxClick center textCenter" }, [
+                  _c("p", { staticClass: "fourteen mb-2" }, [
+                    _vm._v("広告費用")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "twenty bold mb-2" }, [
+                    _vm._v(_vm._s(_vm.mathRound(_vm.data.cv[0][0], 1)))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex" }, [
+                    _c("p", { staticClass: "fourteen flex gray" }, [
+                      _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+                      _vm._v("¥" + _vm._s(_vm.mathRound(_vm.data.cv[1][0], 1)))
+                    ]),
+                    _vm._v(" "),
+                    _vm.data.cv[0][0] >= _vm.data.cv[1][0]
+                      ? _c("p", { staticClass: "fourteen comRateUp" }, [
+                          _vm._v(
+                            "▲" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.data.cv[0][0],
+                                  _vm.data.cv[1][0]
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                      : _c("p", { staticClass: "fourteen comRateDown" }, [
+                          _vm._v(
+                            "▼" +
+                              _vm._s(
+                                _vm.comparRate(
+                                  _vm.data.cv[0][0],
+                                  _vm.data.cv[1][0]
+                                )
+                              ) +
+                              "%"
+                          )
+                        ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "table",
       {
@@ -81242,7 +81777,7 @@ var render = function() {
         staticStyle: { "table-layout": "fixed" }
       },
       [
-        _vm._m(0),
+        _vm._m(6),
         _vm._v(" "),
         _c(
           "tbody",
@@ -81253,7 +81788,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
-                _vm._v("\n        " + _vm._s(report[0][0][1]) + "\n          "),
+                _vm._v(
+                  "\n          " + _vm._s(report[0][0][1]) + "\n          "
+                ),
                 index === 0
                   ? _c("span", {
                       staticClass: "barAgeMax mb-1",
@@ -81291,9 +81828,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][2], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barCountry mb-1",
@@ -81327,7 +81864,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.clickCost(report[0][0][2], report[0][0][1])) +
                     "\n          "
                 ),
@@ -81370,9 +81907,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][3], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barTime mb-1",
@@ -81406,9 +81943,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][4], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barSs mb-1",
@@ -81442,9 +81979,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][5], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barCity mb-1",
@@ -81480,10 +82017,64 @@ var render = function() {
           0
         )
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm._m(7)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconUser iconTop" }, [
+      _c("i", { staticClass: "fas fa-yen-sign" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "equal" }, [
+      _c("p", { staticClass: "blue" }, [
+        _c("i", { staticClass: "fas fa-equals" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "textCenter blue" }, [
+      _c("p", [_c("i", { staticClass: "fas fa-times" })])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconBr iconTop" }, [
+      _c("i", { staticClass: "fas fa-yen-sign" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "equal" }, [
+      _c("p", { staticClass: "purple" }, [
+        _c("i", { staticClass: "fas fa-equals" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "textCenter purple" }, [
+      _c("p", [_c("i", { staticClass: "fas fa-divide" })])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -81496,44 +82087,67 @@ var staticRenderFns = [
           _c("div", { staticClass: "iconUser" }, [
             _c("i", { staticClass: "fas fa-mouse-pointer marginIcon" })
           ]),
-          _vm._v("\n      クリック数\n      ")
+          _vm._v("\n          クリック数\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconBr" }, [
             _c("i", { staticClass: "fas fa-yen-sign marginIcon" })
           ]),
-          _vm._v("\n      費用\n      ")
+          _vm._v("\n          費用\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconPs" }, [
             _c("i", { staticClass: "fas fa-yen-sign marginIcon" })
           ]),
-          _vm._v("\n      クリック単価\n      ")
+          _vm._v("\n          クリック単価\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconAveSs" }, [
             _c("i", { staticClass: "fas fa-bolt marginIcon" })
           ]),
-          _vm._v("\n      セッション数\n      ")
+          _vm._v("\n          セッション数\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconSession" }, [
             _c("i", { staticClass: "fas fa-flag marginIcon" })
           ]),
-          _vm._v("\n      コンバージョン"),
+          _vm._v("\n          コンバージョン"),
           _c("br"),
-          _vm._v("数\n      ")
+          _vm._v("数\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconBye" }, [
             _c("i", { staticClass: "far fa-flag marginIcon" })
           ]),
-          _vm._v("\n      コンバージョン率\n      ")
+          _vm._v("\n          コンバージョン率\n        ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem flex" }, [
+        _c("div", { staticClass: "iconComment iconTop" }, [
+          _c("i", { staticClass: "fas fa-comment-dots" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "commentTextArea" }, [
+          _c("h6", { staticClass: "dark-gray sixteen bold" }, [
+            _vm._v("コメント")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticStyle: { border: "none" },
+            attrs: { placeholder: "コメントを入力" }
+          })
         ])
       ])
     ])
@@ -81561,6 +82175,154 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "conversion container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "card h-100" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-title textCenter" }, [
+              _vm._v("コンバージョン数")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
+              _vm._v(_vm._s(_vm.data.cv[0][1]))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
+              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+              _vm._v(_vm._s(_vm.data.cv[1][1]))
+            ]),
+            _vm._v(" "),
+            Number(_vm.data.cv[0][1]) >= Number(_vm.data.cv[1][1])
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.cv[0][1], _vm.data.cv[1][1])
+                    ) + "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.cv[0][1], _vm.data.cv[1][1])
+                    ) + "%"
+                  )
+                ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "card h-100" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-title textCenter" }, [
+              _vm._v("コンバージョン率")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter nowNumber bold" }, [
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.cv[0][2], 1)))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text textCenter preNumber mb-1" }, [
+              _c("i", { staticClass: "fas fa-arrows-alt-h mr-1" }),
+              _vm._v(_vm._s(_vm.mathRound(_vm.data.cv[1][2], 1)))
+            ]),
+            _vm._v(" "),
+            Number(_vm.data.cv[0][2]) >= Number(_vm.data.cv[1][2])
+              ? _c("p", { staticClass: "card-text textCenter comRateUp" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▲")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.cv[0][2], _vm.data.cv[1][2])
+                    ) + "%"
+                  )
+                ])
+              : _c("p", { staticClass: "card-text textCenter comRateDown" }, [
+                  _c("span", { staticClass: "mr-1" }, [_vm._v("▼")]),
+                  _vm._v(
+                    _vm._s(
+                      _vm.comparRate(_vm.data.cv[0][2], _vm.data.cv[1][2])
+                    ) + "%"
+                  )
+                ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text borderTop my-3" }),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text cardExp" }, [
+              _vm._v("期間中に１回以上のセッションを開始したユーザー数。")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 mb-3" }, [
+        _c("div", { staticClass: "card h-100" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "center cvBox flex justifyBetween" }, [
+              _c("p", { staticClass: "fourteen" }, [_vm._v("セッション数")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "twenty bold" }, [
+                _vm._v(_vm._s(_vm.data.cv[0][0]))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "center rateBox flex justifyEnd" }, [
+              _c("i", { staticClass: "fas fa-long-arrow-alt-down" }),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  _vm._s(
+                    _vm.comparRate(_vm.siteViewNumber, _vm.data.cv[0][0])
+                  ) + "%"
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "center cvBox flex justifyBetween" }, [
+              _c("p", { staticClass: "fourteen" }, [_vm._v("サイト内閲覧数")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "twenty bold" }, [
+                _vm._v(_vm._s(_vm.siteViewNumber))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "center rateBox flex justifyEnd" }, [
+              _c("i", { staticClass: "fas fa-long-arrow-alt-down" }),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  _vm._s(
+                    _vm.comparRate(_vm.data.cv[0][1], _vm.siteViewNumber)
+                  ) + "%"
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "center cvBox flex justifyBetween" }, [
+              _c("p", { staticClass: "fourteen" }, [
+                _vm._v("コンバージョン数")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "twenty bold" }, [
+                _vm._v(_vm._s(_vm.data.cv[0][1]))
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "table",
       {
@@ -81568,7 +82330,7 @@ var render = function() {
         staticStyle: { "table-layout": "fixed" }
       },
       [
-        _vm._m(0),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "tbody",
@@ -81579,7 +82341,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
-                _vm._v("\n        " + _vm._s(report[0][0][1]) + "\n        "),
+                _vm._v(
+                  "\n          " + _vm._s(report[0][0][1]) + "\n          "
+                ),
                 _c("span", {
                   staticClass: "barSs mb-1",
                   style: { width: _vm.stylesCv[index] }
@@ -81612,9 +82376,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][2], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barCity mb-1",
@@ -81653,7 +82417,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
-                _vm._v("\n        " + _vm._s(report[0][0][3]) + "\n          "),
+                _vm._v(
+                  "\n          " + _vm._s(report[0][0][3]) + "\n          "
+                ),
                 index === 0
                   ? _c("span", {
                       staticClass: "barAgeMax mb-1",
@@ -81691,9 +82457,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][4], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barCountry mb-1",
@@ -81733,9 +82499,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][5], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barPs mb-1",
@@ -81775,9 +82541,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "textRight" }, [
                 _vm._v(
-                  "\n        " +
+                  "\n          " +
                     _vm._s(_vm.mathRound(report[0][0][6], 1)) +
-                    "\n        "
+                    "\n          "
                 ),
                 _c("span", {
                   staticClass: "barTimeMax mb-1",
@@ -81819,10 +82585,28 @@ var render = function() {
           0
         )
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconSession iconTop" }, [
+      _c("i", { staticClass: "fas fa-flag" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iconBye iconTop" }, [
+      _c("i", { staticClass: "far fa-flag" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -81835,50 +82619,73 @@ var staticRenderFns = [
           _c("div", { staticClass: "iconSession" }, [
             _c("i", { staticClass: "fas fa-flag marginIcon" })
           ]),
-          _vm._v("\n      コンバージョン"),
+          _vm._v("\n          コンバージョン"),
           _c("br"),
-          _vm._v("数\n      ")
+          _vm._v("数\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconBye" }, [
             _c("i", { staticClass: "far fa-flag marginIcon" })
           ]),
-          _vm._v("\n      コンバージョン"),
+          _vm._v("\n          コンバージョン"),
           _c("br"),
-          _vm._v("率\n      ")
+          _vm._v("率\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconUser" }, [
             _c("i", { staticClass: "fas fa-user marginIcon" })
           ]),
-          _vm._v("\n      ユーザー数\n      ")
+          _vm._v("\n          ユーザー数\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconBr" }, [
             _c("i", { staticClass: "fas fa-arrow-alt-circle-left marginIcon" })
           ]),
-          _vm._v("\n      直帰率\n      ")
+          _vm._v("\n          直帰率\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconPs" }, [
             _c("i", { staticClass: "fas fa-pager marginIcon" })
           ]),
-          _vm._v("\n      ページ"),
+          _vm._v("\n          ページ"),
           _c("br"),
-          _vm._v("/セッション\n      ")
+          _vm._v("/セッション\n        ")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "normal", staticStyle: { width: "14%" } }, [
           _c("div", { staticClass: "iconAveSs" }, [
             _c("i", { staticClass: "fas fa-clock marginIcon" })
           ]),
-          _vm._v("\n      平均"),
+          _vm._v("\n          平均"),
           _c("br"),
-          _vm._v("セッション時間\n      ")
+          _vm._v("セッション時間\n        ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", { staticClass: "commentArea kagariBorder bottom1Rem flex" }, [
+        _c("div", { staticClass: "iconComment iconTop" }, [
+          _c("i", { staticClass: "fas fa-comment-dots" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "commentTextArea" }, [
+          _c("h6", { staticClass: "dark-gray sixteen bold" }, [
+            _vm._v("コメント")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticStyle: { border: "none" },
+            attrs: { placeholder: "コメントを入力" }
+          })
         ])
       ])
     ])
