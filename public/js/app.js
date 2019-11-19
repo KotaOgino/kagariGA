@@ -3630,7 +3630,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/user').then(function (res) {
-      _this.data = res.data, console.log(_this.data.user, _this.data.userTypes);
+      _this.data = res.data, console.log(_this.data.userTypes, _this.data.user[2]['New Visitor'][0]);
       _this.setNumber(), _this.widthCountry(), _this.widthCity(), _this.widthAge(), _this.DoughnutChartDataSex(), _this.DoughnutChartDataUser(), _this.DoughnutChartDataDevice();
     })["catch"](function (error) {
       console.error(error);
@@ -3638,20 +3638,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     setNumber: function setNumber() {
-      var newUserRate = this.calTwoNumber(this.data.userTypes[0][0][1], this.data.userTypes[1][0][1]);
-      var pastNewUserRate = this.calTwoNumber(this.data.userTypes[0][0][2], this.data.userTypes[1][0][2]);
-      var returnUserRate = this.calTwoNumber(this.data.userTypes[1][0][1], this.data.userTypes[0][0][1]);
-      var pastReturnUserRate = this.calTwoNumber(this.data.userTypes[1][0][2], this.data.userTypes[0][0][2]);
+      var newUserRate = this.calTwoNumber(this.data.user[0][0][1], this.data.user[1][0][1]);
+      var pastNewUserRate = this.calTwoNumber(this.data.user[0][0][2], this.data.user[1][0][2]);
+      var returnUserRate = this.calTwoNumber(this.data.user[1][0][1], this.data.user[0][0][1]);
+      var pastReturnUserRate = this.calTwoNumber(this.data.user[1][0][2], this.data.user[0][0][2]);
       var maleRate = this.calTwoNumber(this.data.user[2]['male'][0], this.data.user[2]['female'][0]);
       var pastMaleRate = this.calTwoNumber(this.data.user[2]['male'][1], this.data.user[2]['female'][1]);
       var femaleRate = this.calTwoNumber(this.data.user[2]['female'][0], this.data.user[2]['male'][0]);
       var pastFemaleRate = this.calTwoNumber(this.data.user[2]['female'][1], this.data.user[2]['male'][1]);
-      var mobileRate = this.calThreeNumber(this.data.user[0][0][1], this.data.user[0][1][1], this.data.user[0][2][1]);
-      var pastMobileRate = this.calThreeNumber(this.data.user[0][0][2], this.data.user[0][1][2], this.data.user[0][2][2]);
-      var pcRate = this.calThreeNumber(this.data.user[0][1][1], this.data.user[0][0][1], this.data.user[0][2][1]);
-      var pastPcRate = this.calThreeNumber(this.data.user[0][1][2], this.data.user[0][0][2], this.data.user[0][2][2]);
-      var tabletRate = this.calThreeNumber(this.data.user[0][2][1], this.data.user[0][1][1], this.data.user[0][0][1]);
-      var pastTabletRate = this.calThreeNumber(this.data.user[0][2][2], this.data.user[0][1][2], this.data.user[0][0][2]);
+      var mobileRate = this.calThreeNumber(this.data.user[1]['mobile'][1], this.data.user[1]['desktop'][1], this.data.user[1]['tablet'][1]);
+      var pastMobileRate = this.calThreeNumber(this.data.user[1]['mobile'][2], this.data.user[1]['desktop'][2], this.data.user[1]['tablet'][2]);
+      var pcRate = this.calThreeNumber(this.data.user[1]['desktop'][1], this.data.user[1]['mobile'][1], this.data.user[1]['tablet'][1]);
+      var pastPcRate = this.calThreeNumber(this.data.user[1]['desktop'][2], this.data.user[1]['mobile'][2], this.data.user[1]['tablet'][2]);
+      var tabletRate = this.calThreeNumber(this.data.user[1]['tablet'][1], this.data.user[1]['mobile'][1], this.data.user[1]['desktop'][1]);
+      var pastTabletRate = this.calThreeNumber(this.data.user[1]['tablet'][2], this.data.user[1]['mobile'][2], this.data.user[1]['desktop'][2]);
       this.newUser = newUserRate;
       this.pastNewUser = pastNewUserRate;
       this.returnUser = returnUserRate;

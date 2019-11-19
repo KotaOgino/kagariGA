@@ -7,7 +7,6 @@ npm-debug.log
 yarn-error.log
 /node_modules
 /tests/
-/app/Google.php
 /app/client_secrets.json
 /vendor/
 .env
