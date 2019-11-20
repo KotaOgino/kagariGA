@@ -22,9 +22,9 @@ use Google_Service_AnalyticsReporting_Segment;
 class Google extends Model {
     public function client()
 {
-        $client_id = "902679289596-n6lrung4jao368f7mv8bnlmkn3grgdqf.apps.googleusercontent.com";
-        $client_secret = "v0P_4grIPyajuAQnAFNl4cu3";
-        $redirect_url = "http://localhost/accounts.google";
+        $client_id = "781086260859-snov5g13jr20rjjttpkoamka7r7mjlet.apps.googleusercontent.com";
+        $client_secret = "zxnH0Tn1MqzKEVQgFlVJf-Jv";
+        $redirect_url = "http://localhost:8888/accounts.google";
         $KEY_FILE_LOCATION = __DIR__ . '/client_secrets.json';
         $gScope = "https://www.googleapis.com/auth/analytics,https://www.googleapis.com/auth/webmasters.readonly";
         $access_type = "offline";
@@ -210,6 +210,7 @@ class Google extends Model {
             $numberUser[$i][] = [$val->dimensions[0], $val->metrics[0]->values[0], $val->metrics[1]->values[0]];
           }
         }
+
         // $a = [$number,$numberUser];
         // dd($a);
         return [$number,$numberUser];

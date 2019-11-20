@@ -103,7 +103,7 @@
               <i class="fas fa-user"></i>
             </div>
             <p class="card-title textCenter">年齢</p>
-            <div v-for="(age,index) in data.user[1]">
+            <div v-for="(age,index) in data.userTypes[2]">
               <div class="flex justifyBetween mb-1">
                 <p class="fourteen black">{{ age[0] }}</p>
                 <p class="eighteen black bold">{{ age[1] }}</p>
@@ -125,7 +125,7 @@
               <i class="fas fa-globe-asia"></i>
             </div>
             <p class="card-title textCenter">国</p>
-            <div v-for="(country,index) in data.user[3]">
+            <div v-for="(country,index) in data.userTypes[0]">
               <div class="flex justifyBetween mb-1">
                 <p class="fourteen black">{{ country[0] }}</p>
                 <p class="eighteen black bold">{{ country[1] }}</p>
@@ -147,7 +147,7 @@
               <i class="fas fa-map-marker-alt"></i>
             </div>
             <p class="card-title textCenter dark-gray">地域</p>
-            <div v-for="(city,index) in data.user[4]">
+            <div v-for="(city,index) in data.userTypes[1]">
               <div class="flex justifyBetween mb-1">
                 <p class="fourteen black">{{ city[0] }}</p>
                 <p class="eighteen black bold">{{ city[1] }}</p>
@@ -258,7 +258,8 @@ export default {
     axios.get('/api/user')
       .then((res) => {
         this.data = res.data,
-          console.log(this.data.userTypes,this.data.user[2]['New Visitor'][0]);
+          console.log(this.data.userTypes);
+          // ,this.data.user[2]['female'][1],this.data.user[1]['desktop'][2]
         this.setNumber(),
         this.widthCountry(),
           this.widthCity(),
@@ -273,20 +274,20 @@ export default {
   },
   methods: {
     setNumber: function(){
-      var newUserRate = this.calTwoNumber(this.data.user[0]['New Visitor'][1],this.data.user[1]['New Visitor'][1]);
-      var pastNewUserRate = this.calTwoNumber(this.data.user[0]['New Visitor'][2],this.data.user[1]['New Visitor'][2]);
-      var returnUserRate = this.calTwoNumber(this.data.user[1]['Return Visitor'][1],this.data.user[0]['Return Visitor'][1]);
-      var pastReturnUserRate = this.calTwoNumber(this.data.user[1]['Return Visitor'][2],this.data.user[0]['Return Visitor'][2]);
+      var newUserRate = this.calTwoNumber(this.data.user[0]['New Visitor'][0],this.data.user[0]['Returning Visitor'][1]);
+      var pastNewUserRate = this.calTwoNumber(this.data.user[0]['New Visitor'][1],this.data.user[0]['Returning Visitor'][0]);
+      var returnUserRate = this.calTwoNumber(this.data.user[0]['Returning Visitor'][0],this.data.user[0]['New Visitor'][1]);
+      var pastReturnUserRate = this.calTwoNumber(this.data.user[0]['Returning Visitor'][1],this.data.user[0]['New Visitor'][0]);
       var maleRate = this.calTwoNumber(this.data.user[2]['male'][0],this.data.user[2]['female'][0]);
       var pastMaleRate = this.calTwoNumber(this.data.user[2]['male'][1],this.data.user[2]['female'][1]);
       var femaleRate = this.calTwoNumber(this.data.user[2]['female'][0],this.data.user[2]['male'][0]);
       var pastFemaleRate = this.calTwoNumber(this.data.user[2]['female'][1],this.data.user[2]['male'][1]);
-      var mobileRate = this.calThreeNumber(this.data.user[1]['mobile'][1],this.data.user[1]['desktop'][1],this.data.user[1]['tablet'][1]);
-      var pastMobileRate = this.calThreeNumber(this.data.user[1]['mobile'][2],this.data.user[1]['desktop'][2],this.data.user[1]['tablet'][2]);
-      var pcRate = this.calThreeNumber(this.data.user[1]['desktop'][1],this.data.user[1]['mobile'][1],this.data.user[1]['tablet'][1]);
-      var pastPcRate = this.calThreeNumber(this.data.user[1]['desktop'][2],this.data.user[1]['mobile'][2],this.data.user[1]['tablet'][2]);
-      var tabletRate = this.calThreeNumber(this.data.user[1]['tablet'][1],this.data.user[1]['mobile'][1],this.data.user[1]['desktop'][1]);
-      var pastTabletRate = this.calThreeNumber(this.data.user[1]['tablet'][2],this.data.user[1]['mobile'][2],this.data.user[1]['desktop'][2]);
+      var mobileRate = this.calThreeNumber(this.data.user[1]['mobile'][0],this.data.user[1]['desktop'][0],this.data.user[1]['tablet'][0]);
+      var pastMobileRate = this.calThreeNumber(this.data.user[1]['mobile'][1],this.data.user[1]['desktop'][1],this.data.user[1]['tablet'][1]);
+      var pcRate = this.calThreeNumber(this.data.user[1]['desktop'][0],this.data.user[1]['mobile'][0],this.data.user[1]['tablet'][0]);
+      var pastPcRate = this.calThreeNumber(this.data.user[1]['desktop'][1],this.data.user[1]['mobile'][1],this.data.user[1]['tablet'][1]);
+      var tabletRate = this.calThreeNumber(this.data.user[1]['tablet'][0],this.data.user[1]['mobile'][0],this.data.user[1]['desktop'][0]);
+      var pastTabletRate = this.calThreeNumber(this.data.user[1]['tablet'][1],this.data.user[1]['mobile'][1],this.data.user[1]['desktop'][1]);
 
       this.newUser = newUserRate;
       this.pastNewUser = pastNewUserRate;
@@ -336,41 +337,41 @@ export default {
       return result;
     },
     widthCountry: function() {
-      var maxNumber = this.data.userTypes[3][0][1];
+      var maxNumber = this.data.userTypes[0][0][1];
       var w_arry = {};
       for (var i = 1; i < 5; i++) {
-        var number = this.data.userTypes[3][i][1];
+        var number = this.data.userTypes[0][i][1];
         var width = this.calRate(number, maxNumber);
         w_arry[i] = width;
       }
       this.stylesCountry = w_arry;
     },
     widthCity: function() {
-      var maxNumber = this.data.userTypes[4][0][1];
+      var maxNumber = this.data.userTypes[1][0][1];
       var w_arry = {};
       for (var i = 1; i < 5; i++) {
-        var number = this.data.userTypes[4][i][1];
+        var number = this.data.userTypes[1][i][1];
         var width = this.calRate(number, maxNumber);
         w_arry[i] = width;
       }
       this.stylesCity = w_arry;
     },
     widthAge: function() {
-      var number = this.data.userTypes[1];
-      var maxNumber = this.data.userTypes[1][0][1];
+      var number = this.data.userTypes[2];
+      var maxNumber = this.data.userTypes[2][0][1];
       var w_arry = {};
       var numberLength = number.length;
       // console.log(numberLength);
       for (var i = 1; i < numberLength; i++) {
-        var number = this.data.userTypes[1][i][1];
+        var number = this.data.userTypes[2][i][1];
         var width = this.calRate(number, maxNumber);
         w_arry[i] = width;
       }
       this.stylesAge = w_arry;
     },
     DoughnutChartDataSex: function() {
-      var maleNumber = male;
-      var femaleNumber = female;
+      var maleNumber = this.data.user[2]['male'][0];
+      var femaleNumber = this.data.user[2]['female'][0];
       var sexData = [];
       sexData.push(maleNumber, femaleNumber);
       this.datacollectionSex = {
@@ -394,8 +395,8 @@ export default {
         }
     },
     DoughnutChartDataUser: function() {
-      var NewNumber = newUser;
-      var ReturnNumber = returnUser;
+      var NewNumber = this.data.user[0]['New Visitor'][0];
+      var ReturnNumber = this.data.user[0]['Returning Visitor'][1];
       var userData = [];
       userData.push(NewNumber, ReturnNumber);
       this.datacollectionUser = {
@@ -419,9 +420,9 @@ export default {
         }
     },
     DoughnutChartDataDevice: function() {
-      var mobileNumber = mobile;
-      var pcNumber = pc;
-      var tabletNumber = tablet;
+      var mobileNumber = this.data.user[1]['mobile'][0];
+      var pcNumber = this.data.user[1]['desktop'][0];
+      var tabletNumber = this.data.user[1]['tablet'][0];
       var deviceData = [];
       deviceData.push(mobileNumber, pcNumber, tabletNumber);
       this.datacollectionDevice = {

@@ -1977,6 +1977,10 @@ body {
   border: 1px solid #EDEDED;
 }
 
+.borderBottom{
+  border-bottom: 1px solid #EDEDED;
+}
+
 .bold {
   font-weight: bold;
 }
@@ -2008,6 +2012,10 @@ body {
 .kagariBorder {
   border: 1px solid #EDEDED;
   border-radius: 5px;
+}
+
+.pointer{
+  cursor: pointer;
 }
 
 .dark-gray {
