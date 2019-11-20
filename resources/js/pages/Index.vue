@@ -196,7 +196,7 @@ export default {
     axios.get('/api/analytics')
       .then((res) => {
         this.data = res.data,
-          console.log(this.data);
+          // console.log(this.data);
         this.fillData()
       })
       .catch(error => {
@@ -243,8 +243,8 @@ export default {
           datasets: [{
             label: '今期間',
             borderColor: '#007AFF',
+            backgroundColor: '#5AC8FA1A',
             pointBackgroundColor: 'blue',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
             data: arrayDataOne
           }, {
             label: '前期間',

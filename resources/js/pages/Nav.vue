@@ -2,17 +2,23 @@
 <div>
   <section class="mt-5 bottom1Rem">
   <div class="container">
+    <!-- <div class="">
+      <v-card>
+        <v-btn>aaa</v-btn>
+      </v-card>
+      <v-date-picker v-model="dates" range></v-date-picker>
+    </div> -->
   <div class="bd-highlight mb-1 bg-white kagariBorder">
   <div class="d-flex">
   <div class="mr-auto p-2 bd-highlight top-line">
-  <p class="mt-4 ml-3 sixteen bold">KAGARI</p>
+  <p class="mt-4 ml-3 sixteen bold">{{data.site_info[1]}}</p>
   <br>
-  <p class="ml-3 mb-4 gray fourteen">https://kagari.ai</p>
+  <p class="ml-3 mb-4 gray fourteen">{{data.site_info[0]}}</p>
   </div>
   <div class="p-2 bd-highlight top-line">
-  <p class="mt-4 mr-3 blue fourteen">期間</p>
+  <p class="mt-4 mr-3 blue fourteen">期間<span class="ml-3 gray borderBottom pointer">{{data.site_info[2]}} 〜 {{data.site_info[3]}}</span></p>
   <br>
-  <p class="mr-3 mb-4 red fourteen">比較</p>
+  <p class="mr-3 mb-4 red fourteen">比較<span class="ml-3 gray borderBottom pointer">{{data.site_info[4]}} 〜 {{data.site_info[5]}}</span></p>
   </div>
   </div>
   <nav class="nav top-nav">
@@ -56,8 +62,20 @@
 export default {
     data() {
         return {
-            isActive: 1
+          data: {},
+          isActive: 1,
+          dates: ['2019-09-10', '2019-09-20']
         }
+    },
+    mounted() {
+        axios.get('/api/nav')
+            .then((res) => {
+                this.data = res.data
+                // console.log(this.data.site_info);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 }
 </script>

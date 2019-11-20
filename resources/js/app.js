@@ -19,15 +19,21 @@ $(function() {
 
 import Vue from 'vue'
 // ルーティングの定義をインポートする
+import Vuetify from 'vuetify'
+import "vuetify/dist/vuetify.min.css";
 import router from './router'
 // ルートコンポーネントをインポートする
 import App from './App.vue'
+
+Vue.use(Vuetify)
 
 // Vue.jsの実行
 document.addEventListener('DOMContentLoaded', function() {
   new Vue({
   el: '#app',
+  // vuetify: new Vuetify(),
   router, // ルーティングの定義を読み込む
+  Vuetify,
   components: { App }, // ルートコンポーネントの使用を宣言する
   template: '<App />' // ルートコンポーネントを描画する
 });

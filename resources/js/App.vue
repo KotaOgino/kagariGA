@@ -10,5 +10,5 @@
 import Nav from "./pages/Nav";
 export default {
   components: { Nav }
-};
+}
 </script>
