@@ -46,7 +46,7 @@ class VueController extends Controller
         ];
   }
   // サマリー
-  public function analytics(Google $google, AddSite $addSite){
+  public function analytics(Google $google, AddSite $addSite, Request $request){
     $user = Auth::user();
     $id =  $user->id;
     $add_sites = AddSite::where('user_id', $id)->get();
@@ -87,7 +87,21 @@ class VueController extends Controller
         }
     }
     $gsa = new Google_Service_AnalyticsReporting($client);
-    $end = date('Y-m-d', strtotime('-1 day', time()));
+    if (!isset($request->calender)){
+      $end = date('Y-m-d', strtotime('-1 day', time()));
+      $start = date('Y-m-d', strtotime('-30 days', time()));
+      $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+      $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
+    }else{
+      $end = date('Y-m-d', strtotime('-1 day', time()));
+      $start = date('Y-m-d', strtotime('-100 days', time()));
+      $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+      $comStart = date('Y-m-d', strtotime('-100 days', strtotime($comEnd)));
+      // $start = '';
+      // $end = '';
+      // $comStart = '';
+      // $comEnd = '';
+    }
     $start = date('Y-m-d', strtotime('-30 days', time()));
     $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
     $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
@@ -112,6 +126,7 @@ class VueController extends Controller
     $comAveSs = $comResult[5];
     $comPv = $comResult[6];
     $comExit = $comResult[7];
+    $site_info = [$url,$siteName,$start,$end,$comStart,$comEnd];
     $data =[
     "session"=>$ss,
     "pSession"=>$ps,
@@ -130,9 +145,9 @@ class VueController extends Controller
     "compareUser"=>$compareUser,
     "comAveSs"=>$comAveSs,
     "comPv"=>$comPv,
-    "comExit"=>$comExit
-    // "site_info"=>$site_info
-    ];
+    "comExit"=>$comExit,
+    "site_info"=>$site_info
+  ];
 
     return $data;
   }

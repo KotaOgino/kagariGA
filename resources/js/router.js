@@ -43,7 +43,7 @@ const routes = [{
   {
     path: '/ad',
     component: Ad,
-    name: 'Ad'
+    name: ';'
   },
   {
     path: '*',

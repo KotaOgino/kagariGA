@@ -18,22 +18,39 @@ $(function() {
 });
 
 import Vue from 'vue'
+
+import Vuetify from 'vuetify/lib'
+
+import colors from 'vuetify/es5/util/colors'
+
 // ルーティングの定義をインポートする
-import Vuetify from 'vuetify'
-import "vuetify/dist/vuetify.min.css";
 import router from './router'
 // ルートコンポーネントをインポートする
 import App from './App.vue'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  theme: {
+    primary: colors.blue.darken2,
+    accent: colors.grey.darken3,
+    secondary: colors.amber.darken3,
+    info: colors.teal.lighten1,
+    warning: colors.amber.base,
+    error: colors.deepOrange.accent4,
+    success: colors.green.accent3
+  }
+})
+
+import 'vuetify/dist/vuetify.min.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+
+export default new Vuetify();
 
 // Vue.jsの実行
 document.addEventListener('DOMContentLoaded', function() {
   new Vue({
   el: '#app',
-  // vuetify: new Vuetify(),
   router, // ルーティングの定義を読み込む
-  Vuetify,
+  // Vuetixfy,
   components: { App }, // ルートコンポーネントの使用を宣言する
   template: '<App />' // ルートコンポーネントを描画する
 });

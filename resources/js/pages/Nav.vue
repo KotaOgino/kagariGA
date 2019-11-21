@@ -2,12 +2,6 @@
 <div>
   <section class="mt-5 bottom1Rem">
   <div class="container">
-    <!-- <div class="">
-      <v-card>
-        <v-btn>aaa</v-btn>
-      </v-card>
-      <v-date-picker v-model="dates" range></v-date-picker>
-    </div> -->
   <div class="bd-highlight mb-1 bg-white kagariBorder">
   <div class="d-flex">
   <div class="mr-auto p-2 bd-highlight top-line">
@@ -16,9 +10,9 @@
   <p class="ml-3 mb-4 gray fourteen">{{data.site_info[0]}}</p>
   </div>
   <div class="p-2 bd-highlight top-line">
-  <p class="mt-4 mr-3 blue fourteen">期間<span class="ml-3 gray borderBottom pointer">{{data.site_info[2]}} 〜 {{data.site_info[3]}}</span></p>
+  <p class="mt-4 mr-3 blue fourteen" v-on:click="dataAjax">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p>
   <br>
-  <p class="mr-3 mb-4 red fourteen">比較<span class="ml-3 gray borderBottom pointer">{{data.site_info[4]}} 〜 {{data.site_info[5]}}</span></p>
+  <p class="mr-3 mb-4 red fourteen">比較<span class="ml-3 gray borderBottom pointer">{{comStart}} 〜 {{comEnd}}</span></p>
   </div>
   </div>
   <nav class="nav top-nav">
@@ -64,18 +58,44 @@ export default {
         return {
           data: {},
           isActive: 1,
-          dates: ['2019-09-10', '2019-09-20']
+          start: '',
+          end: '',
+          comStart: '',
+          comEnd: ''
         }
     },
     mounted() {
         axios.get('/api/nav')
             .then((res) => {
-                this.data = res.data
-                // console.log(this.data.site_info);
+                this.data = res.data,
+                // console.log(this.data.site_info[2]);
+                this.dateSet()
             })
             .catch(error => {
                 console.log(error);
             })
+    },
+    methods: {
+      dateSet: function(){
+        this.start = this.data.site_info[2];;
+        this.end = this.data.site_info[3];;
+        this.comStart = this.data.site_info[4];;
+        this.comEnd = this.data.site_info[5];;
+      },
+      dataAjax: function(){
+        var calender = {
+            start: this.start,
+            end: this.end,
+            comStart: this.comStart,
+            comEnd: this.comEnd
+        };
+        axios.post('/api/ajax',calender).then(res => {
+          console.log(calender);
+        })
+        .catch(error => {
+            console.warn(error);
+        });
+      }
     }
 }
 </script>

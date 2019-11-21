@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const vuetifyLoader = require('vuetify-loader/lib/plugin');
 
 mix.js('resources/js/app.js', 'public/js');
 
@@ -35,4 +36,8 @@ mix.scripts([
   'resources/js/table-scroll.js',
   'resources/js/data-diff.js',
 ], 'public/js/analysis.js');
+
 // Vue
+mix.webpackConfig({
+  plugins: [new vuetifyLoader()]
+});
