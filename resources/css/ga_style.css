@@ -3,14 +3,22 @@ body {
   color: #545A5D;
 }
 
+main{
+  min-height: 95vh;
+}
+
+ .container{
+  padding: 12px 0!important;
+}
+
 .container p {
   margin: 0;
   padding: 0;
 }
 
 .col-md-6,.col-md-4,.col-md-3{
-  padding-left: 8px!important;
-  padding-right: 8px!important;
+  /* padding-left: 8px!important;
+  padding-right: 8px!important; */
 }
 
 .block{
@@ -304,7 +312,7 @@ body {
 }
 
 .LineInfo {
-  margin: 0 auto;
+  margin: 0 1rem;;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -429,6 +437,9 @@ body {
 .small {
   max-width: 600px;
 }
+.card {
+  border: 1px solid #EDEDED!important;
+}
 
 /* レポートカード */
 .nowNumber {
@@ -465,12 +476,16 @@ body {
 .commentArea{
   width: auto;
   background-color: #ffffff;
-  padding: 0.5rem;
+  padding: 0.8rem 0.5rem;
   margin-bottom: 5rem;
 }
 
 .commentArea .commentTextArea textarea{
   width: 800px;
+}
+
+.commentTextArea h6{
+  margin: 1rem 0;
 }
 /* ドーナツチャート */
 #doughnut-chart{

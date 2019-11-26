@@ -170,7 +170,7 @@
         <i class="fas fa-comment-dots"></i>
       </div>
       <div class="commentTextArea">
-        <h6 class="dark-gray sixteen bold">コメント</h6>
+        <h6 class="dark-gray sixteen bold">コメントの見出し</h6>
         <textarea placeholder="コメントを入力" style="border:none;"></textarea>
       </div>
     </div>
