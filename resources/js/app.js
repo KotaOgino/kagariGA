@@ -8,13 +8,13 @@ require('jquery-drawer');
 require('tablesorter');
 
 $(function() {
-    // ドロワーメニュー
-    $('.drawer').drawer();
-    $('.drawer-dropdown').hover(function() {
-        $('ul:not(:animated)', this).slideDown();
-    }, function() {
-        $('ul.drawer-dropdown-menu', this).slideUp();
-    });
+  // ドロワーメニュー
+  $('.drawer').drawer();
+  $('.drawer-dropdown').hover(function() {
+    $('ul:not(:animated)', this).slideDown();
+  }, function() {
+    $('ul.drawer-dropdown-menu', this).slideUp();
+  });
 });
 
 import Vue from 'vue'
@@ -45,13 +45,16 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 export default new Vuetify();
 
+
 // Vue.jsの実行
 document.addEventListener('DOMContentLoaded', function() {
   new Vue({
-  el: '#app',
-  router, // ルーティングの定義を読み込む
-  // Vuetixfy,
-  components: { App }, // ルートコンポーネントの使用を宣言する
-  template: '<App />' // ルートコンポーネントを描画する
-});
+    el: '#app',
+    router, // ルーティングの定義を読み込む
+    // Vuetixfy,
+    components: {
+      App
+    }, // ルートコンポーネントの使用を宣言する
+    template: '<App />' // ルートコンポーネントを描画する
+  });
 });

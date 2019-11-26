@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'api'], function(){
     Route::get('nav','VueController@nav');
-    Route::post('ajax','VueController@analytics');
+    Route::post('ajax','AxiosController@analyticsAxios');
     Route::get('analytics','VueController@analytics');
     Route::get('user','VueController@user');
     Route::get('inflow','VueController@inflow');

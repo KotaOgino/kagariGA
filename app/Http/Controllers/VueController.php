@@ -37,16 +37,16 @@ class VueController extends Controller
         $url = $addSite->url;
         $siteName = $addSite->site_name;
         $end = date('Y-m-d', strtotime('-1 day', time()));
-        $start = date('Y-m-d', strtotime('-30 days', time()));
+        $start = date('Y-m-d', strtotime('-100 days', time()));
         $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-        $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
+        $comStart = date('Y-m-d', strtotime('-100 days', strtotime($comEnd)));
         $site_info = [$url,$siteName,$start,$end,$comStart,$comEnd];
         return $data = [
           "site_info"=>$site_info
         ];
   }
   // サマリー
-  public function analytics(Google $google, AddSite $addSite, Request $request){
+  public function analytics(Google $google, AddSite $addSite){
     $user = Auth::user();
     $id =  $user->id;
     $add_sites = AddSite::where('user_id', $id)->get();
@@ -87,21 +87,21 @@ class VueController extends Controller
         }
     }
     $gsa = new Google_Service_AnalyticsReporting($client);
-    if (!isset($request->calender)){
+
       $end = date('Y-m-d', strtotime('-1 day', time()));
       $start = date('Y-m-d', strtotime('-30 days', time()));
       $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
       $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
-    }else{
-      $end = date('Y-m-d', strtotime('-1 day', time()));
-      $start = date('Y-m-d', strtotime('-100 days', time()));
-      $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-      $comStart = date('Y-m-d', strtotime('-100 days', strtotime($comEnd)));
-      // $start = '';
-      // $end = '';
-      // $comStart = '';
-      // $comEnd = '';
-    }
+    //   if ($request->isMethod('post')){
+    //   $end = date('Y-m-d', strtotime('-1 day', time()));
+    //   $start = date('Y-m-d', strtotime('-100 days', time()));
+    //   $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
+    //   $comStart = date('Y-m-d', strtotime('-100 days', strtotime($comEnd)));
+    //   // $start = '';
+    //   // $end = '';
+    //   // $comStart = '';
+    //   // $comEnd = '';
+    // }
     $start = date('Y-m-d', strtotime('-30 days', time()));
     $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
     $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));

@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <section class="mt-5 bottom1Rem">
+    <!-- <section class="mt-5 bottom1Rem">
     <div class="container">
     <div class="bd-highlight mb-1 bg-white kagariBorder">
     <div class="d-flex">
@@ -49,7 +49,7 @@
     </nav>
     </div>
     </div>
-    </section>
+    </section> -->
   <div class="userLineGraph kagariBorder bottom1Rem">
     <div class="LineInfo">
       <div class="iconUser iconTop">
@@ -57,12 +57,13 @@
       </div>
       <div class="user-span">
         <p class="dark-gray fourteen bold">ユーザー</p>
-        <p class="tewlve dark-gray"><i class="far fa-calendar-alt blue mr-1"></i>20xx-x-xx - 20xx-x-xx</p>
-        <p class="tewlve dark-gray"><i class="fas fa-arrows-alt-h red mr-1"></i>20xx-x-xx - 20xx-x-xx</p>
+        <p class="tewlve dark-gray"><i class="far fa-calendar-alt blue mr-1"></i>{{calender.start}} - {{calender.end}}</p>
+        <p class="tewlve dark-gray"><i class="fas fa-arrows-alt-h red mr-1"></i>{{calender.comStart}} - {{calender.comEnd}}</p>
       </div>
     </div>
-    <div class="userLine">
-      <line-chart :chart-data="datacollection" :options="options" :height="161" :width="720"></line-chart>
+    <div class="userLine ml-3">
+      <line-chart :chart-data="datacollection" :options="options" :height="161" :width="900"></line-chart>
+      <!-- <line-chart :chart-data="datacollection" :options="options"></line-chart> -->
     </div>
   </div>
   <div class="row">
@@ -201,7 +202,7 @@
         <i class="fas fa-comment-dots"></i>
       </div>
       <div class="commentTextArea">
-        <h6 class="dark-gray sixteen bold">コメント</h6>
+        <h6 class="dark-gray sixteen bold">コメントの見出し</h6>
         <textarea placeholder="コメントを入力" style="border:none;"></textarea>
       </div>
     </div>
@@ -226,6 +227,8 @@
 </template>
 <script>
 import LineChart from '../chart/LineChart.js'
+import EventBus from '../EventBus.js'
+
 export default {
   components: {
     // ここで読んだコンポーネントをケバブケースにしたら普通に使えるっぽい
@@ -241,13 +244,31 @@ export default {
       start: '',
       end: '',
       comStart: '',
-      comEnd: ''
+      comEnd: '',
+      calender: {}
     }
   },
+  created() {
+    this.getAxios(),
+    EventBus.$on('site-info',this.getSiteInfo)
+  },
   mounted() {
-    this.getAxios()
+
+  },
+  updated() {
+    // this.dataAjax()
   },
   methods: {
+    getSiteInfo: function(calender){
+      this.calender = calender;
+      axios.post('/api/ajax',this.calender).then(res => {
+        console.log(calender);
+        this.$router.go({path: this.$router.currentRoute.path, force: true})
+      })
+      .catch(error => {
+          console.warn(error);
+      });
+    },
     /**
      * 入力されたデータの数に応じてランダムなチャートデータを作成する
      */
@@ -287,15 +308,10 @@ export default {
         this.$router.go({path: this.$router.currentRoute.path, force: true});
     },
     dataAjax: function(){
-      var calender = {
-          start: this.start,
-          end: this.end,
-          comStart: this.comStart,
-          comEnd: this.comEnd
-      };
+      var calender = this.calender;
       axios.post('/api/ajax',calender).then(res => {
         console.log(calender);
-        this.pageReload()
+        this.$router.go({path: this.$router.currentRoute.path, force: true})
       })
       .catch(error => {
           console.warn(error);

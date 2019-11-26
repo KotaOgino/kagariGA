@@ -1,8 +1,8 @@
 <template>
-<div>
-  <section class="mt-5 bottom1Rem">
+<div class="navcomp">
+  <section class="mt-2">
   <div class="container">
-  <div class="bd-highlight mb-1 bg-white kagariBorder">
+  <div class="bd-highlight bg-white kagariBorder">
   <div class="d-flex">
   <div class="mr-auto p-2 bd-highlight top-line">
   <p class="mt-4 ml-3 sixteen bold">{{data.site_info[1]}}</p>
@@ -10,7 +10,8 @@
   <p class="ml-3 mb-4 gray fourteen">{{data.site_info[0]}}</p>
   </div>
   <div class="p-2 bd-highlight top-line">
-  <p class="mt-4 mr-3 blue fourteen" v-on:click="dataAjax">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p>
+  <!-- <p class="mt-4 mr-3 blue fourteen" v-on:click="dataAjax">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p> -->
+  <p class="mt-4 mr-3 blue fourteen" v-on:click="siteInfo">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p>
   <br>
   <p class="mr-3 mb-4 red fourteen">比較<span class="ml-3 gray borderBottom pointer">{{comStart}} 〜 {{comEnd}}</span></p>
   </div>
@@ -53,6 +54,7 @@
 </div>
 </template>
 <script>
+import EventBus from '../EventBus.js'
 export default {
     data() {
         return {
@@ -64,33 +66,58 @@ export default {
           comEnd: ''
         }
     },
+    beforeMount(){
+      this.axiosGet()
+    },
     mounted() {
-        axios.get('/api/nav')
-            .then((res) => {
-                this.data = res.data,
-                // console.log(this.data.site_info[2]);
-                this.dateSet()
-            })
-            .catch(error => {
-                console.log(error);
-            })
+      this.$nextTick(function () {
+      // this.siteInfo()
+  })
     },
     methods: {
-      dateSet: function(){
-        this.start = this.data.site_info[2];;
-        this.end = this.data.site_info[3];;
-        this.comStart = this.data.site_info[4];;
-        this.comEnd = this.data.site_info[5];;
-      },
-      dataAjax: function(){
+      siteInfo: function(){
+        this.dateSet();
         var calender = {
             start: this.start,
             end: this.end,
             comStart: this.comStart,
             comEnd: this.comEnd
         };
+        console.log(calender);
+        EventBus.$emit('site-info', calender);
+      },
+      axiosGet: function(){
+          axios.get('/api/nav')
+              .then((res) => {
+                  this.data = res.data,
+                  // console.log(this.data.site_info[2]);
+                  this.dateSet()
+              })
+              .catch(error => {
+                  console.log(error);
+              })
+      },
+      dateSet: function(){
+        this.start = this.data.site_info[2];
+        this.end = this.data.site_info[3];
+        this.comStart = this.data.site_info[4];
+        this.comEnd = this.data.site_info[5];
+      },
+      dataAjax: function(){
+        var start = this.start;
+        var end = this.end;
+        var comStart = this.comStart;
+        var comEnd = this.comEnd;
+
+        var calender = new URLSearchParams();
+        calender.append('start', 'start');
+        calender.append('end', 'end');
+        calender.append('comStart', 'comStart');
+        calender.append('comEnd', 'comEnd');
+
         axios.post('/api/ajax',calender).then(res => {
-          console.log(calender);
+          console.log('送信したデータ：' + response.data.calender);
+
         })
         .catch(error => {
             console.warn(error);
