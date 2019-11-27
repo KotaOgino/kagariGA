@@ -11,11 +11,43 @@
   </div>
   <div class="p-2 bd-highlight top-line">
   <!-- <p class="mt-4 mr-3 blue fourteen" v-on:click="dataAjax">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p> -->
-  <p class="mt-4 mr-3 blue fourteen" v-on:click="siteInfo">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p>
+  <p class="mt-4 mr-3 blue fourteen" data-toggle="modal" data-target="#exampleModal">期間<span class="ml-3 gray borderBottom pointer">{{start}} 〜 {{end}}</span></p>
   <br>
-  <p class="mr-3 mb-4 red fourteen">比較<span class="ml-3 gray borderBottom pointer">{{comStart}} 〜 {{comEnd}}</span></p>
+  <p class="mr-3 mb-4 red fourteen" data-toggle="modal" data-target="#exampleModal">比較<span class="ml-3 gray borderBottom pointer">{{comStart}} 〜 {{comEnd}}</span></p>
   </div>
   </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">分析期間を変更する</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <div class="col-md-6">
+          <p>分析 <span>{{start}} 〜 {{end}}</span></p>
+          開始：<input type="date" v-model="start">
+          <br>
+          終了：<input type="date" v-model="end">
+        </div>
+        <div class="col-md-6">
+          <p>比較 <span>{{comStart}} 〜 {{comEnd}}</span></p>
+          開始：<input type="date" v-model="comStart">
+          <br>
+          終了：<input type="date" v-model="comEnd">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="siteInfo">期間を変更</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <nav class="nav top-nav">
   <p v-on:click='isActive=1' v-bind:class="[ isActive === 1 ? 'active' : '' ]" class="nav-item nav-link">
       <router-link to="/" class="router-link">
@@ -55,6 +87,7 @@
 </template>
 <script>
 import EventBus from '../EventBus.js'
+
 export default {
     data() {
         return {
@@ -66,32 +99,26 @@ export default {
           comEnd: ''
         }
     },
-    beforeMount(){
+    mounted() {
       this.axiosGet()
     },
-    mounted() {
-      this.$nextTick(function () {
-      // this.siteInfo()
-  })
-    },
     methods: {
-      siteInfo: function(){
-        this.dateSet();
+      siteInfo: function() {
         var calender = {
             start: this.start,
             end: this.end,
             comStart: this.comStart,
             comEnd: this.comEnd
         };
-        console.log(calender);
+        console.log(calender,'post');
         EventBus.$emit('site-info', calender);
       },
       axiosGet: function(){
           axios.get('/api/nav')
               .then((res) => {
                   this.data = res.data,
-                  // console.log(this.data.site_info[2]);
-                  this.dateSet()
+                  this.dateSet(),
+                  this.siteInfo()
               })
               .catch(error => {
                   console.log(error);
@@ -102,26 +129,6 @@ export default {
         this.end = this.data.site_info[3];
         this.comStart = this.data.site_info[4];
         this.comEnd = this.data.site_info[5];
-      },
-      dataAjax: function(){
-        var start = this.start;
-        var end = this.end;
-        var comStart = this.comStart;
-        var comEnd = this.comEnd;
-
-        var calender = new URLSearchParams();
-        calender.append('start', 'start');
-        calender.append('end', 'end');
-        calender.append('comStart', 'comStart');
-        calender.append('comEnd', 'comEnd');
-
-        axios.post('/api/ajax',calender).then(res => {
-          console.log('送信したデータ：' + response.data.calender);
-
-        })
-        .catch(error => {
-            console.warn(error);
-        });
       }
     }
 }

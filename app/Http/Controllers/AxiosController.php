@@ -16,7 +16,7 @@ use Google_Service_Analytics;
 use Google_Service_AnalyticsReporting;
 use Google_Service_Webmasters;
 
-class VueController extends Controller
+class AxiosController extends Controller
 {
   public function __construct()
   {
@@ -66,10 +66,10 @@ class VueController extends Controller
     }
     $gsa = new Google_Service_AnalyticsReporting($client);
 
-    $end = $request->calender['end'];
-    $start = $request->calender['start'];
-    $comEnd = $request->calender['comEnd'];
-    $comStart = $request->calender['comStart'];
+    $end = $request->end;
+    $start = $request->start;
+    $comEnd = $request->comEnd;
+    $comStart = $request->comStart;
 
     $ga_result = $google->get_ga_data($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
     $originResult = $ga_result[0][0];
@@ -93,6 +93,7 @@ class VueController extends Controller
     $comPv = $comResult[6];
     $comExit = $comResult[7];
     $site_info = [$url,$siteName,$start,$end,$comStart,$comEnd];
+    $axios = 'axios';
     $data =[
     "session"=>$ss,
     "pSession"=>$ps,
@@ -112,7 +113,9 @@ class VueController extends Controller
     "comAveSs"=>$comAveSs,
     "comPv"=>$comPv,
     "comExit"=>$comExit,
-    "site_info"=>$site_info
+    "site_info"=>$site_info,
+    "axios" => $axios,
+    "ga_result" => $ga_result
   ];
 
     return $data;

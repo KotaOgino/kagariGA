@@ -124,6 +124,7 @@ class Google extends Model {
           $value = $value->values;
           array_push($array, $value);
         }
+        // dd($array,$arrayUser);
         return [$array,$arrayUser];
     }
     public function get_ga_user($analytics, $VIEW_ID, $start, $end, $comStart, $comEnd)

@@ -1936,9 +1936,12 @@ main{
   padding: 0;
 }
 
-.col-md-6,.col-md-4,.col-md-3{
-  /* padding-left: 8px!important;
-  padding-right: 8px!important; */
+/* modal */
+.modal{
+  background-color: transparent;
+}
+.modal-title{
+  border-bottom: none!important;
 }
 
 .block{

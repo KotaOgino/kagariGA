@@ -37,9 +37,9 @@ class VueController extends Controller
         $url = $addSite->url;
         $siteName = $addSite->site_name;
         $end = date('Y-m-d', strtotime('-1 day', time()));
-        $start = date('Y-m-d', strtotime('-100 days', time()));
+        $start = date('Y-m-d', strtotime('-30 days', time()));
         $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-        $comStart = date('Y-m-d', strtotime('-100 days', strtotime($comEnd)));
+        $comStart = date('Y-m-d', strtotime('-30 days', strtotime($comEnd)));
         $site_info = [$url,$siteName,$start,$end,$comStart,$comEnd];
         return $data = [
           "site_info"=>$site_info
@@ -141,8 +141,8 @@ class VueController extends Controller
     "comUser"=>$comUser,
     "comTime"=>$comTime,
     "comBRate"=>$comBr,
-    "originUser"=>$originUser,
-    "compareUser"=>$compareUser,
+    // "originUser"=>$originUser,
+    // "compareUser"=>$compareUser,
     "comAveSs"=>$comAveSs,
     "comPv"=>$comPv,
     "comExit"=>$comExit,

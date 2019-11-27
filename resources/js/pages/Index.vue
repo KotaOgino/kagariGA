@@ -249,7 +249,6 @@ export default {
     }
   },
   created() {
-    this.getAxios(),
     EventBus.$on('site-info',this.getSiteInfo)
   },
   mounted() {
@@ -262,8 +261,10 @@ export default {
     getSiteInfo: function(calender){
       this.calender = calender;
       axios.post('/api/ajax',this.calender).then(res => {
-        console.log(calender);
-        this.$router.go({path: this.$router.currentRoute.path, force: true})
+        this.data = res.data,
+        this.dateSet(),
+        this.fillData()
+        // this.$router.go({path: this.$router.currentRoute.path, force: true})
       })
       .catch(error => {
           console.warn(error);
@@ -292,31 +293,30 @@ export default {
       this.comStart = this.data.site_info[4];;
       this.comEnd = this.data.site_info[5];;
     },
-    getAxios: function(){
-      axios.get('/api/analytics')
-        .then((res) => {
-          this.data = res.data,
-            // console.log(this.data);
-          this.dateSet(),
-          this.fillData()
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    },
+    // getAxios: function(){
+    //   axios.get('/api/analytics')
+    //     .then((res) => {
+    //       this.data = res.data,
+    //       this.dateSet(),
+    //       this.fillData()
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     })
+    // },
     pageReload:function() {
         this.$router.go({path: this.$router.currentRoute.path, force: true});
     },
-    dataAjax: function(){
-      var calender = this.calender;
-      axios.post('/api/ajax',calender).then(res => {
-        console.log(calender);
-        this.$router.go({path: this.$router.currentRoute.path, force: true})
-      })
-      .catch(error => {
-          console.warn(error);
-      });
-    },
+    // dataAjax: function(){
+    //   var calender = this.calender;
+    //   axios.post('/api/ajax',calender).then(res => {
+    //     console.log(calender);
+    //     this.$router.go({path: this.$router.currentRoute.path, force: true})
+    //   })
+    //   .catch(error => {
+    //       console.warn(error);
+    //   });
+    // },
     fillData: function() {
       var originUser = this.data['originUser'];
       var compareUser = this.data['compareUser'];

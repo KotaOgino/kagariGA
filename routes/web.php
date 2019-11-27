@@ -77,7 +77,7 @@ Route::get('/{addSite}/compar-ga-report','AjaxController@comparGaReport');
 
 // Vue
 // Route::get('/get', 'HomeController@test');
-Route::post('/api/ajax','VueController@analytics');
+Route::post('/api/ajax','AxiosController@analyticsAxios');
 
 // Mailの送信テスト
 Route::get('/mail', 'MailSendController@send');
