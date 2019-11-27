@@ -96,6 +96,8 @@
   </div> -->
 </template>
 <script>
+import EventBus from '../EventBus.js'
+
 export default {
   data() {
     return {
@@ -107,19 +109,21 @@ export default {
     }
   },
   created() {
-    axios.get('/api/inflow')
-      .then((res) => {
+    EventBus.$on('site-info',this.getSiteInfo)
+  },
+  methods: {
+    getSiteInfo: function(calender){
+      this.calender = calender;
+      axios.post('/api/ajaxInflow',this.calender).then(res => {
         this.data = res.data,
-        console.log(this.data.inflow);
         this.widthChanel(),
         this.widthSocial(),
         this.widthReferral()
       })
       .catch(error => {
-        console.log(error);
-      })
-  },
-  methods: {
+          console.warn(error);
+      });
+    },
         calRate: function(number, maxNumber) {
           var resultNumber = (number / maxNumber) * 100;
           var _pow = Math.pow(10, 1);

@@ -251,12 +251,6 @@ export default {
   created() {
     EventBus.$on('site-info',this.getSiteInfo)
   },
-  mounted() {
-
-  },
-  updated() {
-    // this.dataAjax()
-  },
   methods: {
     getSiteInfo: function(calender){
       this.calender = calender;
@@ -264,7 +258,6 @@ export default {
         this.data = res.data,
         this.dateSet(),
         this.fillData()
-        // this.$router.go({path: this.$router.currentRoute.path, force: true})
       })
       .catch(error => {
           console.warn(error);

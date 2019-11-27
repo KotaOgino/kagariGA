@@ -218,6 +218,7 @@
 import DoughnutChartSex from '../chart/DoughnutChart.js'
 import DoughnutChartUser from '../chart/DoughnutChart.js'
 import DoughnutChartDevice from '../chart/DoughnutChart.js'
+import EventBus from '../EventBus.js'
 
 export default {
   components: {
@@ -255,24 +256,26 @@ export default {
     }
   },
   created() {
-    axios.get('/api/user')
-      .then((res) => {
-        this.data = res.data,
-          console.log(this.data.userTypes);
-          // ,this.data.user[2]['female'][1],this.data.user[1]['desktop'][2]
-        this.setNumber(),
-        this.widthCountry(),
-          this.widthCity(),
-          this.widthAge(),
-          this.DoughnutChartDataSex(),
-          this.DoughnutChartDataUser(),
-          this.DoughnutChartDataDevice()
-      })
-      .catch(error => {
-        console.error(error);
-      })
+    EventBus.$on('site-info',this.getSiteInfo)
   },
   methods: {
+    getSiteInfo: function(calender){
+      this.calender = calender;
+      console.log(calender,'axios');
+      axios.post('/api/ajaxUser',this.calender).then(res => {
+        this.data = res.data,
+        this.setNumber(),
+        this.widthCountry(),
+        this.widthCity(),
+        this.widthAge(),
+        this.DoughnutChartDataSex(),
+        this.DoughnutChartDataUser(),
+        this.DoughnutChartDataDevice()
+      })
+      .catch(error => {
+          console.warn(error);
+      });
+    },
     setNumber: function(){
       var newUserRate = this.calTwoNumber(this.data.user[0]['New Visitor'][0],this.data.user[0]['Returning Visitor'][1]);
       var pastNewUserRate = this.calTwoNumber(this.data.user[0]['New Visitor'][1],this.data.user[0]['Returning Visitor'][0]);

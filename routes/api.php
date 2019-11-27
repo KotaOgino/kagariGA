@@ -21,7 +21,9 @@ Route::group(['middleware' => 'api'], function(){
     Route::get('nav','VueController@nav');
     Route::post('ajax','AxiosController@analyticsAxios');
     Route::get('analytics','VueController@analytics');
+    Route::post('ajaxUser','AxiosController@userAxios');
     Route::get('user','VueController@user');
+    Route::post('ajaxInflow','AxiosController@inflowAxios');
     Route::get('inflow','VueController@inflow');
     Route::get('action','VueController@action');
     Route::get('conversion','VueController@cv');
