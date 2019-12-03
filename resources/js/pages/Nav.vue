@@ -26,18 +26,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body row">
-        <div class="col-md-6">
-          <p>分析 <span>{{start}} 〜 {{end}}</span></p>
-          開始：<input type="date" v-model="start">
-          <br>
-          終了：<input type="date" v-model="end">
+      <div class="modal-body row mb-4">
+        <div class="col-md-6 textCenter">
+          <p class="mb-3"><span class="blue bold mr-2">分析</span><span class="borderBottom">{{start}} 〜 {{end}}</span></p>
+          <v-app>
+          <v-date-picker  color="info" @input="onDateRangeChange" v-model="dates" range></v-date-picker>
+          </v-app>
         </div>
-        <div class="col-md-6">
-          <p>比較 <span>{{comStart}} 〜 {{comEnd}}</span></p>
-          開始：<input type="date" v-model="comStart">
-          <br>
-          終了：<input type="date" v-model="comEnd">
+        <div class="col-md-6 textCenter">
+          <p class="mb-3"><span class="red bold mr-2">比較</span><span class="borderBottom">{{comStart}} 〜 {{comEnd}}</span></p>
+          <v-app>
+          <v-date-picker  color="info" @input="onComDateRangeChange" v-model="comDates" range></v-date-picker>
+        </v-app>
         </div>
       </div>
       <div class="modal-footer">
@@ -87,6 +87,7 @@
 </template>
 <script>
 import EventBus from '../EventBus.js'
+import EventBus2 from '../EventBus2.js'
 
 export default {
     data() {
@@ -96,11 +97,21 @@ export default {
           start: '',
           end: '',
           comStart: '',
-          comEnd: ''
+          comEnd: '',
+          dates: [],
+          comDates: []
         }
     },
     mounted() {
       this.axiosGet()
+    },
+    watch: {
+      '$route': function (to, from) {
+      if (to.path !== from.path) {
+        console.log('route');
+        this.siteInfo()
+      }
+    }
     },
     methods: {
       siteInfo: function() {
@@ -116,6 +127,7 @@ export default {
       axiosGet: function(){
           axios.get('/api/nav')
               .then((res) => {
+                console.log('navData');
                   this.data = res.data,
                   this.dateSet(),
                   this.siteInfo()
@@ -129,6 +141,18 @@ export default {
         this.end = this.data.site_info[3];
         this.comStart = this.data.site_info[4];
         this.comEnd = this.data.site_info[5];
+        this.dates = [this.start,this.end];
+        this.comDates = [this.comStart,this.comEnd];
+      },
+      onDateRangeChange: function(range){
+        this.dates = range;
+        this.start = this.dates[0];
+        this.end = this.dates[1];
+      },
+      onComDateRangeChange: function(range){
+        this.comDates = range;
+        this.comStart = this.comDates[0];
+        this.comEnd = this.comDates[1];
       }
     }
 }

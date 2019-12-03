@@ -174,6 +174,8 @@
 </div>
 </template>
 <script>
+import EventBus from '../EventBus.js'
+
 export default {
   data() {
     return {
@@ -188,9 +190,13 @@ export default {
       siteViewNumber: ''
     }
   },
-  created() {
-    axios.get('/api/conversion')
-      .then((res) => {
+  mounted() {
+    EventBus.$on('site-info',this.getSiteInfo)
+  },
+  methods: {
+    getSiteInfo: function(calender){
+      this.calender = calender;
+      axios.post('/api/ajaxConversion',this.calender).then(res => {
         this.data = res.data,
         this.siteView(),
         this.makeArrayCv(),
@@ -201,10 +207,9 @@ export default {
           this.widthUser()
       })
       .catch(error => {
-        console.error(error);
-      })
-  },
-  methods: {
+          console.warn(error);
+      });
+    },
     calRate: function(number, maxNumber) {
       var resultNumber = (number / maxNumber) * 100;
       var _pow = Math.pow(10, 1);

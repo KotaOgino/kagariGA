@@ -111,6 +111,8 @@
 </div>
 </template>
 <script>
+import EventBus from '../EventBus.js'
+
 export default {
     data() {
         return {
@@ -125,22 +127,24 @@ export default {
         }
     },
     mounted() {
-        axios.get('/api/action')
-            .then((res) => {
-                this.data = res.data,
-                // console.log(this.data);
-                this.makeArrayBr(),
-                this.makeArrayTime(),
-                this.makeArrayUser(),
-                this.makeArrayPs(),
-                this.makeArrayPv(),
-                this.widthSs()
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        EventBus.$on('site-info',this.getSiteInfo)
     },
     methods: {
+      getSiteInfo: function(calender){
+        this.calender = calender;
+        axios.post('/api/ajaxAction',this.calender).then(res => {
+          this.data = res.data,
+          this.makeArrayBr(),
+          this.makeArrayTime(),
+          this.makeArrayUser(),
+          this.makeArrayPs(),
+          this.makeArrayPv(),
+          this.widthSs()
+        })
+        .catch(error => {
+            console.warn(error);
+        });
+      },
       calRate: function(number, maxNumber) {
         var resultNumber = (number / maxNumber) * 100;
         var _pow = Math.pow(10, 1);

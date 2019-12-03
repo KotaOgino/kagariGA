@@ -248,7 +248,7 @@ export default {
       calender: {}
     }
   },
-  created() {
+  mounted() {
     EventBus.$on('site-info',this.getSiteInfo)
   },
   methods: {

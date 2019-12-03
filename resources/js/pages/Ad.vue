@@ -220,6 +220,8 @@
 </template>
 
 <script>
+import EventBus from '../EventBus.js'
+
 export default {
   data() {
     return {
@@ -239,10 +241,13 @@ export default {
     }
   },
   mounted() {
-    axios.get('/api/ad')
-      .then((res) => {
+    EventBus.$on('site-info',this.getSiteInfo)
+  },
+  methods: {
+    getSiteInfo: function(calender){
+      this.calender = calender;
+      axios.post('/api/ajaxAd',this.calender).then(res => {
         this.data = res.data,
-          console.log(this.data.cv, this.data.cvReport);
         this.makeArraySs(),
           this.makeArrayCv(),
           this.makeArrayCvr(),
@@ -253,10 +258,9 @@ export default {
           this.clickCostAd()
       })
       .catch(error => {
-        console.log(error);
-      })
-  },
-  methods: {
+          console.warn(error);
+      });
+    },
     calRate: function(number, maxNumber) {
       var resultNumber = (number / maxNumber) * 100;
       var _pow = Math.pow(10, 1);

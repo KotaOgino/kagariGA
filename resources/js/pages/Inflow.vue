@@ -108,7 +108,7 @@ export default {
       stylesReferral: {}
     }
   },
-  created() {
+  mounted() {
     EventBus.$on('site-info',this.getSiteInfo)
   },
   methods: {

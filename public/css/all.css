@@ -1942,6 +1942,7 @@ main{
 }
 .modal-title{
   border-bottom: none!important;
+  padding-bottom: 0!important;
 }
 
 .block{
@@ -2474,4 +2475,11 @@ main{
 }
 .equal{
   padding-top: 5rem;
+}
+/* カレンダー */
+.v-picker__title{
+  display: none;
+}
+.v-application--wrap{
+  min-height: auto!important;
 }

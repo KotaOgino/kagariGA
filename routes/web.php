@@ -80,6 +80,9 @@ Route::get('/{addSite}/compar-ga-report','AjaxController@comparGaReport');
 Route::post('/api/ajax','AxiosController@analyticsAxios');
 Route::post('/api/ajaxUser','AxiosController@userAxios');
 Route::post('/api/ajaxInflow','AxiosController@inflowAxios');
+Route::post('/api/ajaxAction','AxiosController@actionAxios');
+Route::post('/api/ajaxConversion','AxiosController@conversionAxios');
+Route::post('ajaxAd','AxiosController@adAxios');
 
 
 // Mailの送信テスト

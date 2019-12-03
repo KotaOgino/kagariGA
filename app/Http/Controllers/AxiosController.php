@@ -222,161 +222,161 @@ class AxiosController extends Controller
     return $data;
   }
   // // ユーザー行動分析
-  // public function action(Google $google, AddSite $addSite){
-  //   $user = Auth::user();
-  //   $id =  $user->id;
-  //   $add_sites = AddSite::where('user_id', $id)->get();
-  //   if (empty($add_sites) || $add_sites == []) {
-  //       return redirect('/accounts.google');
-  //   }
-  //   $addSite = AddSite::where('user_id', $id)->first();
-  //   if (is_null($addSite)) {
-  //       return redirect('/accounts.google');
-  //   }
-  //   $VIEW_ID =(string)$addSite->VIEW_ID;
-  //   $url = $addSite->url;
-  //   $client = $google->client();
-  //   $timeCreated = $user->createdAtToken;
-  //   $refreshToken = $user->refresh_token;
-  //   $time = time();
-  //   $timeDifference = $time - $timeCreated;
-  //   if ($timeDifference < 3600) {
-  //       $accessToken = $user->Gtoken;
-  //       $client->setAccessToken($accessToken);
-  //   } elseif ($timeDifference > 3600) {
-  //       try {
-  //           $client = $client ->refreshToken($refreshToken);
-  //           $newTimeCreated = $client['created'];
-  //           $newAccessToken = $client['access_token'];
-  //           $newRefreshToken = $client['refresh_token'];
-  //           $user->Gtoken = $newAccessToken;
-  //           $user->refresh_token = $newRefreshToken;
-  //           $user->createdAtToken = $newTimeCreated;
-  //           $user->update();
-  //           $client = $google->client();
-  //           $accessToken = $user->Gtoken;
-  //           $client->setAccessToken($accessToken);
-  //       } catch (ErrorException $e) {
-  //           return redirect('login');
-  //       }
-  //   }
-  //   $gsa = new Google_Service_AnalyticsReporting($client);
-  //   $end = date('Y-m-d', strtotime('-1 day', time()));
-  //   $start = date('Y-m-d', strtotime('-30 days', time()));
-  //   $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-  //   $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
-  //
-  //   $ga_action = $google->get_ga_action($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
-  //   $data = $ga_action;
-  //
-  //   return $data;
-  // }
-  //
-  // public function cv(Google $google, AddSite $addSite){
-  //   $user = Auth::user();
-  //   $id =  $user->id;
-  //   $add_sites = AddSite::where('user_id', $id)->get();
-  //   if (empty($add_sites) || $add_sites == []) {
-  //       return redirect('/accounts.google');
-  //   }
-  //   $addSite = AddSite::where('user_id', $id)->first();
-  //   if (is_null($addSite)) {
-  //       return redirect('/accounts.google');
-  //   }
-  //   $VIEW_ID =(string)$addSite->VIEW_ID;
-  //   $url = $addSite->url;
-  //   $client = $google->client();
-  //   $timeCreated = $user->createdAtToken;
-  //   $refreshToken = $user->refresh_token;
-  //   $time = time();
-  //   $timeDifference = $time - $timeCreated;
-  //   if ($timeDifference < 3600) {
-  //       $accessToken = $user->Gtoken;
-  //       $client->setAccessToken($accessToken);
-  //   } elseif ($timeDifference > 3600) {
-  //       try {
-  //           $client = $client ->refreshToken($refreshToken);
-  //           $newTimeCreated = $client['created'];
-  //           $newAccessToken = $client['access_token'];
-  //           $newRefreshToken = $client['refresh_token'];
-  //           $user->Gtoken = $newAccessToken;
-  //           $user->refresh_token = $newRefreshToken;
-  //           $user->createdAtToken = $newTimeCreated;
-  //           $user->update();
-  //           $client = $google->client();
-  //           $accessToken = $user->Gtoken;
-  //           $client->setAccessToken($accessToken);
-  //       } catch (ErrorException $e) {
-  //           return redirect('login');
-  //       }
-  //   }
-  //   $gsa = new Google_Service_AnalyticsReporting($client);
-  //   $end = date('Y-m-d', strtotime('-1 day', time()));
-  //   $start = date('Y-m-d', strtotime('-30 days', time()));
-  //   $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-  //   $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
-  //   $ga_cv = $google->get_ga_cv($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
-  //   $ga_cvOne = $ga_cv[0];
-  //   $ga_cvTwo = $ga_cv[1];
-  //   $data = [
-  //     "cv"=>$ga_cvTwo,
-  //     "cvReport"=>$ga_cvOne
-  //   ];
-  //   return $data;
-  // }
-  //
-  // public function ad(Google $google, AddSite $addSite){
-  //   $user = Auth::user();
-  //   $id =  $user->id;
-  //   $add_sites = AddSite::where('user_id', $id)->get();
-  //   if (empty($add_sites) || $add_sites == []) {
-  //       return redirect('/accounts.google');
-  //   }
-  //   $addSite = AddSite::where('user_id', $id)->first();
-  //   if (is_null($addSite)) {
-  //       return redirect('/accounts.google');
-  //   }
-  //   $VIEW_ID =(string)$addSite->VIEW_ID;
-  //   $url = $addSite->url;
-  //   $client = $google->client();
-  //   $timeCreated = $user->createdAtToken;
-  //   $refreshToken = $user->refresh_token;
-  //   $time = time();
-  //   $timeDifference = $time - $timeCreated;
-  //   if ($timeDifference < 3600) {
-  //       $accessToken = $user->Gtoken;
-  //       $client->setAccessToken($accessToken);
-  //   } elseif ($timeDifference > 3600) {
-  //       try {
-  //           $client = $client ->refreshToken($refreshToken);
-  //           $newTimeCreated = $client['created'];
-  //           $newAccessToken = $client['access_token'];
-  //           $newRefreshToken = $client['refresh_token'];
-  //           $user->Gtoken = $newAccessToken;
-  //           $user->refresh_token = $newRefreshToken;
-  //           $user->createdAtToken = $newTimeCreated;
-  //           $user->update();
-  //           $client = $google->client();
-  //           $accessToken = $user->Gtoken;
-  //           $client->setAccessToken($accessToken);
-  //       } catch (ErrorException $e) {
-  //           return redirect('login');
-  //       }
-  //   }
-  //   $gsa = new Google_Service_AnalyticsReporting($client);
-  //   $end = date('Y-m-d', strtotime('-1 day', time()));
-  //   $start = date('Y-m-d', strtotime('-30 days', time()));
-  //   $comEnd = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-  //   $comStart = date('Y-m-d', strtotime('-29 days', strtotime($comEnd)));
-  //   $ga_ad = $google->get_ga_ad($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
-  //   $ga_adOne = $ga_ad[0];
-  //   $ga_adTwo = $ga_ad[1];
-  //   $data = [
-  //     "cv"=>$ga_adOne,
-  //     "cvReport"=>$ga_adTwo
-  //   ];
-  //   return $data;
-  // }
+  public function actionAxios(Google $google, AddSite $addSite, Request $request){
+    $user = Auth::user();
+    $id =  $user->id;
+    $add_sites = AddSite::where('user_id', $id)->get();
+    if (empty($add_sites) || $add_sites == []) {
+        return redirect('/accounts.google');
+    }
+    $addSite = AddSite::where('user_id', $id)->first();
+    if (is_null($addSite)) {
+        return redirect('/accounts.google');
+    }
+    $VIEW_ID =(string)$addSite->VIEW_ID;
+    $url = $addSite->url;
+    $client = $google->client();
+    $timeCreated = $user->createdAtToken;
+    $refreshToken = $user->refresh_token;
+    $time = time();
+    $timeDifference = $time - $timeCreated;
+    if ($timeDifference < 3600) {
+        $accessToken = $user->Gtoken;
+        $client->setAccessToken($accessToken);
+    } elseif ($timeDifference > 3600) {
+        try {
+            $client = $client ->refreshToken($refreshToken);
+            $newTimeCreated = $client['created'];
+            $newAccessToken = $client['access_token'];
+            $newRefreshToken = $client['refresh_token'];
+            $user->Gtoken = $newAccessToken;
+            $user->refresh_token = $newRefreshToken;
+            $user->createdAtToken = $newTimeCreated;
+            $user->update();
+            $client = $google->client();
+            $accessToken = $user->Gtoken;
+            $client->setAccessToken($accessToken);
+        } catch (ErrorException $e) {
+            return redirect('login');
+        }
+    }
+    $gsa = new Google_Service_AnalyticsReporting($client);
+    $end = $request->end;
+    $start = $request->start;
+    $comEnd = $request->comEnd;
+    $comStart = $request->comStart;
+
+    $ga_action = $google->get_ga_action($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
+    $data = $ga_action;
+
+    return $data;
+  }
+
+  public function conversionAxios(Google $google, AddSite $addSite, Request $request){
+    $user = Auth::user();
+    $id =  $user->id;
+    $add_sites = AddSite::where('user_id', $id)->get();
+    if (empty($add_sites) || $add_sites == []) {
+        return redirect('/accounts.google');
+    }
+    $addSite = AddSite::where('user_id', $id)->first();
+    if (is_null($addSite)) {
+        return redirect('/accounts.google');
+    }
+    $VIEW_ID =(string)$addSite->VIEW_ID;
+    $url = $addSite->url;
+    $client = $google->client();
+    $timeCreated = $user->createdAtToken;
+    $refreshToken = $user->refresh_token;
+    $time = time();
+    $timeDifference = $time - $timeCreated;
+    if ($timeDifference < 3600) {
+        $accessToken = $user->Gtoken;
+        $client->setAccessToken($accessToken);
+    } elseif ($timeDifference > 3600) {
+        try {
+            $client = $client ->refreshToken($refreshToken);
+            $newTimeCreated = $client['created'];
+            $newAccessToken = $client['access_token'];
+            $newRefreshToken = $client['refresh_token'];
+            $user->Gtoken = $newAccessToken;
+            $user->refresh_token = $newRefreshToken;
+            $user->createdAtToken = $newTimeCreated;
+            $user->update();
+            $client = $google->client();
+            $accessToken = $user->Gtoken;
+            $client->setAccessToken($accessToken);
+        } catch (ErrorException $e) {
+            return redirect('login');
+        }
+    }
+    $gsa = new Google_Service_AnalyticsReporting($client);
+    $end = $request->end;
+    $start = $request->start;
+    $comEnd = $request->comEnd;
+    $comStart = $request->comStart;
+    $ga_cv = $google->get_ga_cv($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
+    $ga_cvOne = $ga_cv[0];
+    $ga_cvTwo = $ga_cv[1];
+    $data = [
+      "cv"=>$ga_cvTwo,
+      "cvReport"=>$ga_cvOne
+    ];
+    return $data;
+  }
+
+  public function adAxios(Google $google, AddSite $addSite, Request $request){
+    $user = Auth::user();
+    $id =  $user->id;
+    $add_sites = AddSite::where('user_id', $id)->get();
+    if (empty($add_sites) || $add_sites == []) {
+        return redirect('/accounts.google');
+    }
+    $addSite = AddSite::where('user_id', $id)->first();
+    if (is_null($addSite)) {
+        return redirect('/accounts.google');
+    }
+    $VIEW_ID =(string)$addSite->VIEW_ID;
+    $url = $addSite->url;
+    $client = $google->client();
+    $timeCreated = $user->createdAtToken;
+    $refreshToken = $user->refresh_token;
+    $time = time();
+    $timeDifference = $time - $timeCreated;
+    if ($timeDifference < 3600) {
+        $accessToken = $user->Gtoken;
+        $client->setAccessToken($accessToken);
+    } elseif ($timeDifference > 3600) {
+        try {
+            $client = $client ->refreshToken($refreshToken);
+            $newTimeCreated = $client['created'];
+            $newAccessToken = $client['access_token'];
+            $newRefreshToken = $client['refresh_token'];
+            $user->Gtoken = $newAccessToken;
+            $user->refresh_token = $newRefreshToken;
+            $user->createdAtToken = $newTimeCreated;
+            $user->update();
+            $client = $google->client();
+            $accessToken = $user->Gtoken;
+            $client->setAccessToken($accessToken);
+        } catch (ErrorException $e) {
+            return redirect('login');
+        }
+    }
+    $gsa = new Google_Service_AnalyticsReporting($client);
+    $end = $request->end;
+    $start = $request->start;
+    $comEnd = $request->comEnd;
+    $comStart = $request->comStart;
+    $ga_ad = $google->get_ga_ad($gsa, $VIEW_ID, $start, $end, $comStart, $comEnd);
+    $ga_adOne = $ga_ad[0];
+    $ga_adTwo = $ga_ad[1];
+    $data = [
+      "cv"=>$ga_adOne,
+      "cvReport"=>$ga_adTwo
+    ];
+    return $data;
+  }
 
 
 }

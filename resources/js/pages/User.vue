@@ -255,7 +255,7 @@ export default {
       pastTablet:''
     }
   },
-  created() {
+  mounted() {
     EventBus.$on('site-info',this.getSiteInfo)
   },
   methods: {
