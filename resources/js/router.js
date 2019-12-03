@@ -16,34 +16,34 @@ Vue.use(VueRouter)
 
 // パスとコンポーネントのマッピング
 const routes = [{
-    path: '/',
+    path: '/:userId',
     component: Index,
     name: 'index',
   },
   {
-    path: '/user',
+    path: '/user/:userId',
     component: User,
     name: 'User'
   },
   {
-    path: '/inflow',
+    path: '/inflow/:userId',
     component: Inflow,
     name: 'Inflow'
   },
   {
-    path: '/action',
+    path: '/action/:userId',
     component: Action,
     name: 'Action'
   },
   {
-    path: '/conversion',
+    path: '/conversion/:userId',
     component: Conversion,
-    name: 'Conversion'
+    name: 'Conversion/:userId'
   },
   {
     path: '/ad',
     component: Ad,
-    name: ';'
+    name: 'Ad'
   },
   {
     path: '*',

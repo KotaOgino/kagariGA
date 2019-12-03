@@ -1,5 +1,6 @@
 <template>
 <div class="navcomp">
+  <h1>{{ $route.params.id }}</h1>
   <section class="mt-2">
   <div class="container">
   <div class="bd-highlight bg-white kagariBorder">
@@ -26,15 +27,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body row mb-4">
+      <div class="modal-body row mb-5">
         <div class="col-md-6 textCenter">
-          <p class="mb-3"><span class="blue bold mr-2">分析</span><span class="borderBottom">{{start}} 〜 {{end}}</span></p>
+          <p class="mb-3 textLeft"><span class="blue bold mr-2">分析</span><span class="borderBottom">{{start}} 〜 {{end}}</span></p>
           <v-app>
           <v-date-picker  color="info" @input="onDateRangeChange" v-model="dates" range></v-date-picker>
           </v-app>
         </div>
         <div class="col-md-6 textCenter">
-          <p class="mb-3"><span class="red bold mr-2">比較</span><span class="borderBottom">{{comStart}} 〜 {{comEnd}}</span></p>
+          <p class="mb-3 textLeft"><span class="red bold mr-2">比較</span><span class="borderBottom">{{comStart}} 〜 {{comEnd}}</span></p>
           <v-app>
           <v-date-picker  color="info" @input="onComDateRangeChange" v-model="comDates" range></v-date-picker>
         </v-app>
@@ -50,32 +51,32 @@
 
   <nav class="nav top-nav">
   <p v-on:click='isActive=1' v-bind:class="[ isActive === 1 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to="/" class="router-link">
+      <router-link :to="{ name: 'index', params: { userId: id }}" class="router-link">
           <i class="far fa-calendar-alt mr-1"></i>サマリー
       </router-link>
   </p>
   <p v-on:click='isActive=2' v-bind:class="[ isActive === 2 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to='/user' class="router-link">
+      <router-link :to="{ name: 'User', params: { userId: id }}" class="router-link">
           <i class="fas fa-users mr-1"></i>ユーザー属性
       </router-link>
   </p>
   <p v-on:click='isActive=3' v-bind:class="[ isActive === 3 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to='/inflow' class="router-link">
+      <router-link :to="{ name: 'Inflow', params: { userId: id }}" class="router-link">
           <i class="fas fa-project-diagram mr-1"></i>流入元分析
       </router-link>
   </p>
   <p v-on:click='isActive=4' v-bind:class="[ isActive === 4 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to='/action' class="router-link">
+      <router-link :to="{ name: 'Action', params: { userId: id }}" class="router-link">
           <i class="fas fa-pager mr-1"></i>ユーザー行動分析
       </router-link>
   </p>
   <p v-on:click='isActive=5' v-bind:class="[ isActive === 5 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to='/conversion' class="router-link">
+      <router-link :to="{ name: 'Conversion', params: { userId: id }}" class="router-link">
           <i class="fas fa-flag mr-1"></i>コンバージョン分析
       </router-link>
   </p>
   <p v-on:click='isActive=6' v-bind:class="[ isActive === 6 ? 'active' : '' ]" class="nav-item nav-link">
-      <router-link to='/ad' class="router-link">
+      <router-link :to="{ name: 'Ad', params: { userId: id }}" class="router-link">
           <i class="fas fa-ad mr-1"></i>広告分析
       </router-link>
   </p>
@@ -87,11 +88,11 @@
 </template>
 <script>
 import EventBus from '../EventBus.js'
-import EventBus2 from '../EventBus2.js'
 
 export default {
     data() {
         return {
+          id: '',
           data: {},
           isActive: 1,
           start: '',
@@ -108,7 +109,6 @@ export default {
     watch: {
       '$route': function (to, from) {
       if (to.path !== from.path) {
-        console.log('route');
         this.siteInfo()
       }
     }
@@ -121,13 +121,11 @@ export default {
             comStart: this.comStart,
             comEnd: this.comEnd
         };
-        console.log(calender,'post');
         EventBus.$emit('site-info', calender);
       },
       axiosGet: function(){
           axios.get('/api/nav')
               .then((res) => {
-                console.log('navData');
                   this.data = res.data,
                   this.dateSet(),
                   this.siteInfo()
@@ -137,6 +135,7 @@ export default {
               })
       },
       dateSet: function(){
+        this.id = this.data.id;
         this.start = this.data.site_info[2];
         this.end = this.data.site_info[3];
         this.comStart = this.data.site_info[4];

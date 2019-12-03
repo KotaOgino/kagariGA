@@ -24,6 +24,9 @@ main{
   border-bottom: none!important;
   padding-bottom: 0!important;
 }
+.modal-body{
+  padding: 2rem!important;
+}
 
 .block{
   display: block;
